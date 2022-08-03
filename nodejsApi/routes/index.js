@@ -1,0 +1,424 @@
+var express = require('express');
+var router = express.Router();
+var connect = require('../db/connect')
+const os = require("os")
+const jwt = require('jsonwebtoken');
+const fs = require('fs')
+const path = require("path") // 处理路径的模块
+//上传图片的模板
+var multer = require('multer');
+//生成的图片放入uploads文件夹下
+var upload = multer({ dest: 'uploads/' })
+/* GET home page. */
+router.get('/', function (req, res, next) {
+  res.render('index', { title: 'Express' });
+});
+// 登录接口
+router.post('/api/login', function (req, res, next) {
+  // 获取账号密码
+  const { username, password } = req.body
+  const sql = `select *from users where username='${username}' and password= '${password}'`
+  connect.query(sql, (err, results) => {
+    if (err) throw err;
+    const { nickname, avatar, token } = results[0];
+    if (results.length > 0) {
+      // const secret = "woshizengyu"
+      // let token = jwt.sign({ username, password }, secret, { expiresIn: "10h" })
+      res.send({
+        code: 200,
+        msg: '账号密码验证成功!',
+        token,
+        Info: {
+          avatar,
+          nickname
+        }
+
+      })
+    } else {
+      res.send({
+        code: 201,
+        msg: '账号密码验证失败!'
+      })
+    }
+  })
+
+
+
+
+})
+// 部门一系列信息
+// 获取全部部门信息
+router.get('/api/deptInfo', function (req, res, next) {
+  const sql = `select *from depall`;
+  connect.query(sql, (err, results) => {
+    connect.query('select *from dept', (e, r) => {
+      if (err || e) throw err;
+      if (results.length > 0) {
+        res.send({
+          code: 200,
+          msg: '操作成功',
+          deptInfo: [
+            ...results
+          ],
+          groupInfo: [...r]
+        })
+      } else {
+        res.send({
+          code: 202,
+          msg: '操作失败',
+        })
+      }
+    })
+
+  })
+})
+
+// 根据部门号查找部门下的全部团队
+router.get('/api/getDeptByDno', function (req, res, next) {
+  const { dno } = req.query;
+  const sql = `select *from dept where dept.deptno=${dno}`
+  connect.query(sql, (err, results) => {
+    if (err) throw err;
+    if (results.length > 0) {
+      res.send({
+        code: 200,
+        msg: '操作成功',
+        groupInfo: [...results]
+      })
+    } else {
+      res.send({
+        code: 202,
+        msg: '操作失败',
+      })
+    }
+  })
+})
+
+// 根据部门团队号查询 部门团队下的所有成员
+router.get('/api/getEmployee', (req, res) => {
+  const { deptId, page, size } = req.query;
+  const sql = `select e.*,d.deptname,da.dno from employee e,dept d, depall da where e.deptno=d.id and d.deptno=da.dno and e.deptno=${deptId} order by e.employno limit ${(page - 1) * size},${size}`
+  connect.query(sql, (err, results) => {
+    if (err) throw err;
+    // 查询全部条数
+    connect.query(`select d.count from  dept d where d.id=${deptId}`, (error, resu) => {
+      if (error) throw error;
+      if (results.length >= 0) {
+        res.send({
+          code: 200,
+          msg: '操作成功',
+          employeInfo: [...results],
+          count: resu[0]['count']
+        })
+      } else {
+        res.send({
+          code: 202,
+          msg: '操作失败',
+        })
+      }
+
+
+    })
+  })
+})
+// 添加员工或修改员工
+router.post('/api/addOrUpdateEmploy', (req, res) => {
+  const { body } = req
+  const { isUpdate } = body;
+  // 如果是更新则走更新的操作
+  if (isUpdate) {
+    const udSql = `
+    UPDATE vueandts.employee SET deptno = ${body.deptno}, employname = '${body.employname}', employage = '${body.employage}', employsex= '${body.employsex}', employidcard = '${body.employidcard}',
+    employphone = '${body.employphone}', entryDate = '${body.entryDate}', 
+    employemail = '${body.employemail}', employaddress = '${body.employaddress}', 
+    employsalary = '${body.employsalary}' 
+    WHERE employno = ${body.employno};
+    `
+    // 更新员工
+    connect.query(udSql, (e, r) => {
+      if (r.affectedRows && r.affectedRows > 0) {
+        res.send({
+          code: 200,
+          msg: '修改员工信息成功!'
+        })
+      } else {
+        res.send({
+          code: 202,
+          msg: '修改异常,请确认新数据和原数据是否相同或出现未知异常'
+        })
+      }
+    })
+  } else {
+    // 插入sql
+    const addSql = `INSERT INTO vueandts.employee(deptno, employname, employage, employsex,employidcard, employphone, entryDate, employemail, employaddress, employsalary)
+        VALUES (${body.deptno}, '${body.employname}', '${body.employage}', '${body.employsex}', '${body.employidcard}', '${body.employphone}', '${body.entryDate}', '${body.employemail}', '${body.employaddress}', '${body.employsalary}');`
+    connect.query(addSql, (err, result) => {
+      // 插入成功 返回信息
+      if (result.affectedRows && result.affectedRows > 0) {
+        res.send({
+          code: 200,
+          msg: '添加员工信息成功!'
+        })
+      } else {
+        // 插入失败 返回信息
+        res.send({
+          code: 202,
+          msg: '添加员工信息失败!'
+        })
+      }
+    })
+
+
+  }
+
+})
+
+// 删除员工
+router.post('/api/deleteEmploy', (req, res) => {
+  const { employno } = req.body;
+  const sql = `delete from employee where employno =${employno}`
+  connect.query(sql, (error, results) => {
+    if (results && results.affectedRows > 0) {
+      res.send({
+        code: 200,
+        msg: '删除员工成功!'
+      })
+    } else {
+      res.send({
+        code: 202,
+        msg: '删除员工失败,员工不存在或未知异常'
+      })
+    }
+  })
+})
+
+// 关键字查找
+router.get('/api/searchEmploy', (req, res) => {
+  const { keyword, page, size } = req.query;
+  const sql = `
+  select e.* ,d.deptname,da.dno from  employee e,dept d,depall da where (e.employno like'%${keyword}%' or e.employname like'%${keyword}%')  AND  e.deptno=d.id GROUP BY e.employno order by e.employno  limit ${(page - 1) * size},${size}`
+  connect.query(`select count(DISTINCT e.employno) as count from  employee e,dept d where e.employno like'%${keyword}%' or e.employname like'%${keyword}%' AND  e.deptno=d.id`, (e, r) => {
+    if (e) throw e
+    else {
+      connect.query(sql, (error, results) => {
+        if (error) throw error
+        if (results && results.length > 0) {
+          res.send({
+            code: 200,
+            count: r[0].count,
+            msg: '查找成功!',
+            employeInfo: [...results]
+          })
+        } else {
+          res.send({
+            code: 202,
+            msg: '查找失败!',
+
+          })
+        }
+
+      })
+
+    }
+  })
+
+
+})
+
+// 薪资------
+// 获取团队薪资信息
+router.get('/api/getSaralyInfo', (req, res) => {
+  const { dno } = req.query;
+  if (dno) {
+    const sql = `
+    select sa.* from employesalary sa WHERE deptno=${dno}
+    `;
+    connect.query(sql, (error, results) => {
+      if (results && results.length > 0) {
+        connect.query(`select de.* from dept de WHERE deptno=${dno}`, (e, r) => {
+          if (r.length > 0) {
+            // 将两个数组转化成一个
+            var groupInfo = results.map((item, index) => {
+              return { ...item, ...r[index] };
+            });
+            res.send({
+              code: 200,
+              groupInfo: groupInfo
+            })
+          } else {
+            res.send({
+              code: 202,
+              msg: '未知错误'
+            })
+          }
+        })
+      } else {
+        res.send({
+          code: 202,
+          msg: '无信息'
+        })
+      }
+    })
+  } else {
+    res.send({
+      code: 202,
+      msg: '缺少部门号无法获取准确信息'
+    })
+  }
+})
+
+// 修改薪资信息
+router.post('/api/updateSalaryInfo', (req, res) => {
+  const { editForm, performance } = req.body;
+  console.log(editForm, performance);
+  if (editForm.isuse != null && editForm.deptid != null) {
+    const sql = `
+      UPDATE employesalary SET isuse = '${editForm.isuse}' WHERE deptid=${editForm.deptid} `;
+    connect.query(sql, (error, results) => {
+      if (results.affectedRows > 0) {
+        res.send({
+          code: 200,
+          msg: '修改成功'
+        })
+      }
+    })
+  } else {
+    const sql = `
+    UPDATE employesalary SET performance = '${performance.performance}' WHERE deptid=${performance.deptid} `;
+    connect.query(sql, (e, r) => {
+      console.log(r);
+    })
+    res.send({
+      code: 200,
+      msg: '修改绩效成功'
+    })
+  }
+
+
+
+})
+
+// 获取员工详细薪资明细
+router.get('/api/getSaralyDetailInfo', (req, res) => {
+  const { deptid, page, size } = req.query
+  if (deptid) {
+    connect.query(`SELECT count(*) as count FROM employesalarydetail  ed where  ed.deptno=${deptid}`, (error, results) => {
+      if (results != null) {
+        const sql = `SELECT ed.*,d.deptname FROM employesalarydetail  ed,dept d where ed.deptno=d.id AND  ed.deptno=${deptid} GROUP BY ed.employno limit ${(page - 1) * size},${size}`
+        connect.query(sql, (e, r) => {
+          // 获取补贴相关的具体数据
+          connect.query('select *from employeSub', (haserror, success) => {
+            if (r.length > 0) {
+              res.send({
+                code: 200,
+                detailInfo: [...r],
+                count: results[0].count,
+                // 补贴
+                subDetail: success
+              })
+            } else {
+              res.send({
+                code: 202,
+                msg: '暂无数据!'
+              })
+            }
+          })
+        })
+      } else {
+        res.send({
+          code: 202,
+          msg: '暂无数据!'
+        })
+      }
+    })
+  } else {
+    res.send({
+      code: 202,
+      msg: '缺少关键信息'
+    })
+  }
+})
+
+// 修改员工详细
+router.post('/api/updateSalaryDetail', (req, res) => {
+  // every返回全部为真的情况
+  const updateSuccess = req.body.every((item, index) => {
+    const sql = `update employesalarydetail
+    set  deptno =${item.deptno}, employname ='${item.employname}', 
+    usesocialsub ='${item.usesocialSub}', usehousesub ='${item.usehouseSub}', 
+    useeatsub ='${item.useeatSub}', usetranssub ='${item.usetransSub}',
+     usehotsub ='${item.usehotSub}', useperformance =${item.usePerformance},
+      isuse ='${item.isuse}' where  employno =${item.employno};`
+    const updatesuccess = connect.query(sql, (error, results) => {
+      if (results.affectedRows > 0)
+        return true;
+    })
+    return updatesuccess;
+  })
+  if (updateSuccess) {
+    res.send({
+      code: 200,
+      msg: '修改成功'
+    })
+  } else {
+    res.send({
+      code: 202,
+      msg: '修改出现错误请重试'
+    })
+  }
+
+})
+
+router.post('/api/editDept', upload.single('file'), (req, res) => {
+  const { hasAvatar } = req.body;
+  // 如果是有上传头像就走上传头像路线
+  if (!hasAvatar || hasAvatar == 'false') {
+    res.send({ code: 200, msg: 'meiyou' })
+  } else {
+    // // 上传的图片到uploads文件
+    var imges = req.file;
+    if (imges) {
+      // 读取文件信息
+      fs.readFile(imges.path, (err, data) => {
+        if (err) {
+          console.log(err, "图片读取失败")
+          res.send({ code: 202, msg: "图片上传失败" })
+        }
+        var imgesori = imges.originalname; // 图片名称
+        var radname = Date.now() + parseInt(Math.random() * 114514)  // 赋给图片的名称用时间戳+随机数获取
+        var oriname = imgesori.lastIndexOf(".");//获取最后一个.的位置 
+        var hzm = imgesori.substring(oriname, imgesori.length) // 获取图片后缀名
+        var pic = radname + hzm // 拼接一个完整的图片名称 随机生成
+        // 写入文件
+        fs.writeFile(path.join(__dirname, '../public/images/' + pic), data, (err) => {
+          if (err) {
+            res.send({ code: 202, msg: "图片上传失败" })
+            return
+          }
+          // 通过os模块 获取本地address
+          const couter = os.networkInterfaces()
+          for (var cm in couter) {
+            var cms = couter[cm]
+          }
+          // 将图片的路径保存到数据库
+          // "http://localhost:3000/public/images/"不用public 因为 app.js用了  app.use(express.static(path.join(__dirname, 'public')));  省略了public
+          var picPath = "http://" + cms[1].address + ':3000' + '/images/' + pic;
+          res.send({ code: 200, msg: "图片写入成功" })
+          // 执行修改逻辑
+          //   var insertPic = "insert into pic_table(pic_router) values('" + picPath + "')"
+          //   connmysql.query(insertPic, (err, result) => {
+          //     if (err) {
+          //       console.log(err, "图片路径储存数据库失败")
+          //     }
+          //     res.send({ code: 200, msg: "图片上传成功", urls: picPath })
+          //   })
+          // })
+        })
+      })
+    } else {
+      res.send({ code: 200, msg: '图片上传失败' })
+    }
+
+  }
+})
+module.exports = router;
