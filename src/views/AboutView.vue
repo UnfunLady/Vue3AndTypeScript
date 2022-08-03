@@ -19,7 +19,6 @@
         </span>
       </div>
     </template>
-
     <el-icon class="avatar-uploader-icon">
       <Plus />
     </el-icon>
@@ -64,13 +63,6 @@ const handleAvatarSuccess: UploadProps['onSuccess'] = (
   // 将上传后的url返回显示
   // imageUrl.value = URL.createObjectURL(uploadFile.raw!)
 }
-
-
-// 点击预览时显示图片
-const handlePictureCardPreview = (file: UploadFile) => {
-  dialogImageUrl.value = file.url!
-  dialogVisible.value = true
-}
 // 点击删除按钮时删除图片
 const handleRemove = (file: UploadFile) => {
   uploadAvatar.value.handleRemove(file);
@@ -89,6 +81,13 @@ const handleExceed: UploadProps['onExceed'] = (files) => {
 const submit = () => {
   uploadAvatar.value!.submit()
 }
+
+// 点击预览时显示图片
+const handlePictureCardPreview = (file: UploadFile) => {
+  dialogImageUrl.value = file.url!
+  dialogVisible.value = true
+}
+
 
 
 </script>
