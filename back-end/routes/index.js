@@ -369,56 +369,73 @@ router.post('/api/updateSalaryDetail', (req, res) => {
 
 })
 
-router.post('/api/editDept', upload.single('file'), (req, res) => {
-  const { hasAvatar } = req.body;
-  // 如果是有上传头像就走上传头像路线
-  if (!hasAvatar || hasAvatar == 'false') {
-    res.send({ code: 200, msg: 'meiyou' })
-  } else {
-    // // 上传的图片到uploads文件
-    var imges = req.file;
-    if (imges) {
-      // 读取文件信息
-      fs.readFile(imges.path, (err, data) => {
-        if (err) {
-          console.log(err, "图片读取失败")
-          res.send({ code: 202, msg: "图片上传失败" })
-        }
-        var imgesori = imges.originalname; // 图片名称
-        var radname = Date.now() + parseInt(Math.random() * 114514)  // 赋给图片的名称用时间戳+随机数获取
-        var oriname = imgesori.lastIndexOf(".");//获取最后一个.的位置 
-        var hzm = imgesori.substring(oriname, imgesori.length) // 获取图片后缀名
-        var pic = radname + hzm // 拼接一个完整的图片名称 随机生成
-        // 写入文件
-        fs.writeFile(path.join(__dirname, '../public/images/' + pic), data, (err) => {
-          if (err) {
-            res.send({ code: 202, msg: "图片上传失败" })
-            return
-          }
-          // 通过os模块 获取本地address
-          const couter = os.networkInterfaces()
-          for (var cm in couter) {
-            var cms = couter[cm]
-          }
-          // 将图片的路径保存到数据库
-          // "http://localhost:3000/public/images/"不用public 因为 app.js用了  app.use(express.static(path.join(__dirname, 'public')));  省略了public
-          var picPath = "http://" + cms[1].address + ':3000' + '/images/' + pic;
-          res.send({ code: 200, msg: "图片写入成功" })
-          // 执行修改逻辑
-          //   var insertPic = "insert into pic_table(pic_router) values('" + picPath + "')"
-          //   connmysql.query(insertPic, (err, result) => {
-          //     if (err) {
-          //       console.log(err, "图片路径储存数据库失败")
-          //     }
-          //     res.send({ code: 200, msg: "图片上传成功", urls: picPath })
-          //   })
-          // })
-        })
-      })
+// 没有头像
+router.post('/api/editDeptNoAvatar', (req, res) => {
+  const { dno, dname, explain } = req.body.editDeptData;
+  const sql = `
+      UPDATE depall SET dname = '${dname}',
+      depall.explain = '${explain}'  WHERE dno = ${dno};
+      `;
+  connect.query(sql, (e, results) => {
+    if (e) throw e
+    if (results && results.affectedRows > 0) {
+      res.send({ code: 200, msg: '修改部门信息成功!' })
     } else {
-      res.send({ code: 200, msg: '图片上传失败' })
+      res.send({ code: 202, msg: '修改部门信息出错!' })
     }
+  })
 
+})
+
+
+// 1.上传头像
+router.post('/api/editDept', upload.single('file'), (req, res) => {
+  // // 上传的图片到uploads文件
+  const { dno, dname, explain } = req.query;
+  var imges = req.file;
+  if (imges) {
+    // 读取文件信息
+    fs.readFile(imges.path, (err, data) => {
+      if (err) {
+        console.log(err, "图片读取失败")
+        res.send({ code: 202, msg: "读取图片失败" })
+      }
+      var imgesori = imges.originalname; // 图片名称
+      var radname = Date.now() + parseInt(Math.random() * 114514)  // 赋给图片的名称用时间戳+随机数获取
+      var oriname = imgesori.lastIndexOf(".");//获取最后一个.的位置 
+      var hzm = imgesori.substring(oriname, imgesori.length) // 获取图片后缀名
+      var pic = radname + hzm // 拼接一个完整的图片名称 随机生成
+      // 写入文件
+      fs.writeFile(path.join(__dirname, '../public/images/' + pic), data, (err) => {
+        if (err) {
+          res.send({ code: 202, msg: "图片上传失败" })
+          return
+        }
+        // 通过os模块 获取本地address
+        const couter = os.networkInterfaces()
+        for (var cm in couter) {
+          var cms = couter[cm]
+        }
+        // 将图片的路径保存到数据库
+        // "http://localhost:3000/public/images/"不用public 因为 app.js用了  app.use(express.static(path.join(__dirname, 'public')));  省略了public
+        const picPath = "http://" + cms[1].address + ':3000' + '/images/' + pic;
+        const sql = `
+       UPDATE depall SET avatar='${picPath}',dname='${dname}',depall.explain='${explain}' WHERE dno =${dno};`
+        console.log(sql);
+        // 执行修改逻辑
+        connect.query(sql, (error, result) => {
+          if (error) throw error;
+          if (result.affectedRows > 0) {
+            res.send({ code: 200, msg: "修改成功" })
+          } else {
+            res.send({ code: 202, msg: "修改失败" })
+          }
+        })
+
+      })
+    })
+  } else {
+    res.send({ code: 202, msg: '图片上传失败' })
   }
 })
 module.exports = router;

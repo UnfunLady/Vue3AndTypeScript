@@ -1,6 +1,7 @@
 <template>
     <HeaderView title="部门管理" msg="该功能是针对部门的一系列管理操作" />
     <MainView />
+    <router-view></router-view>
 </template>
 
 <script lang='ts'>

@@ -95,9 +95,19 @@ const routes: Array<RouteRecordRaw> = [
             meta: {
               name: '现有部门信息',
               icon: 'Connection'
-            }
+            },
           },
-
+          {
+            path: '/editGroup',
+            name: 'EditGroup',
+            component: () => import(/* webpackChunkName: "about" */ '../views/DepartmentView/DepartmentEditView/MainView/EditGroupView/EditGroupView.vue'),
+            meta: {
+              name: '编辑小组信息',
+              icon: 'Connection',
+              activePath: '/departmentView',
+              hidden: true
+            },
+          }
         ]
       },
       {

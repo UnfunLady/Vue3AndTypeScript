@@ -20,7 +20,6 @@ export default {
     setup() {
         // 初始化数据
         const data = reactive(new editDepartmentDataInit())
-
         const changeEdit = (row: any) => {
             data.editDeptData.editDeptData = row;
             data.editDeptData.isEdit = true;

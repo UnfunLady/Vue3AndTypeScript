@@ -1,3 +1,5 @@
+import type { FormInstance } from "element-plus"
+import { ref } from "vue"
 // 部门基础信息
 export interface departmentData {
     allDeptInfo: [],
@@ -21,11 +23,11 @@ export class departmentDataInit {
 }
 // 修改部门用到的数据
 export interface editDepartmentData {
-    editDeptData: {},
+    editDeptData: {
+        [propName: string]: any
+    },
     isEdit: boolean,
     isUpload: boolean
-
-
 }
 // 初始化
 export class editDepartmentDataInit {
@@ -34,5 +36,27 @@ export class editDepartmentDataInit {
         isEdit: false,
         isUpload: false
     }
+    updateDeptFormRef = ref<FormInstance>()
 }
 
+// 修改小组用到的数据
+export interface editGroupData {
+    editGroupForm: {
+        [propName: string]: any
+    }
+}
+
+export class editGroupInit {
+    editGroupData: editGroupData = {
+        editGroupForm: {}
+    }
+}
+
+// 无头像更新
+export const updateDepartmentNoAvatar = (API: any, data: any) => {
+    return API.department.reqUpdateDepartmentNoAvatar(data);
+}
+// 有头像更新
+export const updateDepartmentAvatar = (API: any, data: any) => {
+    return API.department.reqUpdateDepartmentAvatar(data);
+}

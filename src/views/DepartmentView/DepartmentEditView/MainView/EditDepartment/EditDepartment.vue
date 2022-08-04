@@ -2,17 +2,18 @@
     <div>
         <el-card style="margin-top:20px">
             <div>
-                <el-button color="#0052cc" icon="Back" @click="back">返回</el-button>
+                <el-button color="#296a99" icon="Back" size="large" @click="back">返回部门信息</el-button>
+                <el-button color="#296a99" icon="Right" size="large" @click="goGroupEdit">编辑小组信息</el-button>
             </div>
             <br>
-            <el-form :model="editDeptData.editDeptData" size="large" label-width="auto"
-                style="width:30%;margin: 0 auto;" class="editForm">
+            <el-form ref="updateDeptFormRef" :rules="rules" :model="editDeptData.editDeptData" size="large"
+                label-width="auto" style="width:30%;margin: 0 auto;" class="editForm">
                 <el-form-item label="当前部门头像:">
                     <el-avatar style="width:40px;height: 40px;" :src="editDeptData.editDeptData.avatar" />
                 </el-form-item>
                 <el-form-item label="修改的部门头像:">
                     <div class="uploadAvatar">
-                        <el-upload ref="upload" class="avatar-uploader" action="/api/editDept" :auto-upload="false"
+                        <el-upload ref="upload" class="avatar-uploader" :action="uploadUrl" :auto-upload="false"
                             list-type="picture-card" :on-success="handleAvatarSuccess" :limit="1"
                             :before-upload="beforeAvatarUpload" :on-exceed="handleExceed">
                             <template #file="{ file }">
@@ -40,15 +41,16 @@
                     </div>
 
                 </el-form-item>
-                <el-form-item label="部门名字:">
+                <el-form-item label="部门名字:" prop="dname">
                     <el-input v-model="editDeptData.editDeptData.dname" placeholder=""></el-input>
                 </el-form-item>
-                <el-form-item label="部门职责:">
+                <el-form-item label="部门职责:" prop="explain">
                     <el-input v-model="editDeptData.editDeptData.explain" placeholder=""></el-input>
                 </el-form-item>
 
                 <el-form-item label="">
-                    <el-button icon="edit" color="#296a99" @click="submit" :loading="loading">确认修改</el-button>
+                    <el-button icon="edit" color="#296a99" @click="submit(updateDeptFormRef)" :loading="loading">确认修改
+                    </el-button>
                 </el-form-item>
             </el-form>
 
@@ -61,17 +63,18 @@
 
 <script lang='ts'>
 
-import { reactive, ref, toRefs, defineComponent, onMounted, inject } from 'vue'
-import { editDepartmentDataInit } from '@/types/department'
+import { reactive, ref, toRefs, defineComponent, onMounted, inject, getCurrentInstance, computed } from 'vue'
+import { editDepartmentDataInit, updateDepartmentNoAvatar } from '@/types/department'
 import { ElMessage, genFileId } from 'element-plus'
-import type { UploadInstance, UploadProps, UploadFile, UploadRawFile, } from 'element-plus'
-import { log } from 'console';
-
-
+import type { UploadInstance, UploadProps, UploadFile, UploadRawFile, FormInstance } from 'element-plus';
+import { useRouter } from 'vue-router';
 export default defineComponent({
     name: 'EditDepaetMent',
     props: ['editDeptData', 'isEdit'],
     setup(props, ctx) {
+        // 定义路由
+        const router = useRouter();
+        // 上传的原型
         const upload = ref<UploadInstance>();
         // 定义预览图片url
         const dialogImageUrl = ref('')
@@ -79,11 +82,13 @@ export default defineComponent({
         const dialogVisible = ref(false)
         // loading
         const loading = ref(false)
+        // API
+        const API = getCurrentInstance().appContext.config.globalProperties.$API;
         // 定义数据
         const data = reactive(new editDepartmentDataInit())
         // 获取数据
-        data.editDeptData.editDeptData = props.editDeptData;
-        // 上传之前判断是否是jpg且不能大于2mb
+        data.editDeptData = props.editDeptData;
+        // 上传之前判断是否是jpg或png且不能大于2mb
         const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
             const imageType = ['image/jpeg', 'image/png']
             if (imageType.indexOf(rawFile.type) === -1) {
@@ -95,8 +100,6 @@ export default defineComponent({
             }
             return true
         }
-
-
         // 成功回调
         const handleAvatarSuccess: UploadProps['onSuccess'] = (
             response,
@@ -138,22 +141,73 @@ export default defineComponent({
             // 先上传  在成功的回调里再执行
             upload.value!.submit();
         }
-        const submit = () => {
-            uploadAvatar()
-            loading.value! = true;
-            setTimeout(() => {
-                if (data.editDeptData.isUpload) {
-                    console.log('修改logo');
-                    loading.value! = false;
-                }
-                else {
-                    console.log('不修改logo');
-                    loading.value! = false;
-                }
-            }, 2000)
-        }
 
+
+        // 基础表单验证规则
+        const rules = {
+            dname: [
+                { required: true, message: "请输入部门名字!", trigger: "blur" },
+                { min: 4, max: 8, message: "用户名必须是4-8位", trigger: "blur" },
+            ],
+            explain: [
+                { required: true, message: "请输入部门描述!", trigger: "blur" },
+                { min: 2, max: 60, message: "部门描述必须是2-50位", trigger: "blur" },
+            ],
+        };
+        // 确认修改
+        const submit = (formEl: FormInstance | undefined) => {
+            if (!formEl) return
+            formEl.validate((valid) => {
+                if (valid) {
+                    uploadAvatar();
+                    loading.value! = true;
+                    setTimeout(async () => {
+                        if (data.editDeptData.isUpload) {
+                            setTimeout(() => {
+                                ElMessage.success('修改成功!')
+                                // 返回初始界面
+                                data.editDeptData.isEdit = false;
+                                // 取消loading
+                                loading.value! = false;
+                            }, 800)
+
+                        }
+                        else {
+                            const res = await updateDepartmentNoAvatar(API, data.editDeptData)
+                            if (res.code == 200) {
+                                ElMessage.success('信息修改成功!')
+                            } else {
+                                ElMessage.error('信息修改失败!')
+                            }
+                            data.editDeptData.isEdit = false;
+                            loading.value! = false;
+                        }
+                    }, 1000)
+
+                } else {
+                    ElMessage.warning('请确认输入的数据格式是否正确！')
+
+                }
+            })
+
+
+        }
+        const uploadUrl = computed(() => {
+            // 定义action地址 并把参数传递过去
+            return `/api/editDept?dno=${data.editDeptData.editDeptData.dno}&dname=${data.editDeptData.editDeptData.dname}&explain=${data.editDeptData.editDeptData.explain}`;
+        })
+        // 小组编辑页面
+        const goGroupEdit = () => {
+            // todo 路由跳转到编辑小组页面
+            router.push({
+                name: 'EditGroup',
+                params: {
+                    dno: data.editDeptData.editDeptData.dno
+                }
+            })
+        }
         return {
+            ...toRefs(data),
             back,
             beforeAvatarUpload,
             submit,
@@ -165,7 +219,10 @@ export default defineComponent({
             dialogImageUrl,
             dialogVisible,
             uploadAvatar,
-            loading
+            loading,
+            uploadUrl,
+            rules,
+            goGroupEdit
 
         }
 
