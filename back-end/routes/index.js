@@ -438,4 +438,53 @@ router.post('/api/editDept', upload.single('file'), (req, res) => {
     res.send({ code: 202, msg: '图片上传失败' })
   }
 })
+
+
+
+// 修改小组信息
+router.post('/api/editGroupInfo', (req, res) => {
+  const { id, deptname, location, count } = req.body
+  if (id && deptname && location && count) {
+    const sql = `update dept set deptname='${deptname}',location='${location}',count='${count}' where id=${id}`
+    connect.query(sql, (error, results) => {
+      if (error) throw error
+      if (results.affectedRows > 0) {
+        res.send({
+          code: 200,
+          msg: '修改成功'
+        })
+      } else {
+        res.send({
+          code: 202,
+          msg: '修改失败'
+        })
+      }
+    })
+  } else {
+    res.send({
+      code: 202,
+      msg: '缺少重要信息！'
+    })
+  }
+})
+
+// 获取全部员工信息
+router.get('/api/getAllEmploye', (req, res) => {
+  const sql = `select employee.employno as 'key',employee.employname as 'label' from employee order by employee.employno`
+  connect.query(sql, (err, results) => {
+    if (err) throw err
+    if (results.length > 0) {
+      res.send({
+        code: 200,
+        employeInfo: results
+      })
+    } else {
+      res.send({
+        code: 202,
+        msg: '获取员工信息失败'
+      })
+    }
+  })
+})
+
 module.exports = router;

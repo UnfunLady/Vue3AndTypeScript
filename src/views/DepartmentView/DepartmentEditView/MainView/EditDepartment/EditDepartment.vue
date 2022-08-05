@@ -141,8 +141,6 @@ export default defineComponent({
             // 先上传  在成功的回调里再执行
             upload.value!.submit();
         }
-
-
         // 基础表单验证规则
         const rules = {
             dname: [

@@ -167,7 +167,6 @@ export class EmployeSalaryDetailData {
         },
         // 修改列表
         editList: [],
-
         // 是否成功
         editSuccess: false,
         loading: false

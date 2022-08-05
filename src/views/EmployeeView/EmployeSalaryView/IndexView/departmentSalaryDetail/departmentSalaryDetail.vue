@@ -4,7 +4,6 @@
         <HeaderView msg="这是针对整个小团队的明细,如想修改具体某位员工的数据请在详细信息处修改" title="温馨提示" />
         <el-card style="margin-top:50px">
             <el-table stripe border :data="employeSalaryForm.groupInfo" empty-text="暂无数据">
-
                 <el-table-column label="团队号" prop="id" align="center" />
                 <el-table-column label="团队名" prop="deptname" align="center" />
                 <el-table-column label="团队位置" prop="location" align="center">

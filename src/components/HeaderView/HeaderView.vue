@@ -2,10 +2,10 @@
     <div>
         <el-card>
             <div>
-                <p style="font-size: 22px;">  {{title}}</p>
+                <p style="font-size: 22px;"> {{ title }}</p>
             </div>
             <div class="explain">
-                {{msg}}
+                {{ msg }}
             </div>
         </el-card>
     </div>

@@ -27,6 +27,7 @@ export interface editDepartmentData {
         [propName: string]: any
     },
     isEdit: boolean,
+    // 是否上传头像
     isUpload: boolean
 }
 // 初始化
@@ -41,14 +42,51 @@ export class editDepartmentDataInit {
 
 // 修改小组用到的数据
 export interface editGroupData {
-    editGroupForm: {
-        [propName: string]: any
+    editGroupForm: [],
+    isEdit: boolean
+}
+export class editGroupInit {
+    editGroupData: editGroupData = {
+        editGroupForm: [],
+        isEdit: false
     }
 }
 
-export class editGroupInit {
-    editGroupData: editGroupData = {
-        editGroupForm: {}
+//组织新部门用到的数据
+export interface addDepartmentData {
+    // 所有员工信息
+    employeData: [],
+    // 步骤条
+    active: number,
+    // 选择的员工号集合
+    addEmployeData: [],
+    // 选择要添加的部门表单
+    selectDeptForm: {
+        // 全部部门
+        allDept: [],
+        // 部门号
+        dno: number,
+        // 小组名
+        groupName: string | number,
+        // 确认提交信息的表单
+        confirmForm: {}
+    }
+}
+
+export class addDepartmentDataInit {
+    addDepartmentData: addDepartmentData = {
+        employeData: [],
+        active: 0,
+        addEmployeData: [],
+        selectDeptForm: {
+            // 全部部门
+            allDept: [],
+            // 部门号
+            dno: null,
+            // 小组名
+            groupName: null,
+            confirmForm: {}
+        }
     }
 }
 
@@ -59,4 +97,13 @@ export const updateDepartmentNoAvatar = (API: any, data: any) => {
 // 有头像更新
 export const updateDepartmentAvatar = (API: any, data: any) => {
     return API.department.reqUpdateDepartmentAvatar(data);
+}
+
+// 更新小组信息
+export const updateGroupInfo = (API: any, data: any) => {
+    return API.department.reqUpdateGroupInfo(data);
+}
+// 获取所有员工信息
+export const getAllEmploye = (API: any) => {
+    return API.department.reqGetAllEmploye();
 }

@@ -107,7 +107,17 @@ const routes: Array<RouteRecordRaw> = [
               activePath: '/departmentView',
               hidden: true
             },
-          }
+          },
+          {
+            path: '/addDepartment',
+            name: 'addDepartment',
+            component: () => import(/* webpackChunkName: "about" */ '../views/DepartmentView/AddDepartmentView/AddDepartmentView.vue'),
+
+            meta: {
+              name: '组织新小组',
+              icon: 'Notebook'
+            },
+          },
         ]
       },
       {

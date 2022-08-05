@@ -163,7 +163,7 @@
                                 团队名
                             </div>
                         </template>
-                        <el-tag size="small" type="warning">{{ item.deptname }}</el-tag>
+                        <el-tag size="small" type="info">{{ item.deptname }}</el-tag>
                     </el-descriptions-item>
                     <el-descriptions-item>
                         <template #label>
@@ -175,7 +175,7 @@
                             </div>
                         </template>
 
-                        <el-tag size="small" type="warning"> {{ item.employname }}</el-tag>
+                        <el-tag size="small" type="info"> {{ item.employname }}</el-tag>
                     </el-descriptions-item>
                     <el-descriptions-item>
                         <template #label>
@@ -186,7 +186,7 @@
                                 社保
                             </div>
                         </template>
-                        <el-tag size="small" type="danger">
+                        <el-tag size="small" type="info">
                             {{
                                     item.isuse == "true" && item.usesocialSub == "true"
                                         ? "有"
@@ -202,7 +202,7 @@
                                 房补
                             </div>
                         </template>
-                        <el-tag size="small" type="danger">
+                        <el-tag size="small" type="info">
                             {{
                                     item.isuse == "true" && item.usehouseSub == "true" ? "有" : "无"
                             }}</el-tag>
@@ -217,7 +217,7 @@
                                 餐补
                             </div>
                         </template>
-                        <el-tag size="small" type="danger">
+                        <el-tag size="small" type="info">
                             {{
                                     item.isuse == "true" && item.useeatSub == "true" ? "有" : "无"
                             }}</el-tag>
@@ -231,7 +231,7 @@
                                 交通补
                             </div>
                         </template>
-                        <el-tag size="small" type="danger">{{
+                        <el-tag size="small" type="info">{{
                                 item.isuse == "true" && item.usetransSub == "true" ? "有" : "无"
                         }}</el-tag>
                     </el-descriptions-item>
@@ -244,7 +244,7 @@
                                 高温补
                             </div>
                         </template>
-                        <el-tag size="small" type="danger">
+                        <el-tag size="small" type="info">
                             {{
                                     item.isuse == "true" && item.usehotSub == "true" ? "有" : "无"
                             }}</el-tag>
@@ -258,7 +258,7 @@
                                 绩效(1000元)
                             </div>
                         </template>
-                        <el-tag size="small" type="danger">
+                        <el-tag size="small" type="info">
                             {{ item.usePerformance + "%" }}</el-tag>
                     </el-descriptions-item>
                     <el-descriptions-item>
@@ -484,7 +484,6 @@ export default defineComponent({
         // 修改补贴值
         const changeSub = (scope: any) => {
             nextTick(() => {
-
                 // 把应发工资追加在scope.row上
                 // 加上nextTick 让下一次渲染的应发工资赋值  不然会把上一次的赋值
                 scope.row.allSalary = parseInt(document.querySelectorAll('.allSalary')[scope.$index].innerHTML);

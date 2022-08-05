@@ -74,8 +74,8 @@
                 @current-change="getEmploye" />
         </div>
 
-        <el-dialog draggable :title="addOrUpdateEmployeForm.isUpdate ? '更新员工信息' : '增加新员工'" v-model="dialogVisiable"
-            @close="cancelAddOrUpdate">
+        <el-dialog class="addOrUpdateDialog" draggable :title="addOrUpdateEmployeForm.isUpdate ? '更新员工信息' : '增加新员工'"
+            v-model="dialogVisiable" @close="cancelAddOrUpdate">
             <el-form :rules="rules" class="addOrUpdateElForm" label-width="120px" :model="addOrUpdateEmployeForm"
                 ref="addOrUpdateFormRef">
                 <el-form-item label="姓名" prop="employname">
@@ -455,7 +455,7 @@ export default defineComponent({
 })
 </script>
 
-<style >
+<style scope>
 .pagenation {
     text-align: center;
 }
@@ -478,5 +478,9 @@ export default defineComponent({
     background-color: rgba(255, 0, 0, 0.537) !important;
     color: white !important;
     border: none !important;
+}
+
+.el-dialog {
+    min-width: 1016px !important;
 }
 </style>

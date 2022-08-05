@@ -16,7 +16,7 @@
     "nprogress": "^0.2.0",
     "vue": "^3.2.13",
     "vue-property-decorator": "^9.1.2",
-    "vue-router": "^4.0.3"
+    "vue-router": "^4.0.10"
   },
   "devDependencies": {
     "@types/nprogress": "^0.2.0",
