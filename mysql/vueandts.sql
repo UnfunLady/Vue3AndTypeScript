@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 06/08/2022 12:05:59
+ Date: 06/08/2022 16:12:21
 */
 
 SET NAMES utf8mb4;
@@ -22,12 +22,12 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `depall`;
 CREATE TABLE `depall`  (
-  `dno` int(0) NOT NULL,
+  `dno` int(0) NOT NULL AUTO_INCREMENT,
   `dname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `explain` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `avatar` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `count` int(0) NOT NULL,
-  `groupCount` int(0) NOT NULL,
+  `count` int(0) NOT NULL DEFAULT 0,
+  `groupCount` int(0) NOT NULL DEFAULT 0,
   PRIMARY KEY (`dno`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
@@ -41,6 +41,7 @@ INSERT INTO `depall` VALUES (4, '前端团队', '配合UI设计师实现预期�
 INSERT INTO `depall` VALUES (5, '运维团队', '设计并开发高效的监控平台和告警平台，以可控的方式，尽可能高效的完成产品功能的迭代的变更工作', 'https://img0.baidu.com/it/u=3231418332,3200306261&fm=253&fmt=auto&app=138&f=JPEG', 30, 3);
 INSERT INTO `depall` VALUES (6, '经营团队', '以可控的方式，尽可能高效的完成产品功能的迭代的变更工作，搞好市场调查与预测，选定产品发展方向，制定长期发展规划', 'https://img1.baidu.com/it/u=312885407,2370214083&fm=253&fmt=auto&app=138&f=JPEG', 10, 1);
 INSERT INTO `depall` VALUES (7, '行政团队', '负责公司全体员工的后勤保障工作，负责接待来宾（比如：政府部门、职能部门人员），接听或转接外部电话，负责公司员工的考勤管理', 'https://img0.baidu.com/it/u=3450002477,2924136512&fm=253&fmt=auto&app=138&f=PNG', 10, 1);
+INSERT INTO `depall` VALUES (9, '美食团队', '55', 'http://127.0.0.1:3000/images/1659772416688.jpg', 2, 1);
 
 -- ----------------------------
 -- Table structure for dept
@@ -53,8 +54,8 @@ CREATE TABLE `dept`  (
   `location` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `count` int(0) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `fk_depno`(`deptno`) USING BTREE,
-  CONSTRAINT `fk_depno` FOREIGN KEY (`deptno`) REFERENCES `depall` (`dno`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  INDEX `fk_dno`(`deptno`) USING BTREE,
+  CONSTRAINT `fk_dno` FOREIGN KEY (`deptno`) REFERENCES `depall` (`dno`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -77,6 +78,7 @@ INSERT INTO `dept` VALUES (14, 5, '运维团队2组', '广州', 10);
 INSERT INTO `dept` VALUES (15, 5, '运维团队3组', '深圳', 10);
 INSERT INTO `dept` VALUES (16, 6, '经营团队1组', '广州', 10);
 INSERT INTO `dept` VALUES (17, 7, '行政团队1组', '广州', 10);
+INSERT INTO `dept` VALUES (47, 9, '美食团队1组', '北京', 2);
 
 -- ----------------------------
 -- Table structure for employee
@@ -106,11 +108,13 @@ CREATE TABLE `employee`  (
 -- ----------------------------
 INSERT INTO `employee` VALUES (1, 1, '鲁潜22', '21', '男', '441623200110158757', '13825361944', '2022-02-12', '_50@hotmail.com', '广东省深圳市', '3500', 'true');
 INSERT INTO `employee` VALUES (1, 2, '邵金鑫', '21', '男', '110101200106072592', '18968451285', '2022-02-12', '	.zs@yahoo.com', '北京市北京市辖区东城区', '3800', 'true');
+INSERT INTO `employee` VALUES (47, 2, '邵金鑫', '21', '男', '110101200106072592', '18968451285', '2022-02-12', '	.zs@yahoo.com', '北京市北京市辖区东城区', '3800', 'true');
 INSERT INTO `employee` VALUES (1, 3, '陈昊强', '28', '男', '	110101199503072072', '	4706-51611314', '2022-02-12', '	_56@gmail.com', '北京市北京市辖区东城区', '8000', 'true');
 INSERT INTO `employee` VALUES (1, 4, '潘 琪', '23', '女', '110101199903075088', '8667-21583259', '2022-02-12', '24@yahoo.com', '河南省三门峡市', '3200', 'true');
 INSERT INTO `employee` VALUES (1, 5, '洪弘文', '20', '男', '	310101200203072479', '	3461-57848206', '2022-02-12', '	91@hotmail.com', '上海市上海市市辖区黄浦区', '5000', 'true');
 INSERT INTO `employee` VALUES (1, 6, '顾金鑫', '21', '男', '	440106199003078230', '	95655935425', '2022-02-12', '_588@hotmail.com', '广东省广州市天河区', '3500', 'true');
 INSERT INTO `employee` VALUES (1, 7, '卢文昊', '21', '男', '	440106199003072699', '	626-83028149', '2022-02-12', '	.zts@yahoo.com', '广东省广州市天河区', '3500', 'true');
+INSERT INTO `employee` VALUES (47, 7, '卢文昊', '21', '男', '	440106199003072699', '	626-83028149', '2022-02-12', '	.zts@yahoo.com', '广东省广州市天河区', '3500', 'true');
 INSERT INTO `employee` VALUES (1, 8, '韦苑博', '28', '男', '440106199003077115', '3141-91971190', '2022-02-12', '	94@gmail.com', '广东省广州市天河区', '3500', 'true');
 INSERT INTO `employee` VALUES (1, 9, '江涛', '23', '男', '440106199003077174', '156-45629045', '2022-02-12', '95@gmail.com', '广东省汕头市', '3500', 'true');
 INSERT INTO `employee` VALUES (1, 10, '严耀杰', '20', '男', '	440106199003072656', '5733-56739802', '2022-02-12', '	96@gmail.com', '广东省广州市天河区', '3500', 'true');
@@ -339,8 +343,7 @@ CREATE TABLE `employesalary`  (
   `performance` int(0) NOT NULL DEFAULT 100 COMMENT '绩效',
   `isuse` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'true' COMMENT '是否把补贴计入',
   PRIMARY KEY (`deptid`) USING BTREE,
-  INDEX `deptno`(`deptno`) USING BTREE,
-  CONSTRAINT `deptno` FOREIGN KEY (`deptno`) REFERENCES `depall` (`dno`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  INDEX `deptno`(`deptno`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -363,6 +366,7 @@ INSERT INTO `employesalary` VALUES (5, 14, 150, 800, 650, 500, 300, 100, 'true')
 INSERT INTO `employesalary` VALUES (5, 15, 150, 800, 650, 500, 300, 100, 'true');
 INSERT INTO `employesalary` VALUES (6, 16, 150, 800, 650, 500, 300, 100, 'true');
 INSERT INTO `employesalary` VALUES (7, 17, 150, 800, 650, 500, 300, 100, 'true');
+INSERT INTO `employesalary` VALUES (9, 47, 150, 800, 650, 500, 300, 100, 'true');
 
 -- ----------------------------
 -- Table structure for employesalarydetail
@@ -371,7 +375,7 @@ DROP TABLE IF EXISTS `employesalarydetail`;
 CREATE TABLE `employesalarydetail`  (
   `deptno` int(0) NOT NULL,
   `employno` int(0) NOT NULL COMMENT '员工号',
-  `employname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'true' COMMENT '名字',
+  `employname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '名字',
   `usesocialSub` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'true' COMMENT '是否社保',
   `usehouseSub` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'true' COMMENT '是否有房补',
   `useeatSub` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'true' COMMENT '是否有餐补',
@@ -606,6 +610,8 @@ INSERT INTO `employesalarydetail` VALUES (16, 210, '严耀杰1', 'true', 'true',
 INSERT INTO `employesalarydetail` VALUES (1, 2, '邵金鑫1', 'true', 'true', 'true', 'true', 'true', 100, 3800, 'true');
 INSERT INTO `employesalarydetail` VALUES (1, 7, '卢文昊', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
 INSERT INTO `employesalarydetail` VALUES (1, 10, '严耀杰', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
+INSERT INTO `employesalarydetail` VALUES (47, 2, '邵金鑫', 'true', 'true', 'true', 'true', 'true', 100, 3800, 'true');
+INSERT INTO `employesalarydetail` VALUES (47, 7, '卢文昊', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
 
 -- ----------------------------
 -- Table structure for employesub
@@ -649,6 +655,18 @@ INSERT INTO `users` VALUES ('hello', 'world', '0', '0', 'https://himg.bdimg.com/
 -- ----------------------------
 -- Triggers structure for table dept
 -- ----------------------------
+DROP TRIGGER IF EXISTS `salary`;
+delimiter ;;
+CREATE TRIGGER `salary` AFTER INSERT ON `dept` FOR EACH ROW BEGIN
+
+INSERT INTO `vueandts`.`employesalary`(`deptno`, `deptid`) VALUES (new.deptno, new.id);
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Triggers structure for table dept
+-- ----------------------------
 DROP TRIGGER IF EXISTS `dpall`;
 delimiter ;;
 CREATE TRIGGER `dpall` AFTER UPDATE ON `dept` FOR EACH ROW BEGIN
@@ -660,18 +678,6 @@ set allCount=(select  sum(dept.count) from dept where dept.deptno=dpno);
 UPDATE depall SET count=allCount WHERE dno=dpno;
 -- 部门团队人数修改
 update depall set groupCount=(select count(*) from dept where deptno=new.deptno) WHERE dno=new.deptno;
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Triggers structure for table dept
--- ----------------------------
-DROP TRIGGER IF EXISTS `salary`;
-delimiter ;;
-CREATE TRIGGER `salary` AFTER INSERT ON `dept` FOR EACH ROW BEGIN
-
-INSERT INTO `vueandts`.`employesalary`(`deptno`, `deptid`) VALUES (new.deptno, new.id);
 END
 ;;
 delimiter ;
