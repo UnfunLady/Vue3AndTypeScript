@@ -212,6 +212,7 @@ export default defineComponent({
         async function getGroup() {
             // 首先清空团队选项的值
             data.employeForm.deptId = null;
+            data.employeForm.groupInfo = null
             // const { deptId, deptno } = data.employeForm;
             // 该方法从employe.ts定义
             await getGroupByDno(API, data.employeForm);

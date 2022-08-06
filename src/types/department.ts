@@ -52,8 +52,8 @@ export class editGroupInit {
     }
 }
 
-//组织新部门用到的数据
-export interface addDepartmentData {
+//组织新小组用到的数据
+export interface addGroupData {
     // 所有员工信息
     employeData: [],
     // 步骤条
@@ -76,8 +76,8 @@ export interface addDepartmentData {
     addSuccess: boolean
 }
 
-export class addDepartmentDataInit {
-    addDepartmentData: addDepartmentData = {
+export class addGroupDataInit {
+    addGroupData: addGroupData = {
         employeData: [],
         active: 0,
         addEmployeData: [],
@@ -93,6 +93,26 @@ export class addDepartmentDataInit {
         },
         addSuccess: false,
 
+    }
+}
+
+// 创建新部门用到的数据
+export interface addDepartmentData {
+    addDepartmentForm: {
+        dname: string,
+        explain: string,
+        loading: boolean,
+        [propName: string]: any
+    }
+}
+
+export class addDepartmentDataInit {
+    addDepartmentData: addDepartmentData = {
+        addDepartmentForm: {
+            dname: '',
+            explain: '',
+            loading: false
+        }
     }
 }
 

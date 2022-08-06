@@ -4,7 +4,7 @@
         <el-row :gutter="20">
             <el-col :span="6" v-for="item in deptList" :key="item.dno">
                 <div class="grid-content ep-bg-purple">
-                    <el-card>
+                    <el-card style="min-height: 214px;">
                         <div class="content">
                             <div class="item">
                                 <el-avatar>
@@ -24,6 +24,7 @@
                             <div class="item" style="min-width:50px">
                                 <span style="color:red"> {{ item.count }}人</span>
                             </div>
+
                         </div>
                         <div class="action">
                             <el-button link @click="goToDetail(item, 'departmentSalaryDetail')">部门整体工资明细
@@ -74,14 +75,17 @@ export default defineComponent({
         display: flex;
         padding-top: 30px;
         padding-bottom: 30px;
+
     }
 
     .action {
         display: flex;
-        margin: 21px -21px -20px;
+       
         background-color: #90939936;
-        justify-content: space-between;
-
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
         .el-button {
             width: 100%;
             height: 100%;
@@ -123,7 +127,7 @@ export default defineComponent({
 .grid-content {
     border-radius: 4px;
     min-height: 36px;
-
+    position: relative;
 }
 
 $bg-purple: #d3dce6;

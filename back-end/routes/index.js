@@ -7,6 +7,7 @@ const fs = require('fs')
 const path = require("path") // 处理路径的模块
 //上传图片的模板
 var multer = require('multer');
+const { first } = require('lodash');
 //生成的图片放入uploads文件夹下
 var upload = multer({ dest: 'uploads/' })
 /* GET home page. */
@@ -88,7 +89,7 @@ router.get('/api/getDeptByDno', function (req, res, next) {
     } else {
       res.send({
         code: 202,
-        msg: '操作失败',
+        msg: '该部门无任何小组,请组建新的小组',
       })
     }
   })
@@ -571,6 +572,74 @@ router.post('/api/addGroup', (req, res) => {
     }
   })
 
+
+})
+
+
+
+
+// 新增部门
+router.post('/api/addDeptpartment', upload.single('file'), (req, res) => {
+  const images = req.file
+  // 获取部门名和部门描述
+  const { dname, explain } = req.query;
+  // 检查部门是否存在
+  const preSql = `select *from depall where dname='${dname}'`
+  connect.query(preSql, (e, r) => {
+    if (e) throw e
+    if (r.length > 0) {
+      res.send({
+        code: 202,
+        msg: '已经存在相同的部门了!'
+      })
+    } else {
+      if (images) {
+        // 读取文件
+        fs.readFile(images.path, (err, data) => {
+          if (err) res.send({ code: 202, msg: '读取图片失败!' })
+          // 获取图片原始名称
+          const imagesOri = images.originalname;
+          // 取一个随机名字
+          const randomName = Date.now() + parseInt(Math.random() * 1919)
+          // 获取后缀名
+          const hzm = imagesOri.substring(imagesOri.lastIndexOf('.'), imagesOri.length);
+          // 拼接起来完整的随机文件名
+          const pic = randomName + hzm;
+          // 写入文件
+          fs.writeFile(path.join(__dirname, '../public/images/' + pic), data, (err) => {
+            if (err) res.send({ code: 202, msg: '图片上传失败' })
+            const couter = os.networkInterfaces();
+            for (let cm in couter) {
+              var cms = couter[cm]
+            }
+            const picPath = 'http://' + cms[1].address + ':3000' + '/images/' + pic;
+
+            const sql = `insert into depall (dname,depall.explain,avatar)  values('${dname}','${explain}','${picPath}')`
+            connect.query(sql, (error, results) => {
+              if (error) throw error
+              if (results.affectedRows > 0) {
+                res.send({
+                  code: 200,
+                  msg: '添加部门成功!'
+                })
+              } else {
+                res.send({
+                  code: 202,
+                  msg: '添加部门失败!'
+                })
+              }
+            })
+
+          })
+        })
+      } else {
+        res.send({
+          code: 202,
+          msg: '请上传部门头像！'
+        })
+      }
+    }
+  })
 
 })
 module.exports = router;

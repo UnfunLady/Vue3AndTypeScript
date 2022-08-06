@@ -178,8 +178,10 @@ export class EmployeSalaryDetailData {
 // 根据部门号获取全部团队
 export const getGroupByDno = async (API: any, data: any) => {
     const res = await API.employe.reqGetDeptByDno(data);
-    if (res.code == 200) {
+    if (res && res.code == 200) {
         data.groupInfo = res.groupInfo;
+    } else {
+        data.groupInfo = null
     }
 }
 // 根据团队号获取员工

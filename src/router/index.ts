@@ -109,13 +109,21 @@ const routes: Array<RouteRecordRaw> = [
             },
           },
           {
-            path: '/addDepartment',
-            name: 'addDepartment',
-            component: () => import(/* webpackChunkName: "about" */ '../views/DepartmentView/AddDepartmentView/AddDepartmentView.vue'),
-
+            path: '/addGroup',
+            name: 'addGroup',
+            component: () => import(/* webpackChunkName: "about" */ '../views/DepartmentView/AddGroupView/AddGroupView.vue'),
             meta: {
               name: '组织新小组',
               icon: 'Notebook'
+            },
+          },
+          {
+            path: '/addDepartment',
+            name: 'addDepartment',
+            component: () => import(/* webpackChunkName: "about" */ '../views/DepartmentView/AddDepartmentView/AddDepartmentView.vue'),
+            meta: {
+              name: '创建新部门',
+              icon: 'School'
             },
           },
         ]
