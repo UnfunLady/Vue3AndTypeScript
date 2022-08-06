@@ -68,9 +68,12 @@ export interface addDepartmentData {
         dno: number,
         // 小组名
         groupName: string | number,
+        // 小组所在城市
+        location: string,
         // 确认提交信息的表单
         confirmForm: {}
-    }
+    },
+    addSuccess: boolean
 }
 
 export class addDepartmentDataInit {
@@ -84,9 +87,12 @@ export class addDepartmentDataInit {
             // 部门号
             dno: null,
             // 小组名
-            groupName: null,
+            groupName: '',
+            location: '',
             confirmForm: {}
-        }
+        },
+        addSuccess: false,
+
     }
 }
 
@@ -106,4 +112,9 @@ export const updateGroupInfo = (API: any, data: any) => {
 // 获取所有员工信息
 export const getAllEmploye = (API: any) => {
     return API.department.reqGetAllEmploye();
+}
+
+// 新增小组
+export const addGroup = (API: any, data: any) => {
+    return API.department.reqAddGroup(data)
 }

@@ -125,11 +125,13 @@ export default defineComponent({
             file.uid = genFileId()
             // 设置最新的
             upload.value!.handleStart(file);
+            // 上传状态为false
             data.editDeptData.isUpload = false;
         }
         // 点击预览时显示图片
         const handlePictureCardPreview = (file: UploadFile) => {
             dialogImageUrl.value = file.url!
+            // 设置图片可见
             dialogVisible.value = true
         }
         // 返回按钮
@@ -157,9 +159,11 @@ export default defineComponent({
             if (!formEl) return
             formEl.validate((valid) => {
                 if (valid) {
+                    // 执行上传图片 如果有图片会上传
                     uploadAvatar();
                     loading.value! = true;
                     setTimeout(async () => {
+                        //isupload为true时 执行修改logo的api
                         if (data.editDeptData.isUpload) {
                             setTimeout(() => {
                                 ElMessage.success('修改成功!')
@@ -171,6 +175,7 @@ export default defineComponent({
 
                         }
                         else {
+                            // 执行没有修改logo的api
                             const res = await updateDepartmentNoAvatar(API, data.editDeptData)
                             if (res.code == 200) {
                                 ElMessage.success('信息修改成功!')

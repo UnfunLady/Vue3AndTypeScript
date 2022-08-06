@@ -349,6 +349,7 @@ router.post('/api/updateSalaryDetail', (req, res) => {
     useeatsub ='${item.useeatSub}', usetranssub ='${item.usetransSub}',
      usehotsub ='${item.usehotSub}', useperformance =${item.usePerformance},
       isuse ='${item.isuse}' where  employno =${item.employno};`
+    // 执行更新语句
     const updatesuccess = connect.query(sql, (error, results) => {
       if (results.affectedRows > 0)
         return true;
@@ -444,33 +445,46 @@ router.post('/api/editDept', upload.single('file'), (req, res) => {
 // 修改小组信息
 router.post('/api/editGroupInfo', (req, res) => {
   const { id, deptname, location, count } = req.body
-  if (id && deptname && location && count) {
-    const sql = `update dept set deptname='${deptname}',location='${location}',count='${count}' where id=${id}`
-    connect.query(sql, (error, results) => {
-      if (error) throw error
-      if (results.affectedRows > 0) {
-        res.send({
-          code: 200,
-          msg: '修改成功'
+  const checkDname = `select *from dept where deptname='${deptname}'`
+  connect.query(checkDname, (erro, checkResult) => {
+    if (erro) throw erro
+    if (checkResult.length > 0) {
+      res.send({
+        code: 202,
+        msg: '已有相同名字部门请重新取名!'
+      })
+    }
+    else {
+      if (id && deptname && location && count) {
+        const sql = `update dept set deptname='${deptname}',location='${location}',count='${count}' where id=${id}`
+        connect.query(sql, (error, results) => {
+          if (error) throw error
+          if (results.affectedRows > 0) {
+            res.send({
+              code: 200,
+              msg: '修改成功'
+            })
+          } else {
+            res.send({
+              code: 202,
+              msg: '修改失败'
+            })
+          }
         })
       } else {
         res.send({
           code: 202,
-          msg: '修改失败'
+          msg: '缺少重要信息！'
         })
       }
-    })
-  } else {
-    res.send({
-      code: 202,
-      msg: '缺少重要信息！'
-    })
-  }
+    }
+  })
+
 })
 
 // 获取全部员工信息
 router.get('/api/getAllEmploye', (req, res) => {
-  const sql = `select employee.employno as 'key',employee.employname as 'label' from employee order by employee.employno`
+  const sql = `select DISTINCT employee.employno as 'key',employee.employname as 'label' from employee order by employee.employno`
   connect.query(sql, (err, results) => {
     if (err) throw err
     if (results.length > 0) {
@@ -487,4 +501,76 @@ router.get('/api/getAllEmploye', (req, res) => {
   })
 })
 
+
+// 新增小组信息
+router.post('/api/addGroup', (req, res) => {
+  const { addForm, deptno, location, deptname } = req.body;
+  // 检查小组是否重名
+  const checkDname = `select *from dept where deptname='${deptname}'`
+  connect.query(checkDname, (erro, checkResult) => {
+    if (erro) throw erro
+    if (checkResult.length > 0) {
+      res.send({
+        code: 202,
+        msg: '已有相同名字部门请重新取名!'
+      })
+    } else {
+      // 插入新小组
+      const sql = `insert into dept(deptno,deptname,location) values(${deptno},'${deptname}','${location}')`
+      connect.query(sql, (err, results) => {
+        if (err) throw err
+        if (results.affectedRows > 0) {
+          // 是否全部插入成功
+          const isSuccess = addForm.every((item, index) => {
+            // 查找刚插入的小组的编号
+            const sql = `select d.id from dept d where deptname='${deptname}'`;
+            const allSuccess = connect.query(sql, (e, r) => {
+              if (e) throw e
+              // 获取选择的员工基本信息准备插入到表中
+              const presql = `select e.employno,e.employname,e.employage,e.employsex,e.employidcard,e.employphone,e.entryDate,e.employemail,e.employaddress,e.employsalary,e.isuse from employee e WHERE e.employno=${item}`
+              const isOk = connect.query(presql, (error, result) => {
+                if (error) throw error
+                // 插入信息到员工表
+                const beforeSql = `INSERT INTO employee(deptno, employno, employname, employage, employsex, employidcard, employphone, entryDate, employemail, employaddress, employsalary, isuse) VALUES
+           (${r[0].id}, ${result[0].employno}, '${result[0].employname}', '${result[0].employage}',
+            '${result[0].employsex}', '${result[0].employidcard}', '${result[0].employphone}', '${result[0].entryDate}',
+             '${result[0].employemail}', '${result[0].employaddress}', '${result[0].employsalary}', '${result[0].isuse}');
+          `
+                // 执行插入语句
+                const insertSuccess = connect.query(beforeSql, (er, rs) => {
+                  if (er) throw er
+                  if (rs.affectedRows > 0) {
+                    // 返回真
+                    return true
+                  }
+                })
+                // 返回真
+                return insertSuccess
+              })
+              // 返回真
+              return isOk
+            })
+            // 三个步骤全部成功返回真  every为真返回200code
+            return allSuccess
+          })
+          if (isSuccess) {
+            res.send({
+              code: 200,
+              msg: '新增小组成功'
+            })
+          }
+        }
+        else {
+          res.send({
+            code: 202,
+            msg: '新增小组失败！'
+          })
+        }
+      })
+
+    }
+  })
+
+
+})
 module.exports = router;

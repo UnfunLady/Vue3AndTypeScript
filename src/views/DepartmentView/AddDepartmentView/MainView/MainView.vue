@@ -1,5 +1,6 @@
 <template>
     <div class="mainview">
+        <!-- 步骤条 -->
         <el-steps :active="initData.addDepartmentData.active" finish-status="success"
             style="width:50%;margin: 0 auto;margin-top: 30px;">
             <el-step title="第一步" description="选择要组成新小组的员工" />
@@ -9,9 +10,10 @@
         <!-- 第一步 选择要添加的员工 -->
         <div style="text-align: center;margin-top: 30px;" v-show="initData.addDepartmentData.active === 0">
             <div style="text-align: center">
+
                 <el-transfer v-model="initData.addDepartmentData.addEmployeData"
                     style="text-align: left; display: inline-block" filter-placeholder="查询员工姓名" filterable
-                    :titles="['选择所有员工', '新小组员工']" :button-texts="['取消添加', '添加员工']" :format="{
+                    :titles="['工号+姓名', '新小组员工']" :button-texts="['取消添加', '添加员工']" :format="{
                         noChecked: '${total}',
                         hasChecked: '${checked}/${total}',
                     }" :data="initData.addDepartmentData.employeData" @change="handleChange">
@@ -36,18 +38,21 @@
             v-show="initData.addDepartmentData.active === 1">
             <el-form :model="initData.addDepartmentData.selectDeptForm" label-width="auto">
                 <el-form-item label="请您选择部门">
-
                     <el-select size="large" v-model="initData.addDepartmentData.selectDeptForm.dno"
                         placeholder="请选择新团队所属部门" @change="cofirmListChange">
                         <el-option v-for="item in initData.addDepartmentData.selectDeptForm.allDept" :key="item['dno']"
                             :value="item['dno']" :label="item['dname']">
-
                         </el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="输入小组名字">
                     <el-input size="large" v-model="initData.addDepartmentData.selectDeptForm.groupName"
                         placeholder="请输入新增的小组名字">
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="小组所在城市">
+                    <el-input size="large" v-model="initData.addDepartmentData.selectDeptForm.location"
+                        placeholder="请输入小组所在城市">
                     </el-input>
                 </el-form-item>
             </el-form>
@@ -91,22 +96,74 @@
                     </template>
                     <el-tag size="small">{{ initData.addDepartmentData.selectDeptForm.groupName }}</el-tag>
                 </el-descriptions-item>
+                <el-descriptions-item>
+                    <template #label>
+                        <div class="cell-item">
+                            <el-icon>
+                                <OfficeBuilding />
+                            </el-icon>
+                            新增小组员工号
+                        </div>
+                    </template>
+
+                    <div v-if="initData.addDepartmentData.addEmployeData.length < 4">
+                        <el-tag size="small" v-for="item in initData.addDepartmentData.addEmployeData" :key="item"
+                            style="margin-left:5px">
+                            {{ item }}
+                        </el-tag>
+                    </div>
+                    <div v-else>
+                        <el-tag size="small" v-for="item in initData.addDepartmentData.addEmployeData.slice(0, 3)"
+                            :key="item" style="margin-left:5px">
+                            {{ item }}
+                        </el-tag>
+                        ......
+                    </div>
+
+                </el-descriptions-item>
             </el-descriptions>
             <br>
             <!-- 最后一步提交 -->
             <div>
                 <el-button icon="Back" style="color:white" color="#529a7c" @click="initData.addDepartmentData.active--">
                     回上一步</el-button>
-                <el-button icon="Check" style="color:white" color="#529a7c">提交保存</el-button>
+                <el-button icon="Check" style="color:white" color="#529a7c" @click="confirmSava">提交保存</el-button>
             </div>
 
         </div>
+        <!-- 最后一步显示成功或失败 -->
+
+        <!-- 修改成功的展示 -->
+        <div v-show="
+            initData.addDepartmentData.active > 2 &&
+            initData.addDepartmentData.addSuccess
+        ">
+            <el-result icon="success" title="修改员工信息成功" sub-title="点击回到第一步">
+                <template #extra>
+                    <el-button type="primary" @click="backOne">返回第一步</el-button>
+                </template>
+            </el-result>
+        </div>
+
+        <!-- 修改失败的展示 -->
+        <div v-show="
+            initData.addDepartmentData.active > 2 &&
+            !initData.addDepartmentData.addSuccess
+        ">
+            <el-result icon="error" title="修改员工信息失败" sub-title="点击回到第一步">
+                <template #extra>
+                    <el-button type="primary" @click="backOne">返回第一步</el-button>
+                </template>
+            </el-result>
+        </div>
+
 
         <div style="text-align: center;">
             <el-button v-show="initData.addDepartmentData.active === 1" @click="initData.addDepartmentData.active--"
                 color="#529a7c" style="color:white" icon="Back">返回上一步
             </el-button>
-            <el-button :disabled="initData.addDepartmentData.selectDeptForm.groupName == null"
+            <el-button
+                :disabled="initData.addDepartmentData.selectDeptForm.groupName == '' || initData.addDepartmentData.selectDeptForm.location == '' || initData.addDepartmentData.selectDeptForm.dno == null"
                 v-show="initData.addDepartmentData.active === 1" @click="initData.addDepartmentData.active++"
                 color="#529a7c" style="color:white" icon="Check">提交信息
             </el-button>
@@ -116,7 +173,9 @@
 
 <script lang="ts" setup>
 import { reactive, ref, onMounted, getCurrentInstance } from 'vue'
-import { getAllEmploye, addDepartmentDataInit } from '@/types/department'
+import { getAllEmploye, addDepartmentDataInit, addGroup } from '@/types/department'
+import { ElMessage } from 'element-plus';
+import router from '@/router';
 // 初始化数据
 const initData = reactive(new addDepartmentDataInit());
 // 全局API
@@ -146,16 +205,44 @@ const handleChange = (
     console.log(value, direction, movedKeys)
 
 }
-
+// 确认展示
 const cofirmListChange = () => {
     // 修改选择时将选择的对象的数据传到表单用来确认展示
     initData.addDepartmentData.selectDeptForm.confirmForm = initData.addDepartmentData.selectDeptForm.allDept.filter((v) => {
         //  返回选择的部门号和全部部门相同的数据
         return v['dno'] === initData.addDepartmentData.selectDeptForm.dno
     })
+}
 
+// 最终提交
+const confirmSava = async () => {
+    const confirmData = {
+        // 选择的员工号
+        addForm: [...initData.addDepartmentData.addEmployeData],
+        // 团队号
+        deptno: initData.addDepartmentData.selectDeptForm.dno,
+        // 小组名
+        deptname: initData.addDepartmentData.selectDeptForm.groupName,
+        // 小组地址
+        location: initData.addDepartmentData.selectDeptForm.location
+    }
+    const res = await addGroup(API, confirmData);
+    if (res && res.code === 200) {
+        ElMessage.success('组建新小组成功!')
+        // 加一步
+        initData.addDepartmentData.active++
+        initData.addDepartmentData.addSuccess = true;
+    } else {
+        ElMessage.error(res.msg)
+    }
 
 }
+// 返回第一步
+const backOne = () => {
+    initData.addDepartmentData.active = 0
+    //置空表单
+}
+
 </script>
 
 <style lang="scss">
