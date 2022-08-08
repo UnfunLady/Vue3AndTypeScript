@@ -195,6 +195,7 @@ export default defineComponent({
 
 
         }
+        // 计算action
         const uploadUrl = computed(() => {
             // 定义action地址 并把参数传递过去
             return `/api/editDept?dno=${data.editDeptData.editDeptData.dno}&dname=${data.editDeptData.editDeptData.dname}&explain=${data.editDeptData.editDeptData.explain}`;
@@ -209,6 +210,9 @@ export default defineComponent({
                 }
             })
         }
+
+
+
         return {
             ...toRefs(data),
             back,

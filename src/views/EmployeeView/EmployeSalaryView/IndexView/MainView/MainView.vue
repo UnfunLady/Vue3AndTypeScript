@@ -80,12 +80,13 @@ export default defineComponent({
 
     .action {
         display: flex;
-       
+
         background-color: #90939936;
-    position: absolute;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+
         .el-button {
             width: 100%;
             height: 100%;

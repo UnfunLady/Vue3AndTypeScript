@@ -5,13 +5,11 @@
 
 <script lang='ts'>
 import { reactive, ref, toRefs, defineComponent, onMounted } from 'vue'
-import Header from '@/components/HeaderView/HeaderView.vue'
 import MainView from './MainView/MainView.vue'
 export default defineComponent({
     name: 'addDepartment',
     components: {
         MainView,
-        Header
     },
     setup() {
         return {

@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- 员工个人薪资管理 -->
-        <HeaderView msg="请详细核实每一步要操作的对象以免造成不必要的麻烦" title="温馨提示" />
+        <Header msg="请详细核实每一步要操作的对象以免造成不必要的麻烦" title="温馨提示" />
 
         <!-- 分步 -->
         <el-card style="margin: 30px 0px 30px 0px">
@@ -361,7 +361,6 @@ import {
     nextTick
 } from "vue";
 import { useRoute } from "vue-router";
-import HeaderView from "@/components/HeaderView/HeaderView.vue";
 import {
     EmployeSalaryDetailData,
     getEmployeSalaryDetailInfo,
@@ -370,9 +369,6 @@ import {
 import { ElMessage } from "element-plus";
 export default defineComponent({
     name: "employeDetailView",
-    components: {
-        HeaderView,
-    },
     setup() {
         const route = useRoute();
         const data = reactive(new EmployeSalaryDetailData());

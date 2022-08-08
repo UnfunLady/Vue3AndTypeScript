@@ -100,6 +100,7 @@ router.get('/api/getEmployee', (req, res) => {
   const { deptId, page, size } = req.query;
   const sql = `select e.*,d.deptname,da.dno from employee e,dept d, depall da where e.deptno=d.id and d.deptno=da.dno and e.deptno=${deptId} order by e.employno limit ${(page - 1) * size},${size}`
   connect.query(sql, (err, results) => {
+
     if (err) throw err;
     // 查询全部条数
     connect.query(`select d.count from  dept d where d.id=${deptId}`, (error, resu) => {
@@ -125,34 +126,49 @@ router.get('/api/getEmployee', (req, res) => {
 // 添加员工或修改员工
 router.post('/api/addOrUpdateEmploy', (req, res) => {
   const { body } = req
-  const { isUpdate } = body;
+  const { isUpdate } = body.default;
+  // body.default基本信息 body.old 旧部门信息 因为表是多个主键 修改需要用到旧部门id
   // 如果是更新则走更新的操作
   if (isUpdate) {
-    const udSql = `
-    UPDATE vueandts.employee SET deptno = ${body.deptno}, employname = '${body.employname}', employage = '${body.employage}', employsex= '${body.employsex}', employidcard = '${body.employidcard}',
-    employphone = '${body.employphone}', entryDate = '${body.entryDate}', 
-    employemail = '${body.employemail}', employaddress = '${body.employaddress}', 
-    employsalary = '${body.employsalary}' 
-    WHERE employno = ${body.employno};
-    `
-    // 更新员工
-    connect.query(udSql, (e, r) => {
-      if (r.affectedRows && r.affectedRows > 0) {
-        res.send({
-          code: 200,
-          msg: '修改员工信息成功!'
-        })
-      } else {
+    const preSql = `select *from employee where employno=${body.default.employno} and deptno=${body.default.deptno}`
+    console.log(preSql);
+    connect.query(preSql, (errors, resu) => {
+      if (errors) throw errors
+      if (resu && resu.length > 0) {
         res.send({
           code: 202,
-          msg: '修改异常,请确认新数据和原数据是否相同或出现未知异常'
+          msg: '该小组已有相同成员 请移到其他小组'
+        })
+      } else {
+        const udSql = `
+    UPDATE vueandts.employee SET deptno = ${body.default.deptno}, employname = '${body.default.employname}', employage = '${body.default.employage}', employsex= '${body.default.employsex}', employidcard = '${body.default.employidcard}',
+    employphone = '${body.default.employphone}', entryDate = '${body.default.entryDate}', 
+    employemail = '${body.default.employemail}', employaddress = '${body.default.employaddress}', 
+    employsalary = '${body.default.employsalary}' 
+    WHERE deptno=${body.old} and employno = ${body.default.employno};
+    `
+        // 更新员工
+        connect.query(udSql, (e, r) => {
+          if (e) throw e
+          if (r && r.affectedRows > 0) {
+            res.send({
+              code: 200,
+              msg: '修改员工信息成功!'
+            })
+          } else {
+            res.send({
+              code: 202,
+              msg: '修改异常,请确认新数据和原数据是否相同或出现未知异常'
+            })
+          }
         })
       }
     })
+
   } else {
     // 插入sql
     const addSql = `INSERT INTO vueandts.employee(deptno, employname, employage, employsex,employidcard, employphone, entryDate, employemail, employaddress, employsalary)
-        VALUES (${body.deptno}, '${body.employname}', '${body.employage}', '${body.employsex}', '${body.employidcard}', '${body.employphone}', '${body.entryDate}', '${body.employemail}', '${body.employaddress}', '${body.employsalary}');`
+        VALUES (${body.default.deptno}, '${body.default.employname}', '${body.default.employage}', '${body.default.employsex}', '${body.default.employidcard}', '${body.default.employphone}', '${body.default.entryDate}', '${body.default.employemail}', '${body.default.employaddress}', '${body.default.employsalary}');`
     connect.query(addSql, (err, result) => {
       // 插入成功 返回信息
       if (result.affectedRows && result.affectedRows > 0) {
@@ -168,10 +184,7 @@ router.post('/api/addOrUpdateEmploy', (req, res) => {
         })
       }
     })
-
-
   }
-
 })
 
 // 删除员工
@@ -320,7 +333,7 @@ router.get('/api/getSaralyDetailInfo', (req, res) => {
             } else {
               res.send({
                 code: 202,
-                msg: '暂无数据!'
+                msg: '该小组暂无员工!'
               })
             }
           })

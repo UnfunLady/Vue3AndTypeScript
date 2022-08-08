@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 06/08/2022 16:12:21
+ Date: 08/08/2022 16:32:13
 */
 
 SET NAMES utf8mb4;
@@ -29,12 +29,12 @@ CREATE TABLE `depall`  (
   `count` int(0) NOT NULL DEFAULT 0,
   `groupCount` int(0) NOT NULL DEFAULT 0,
   PRIMARY KEY (`dno`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of depall
 -- ----------------------------
-INSERT INTO `depall` VALUES (1, '爬虫团队', '参与分布式爬虫和数据采集系统的架构设计和开发,负责大规模文本、图像数据的抓取、抽取，去重、分类，垃圾过滤，质量识别等工作', 'https://img0.baidu.com/it/u=3104250705,162290846&fm=253&fmt=auto&app=138&f=JPG', 79, 5);
+INSERT INTO `depall` VALUES (1, '爬虫团队', '参与分布式爬虫和数据采集系统的架构设计和开发,负责大规模文本、图像数据的抓取、抽取，去重、分类，垃圾过滤，质量识别等工作', 'https://img0.baidu.com/it/u=3104250705,162290846&fm=253&fmt=auto&app=138&f=JPG', 79, 4);
 INSERT INTO `depall` VALUES (2, '后端团队', '设计开发以及测试并且维护后端的各个子系统，负责线上服务器运行期间的安全以及稳定性，负责相关后台服务的工发工作', '\r\nhttps://mms2.baidu.com/it/u=1219526164,3946276492&fm=253&app=138&f=JPEG', 40, 3);
 INSERT INTO `depall` VALUES (3, 'UI团队', '负责软件界面的美术设计、创意工作和制作工作，根据各种相关软件的用户群，提出构思新颖、有高度吸引力的创意设计', 'https://img1.baidu.com/it/u=3213166844,1927952924&fm=253&fmt=auto&app=138&f=PNG', 20, 2);
 INSERT INTO `depall` VALUES (4, '前端团队', '配合UI设计师实现预期的视觉交互效果，定期的更新和优化产品，保持产品的生命力和可用性，配合后端工程师完成相关应用的开发工作', 'https://img2.baidu.com/it/u=2213282682,62301055&fm=253&fmt=auto&app=138&f=JPEG', 30, 3);
@@ -56,7 +56,7 @@ CREATE TABLE `dept`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_dno`(`deptno`) USING BTREE,
   CONSTRAINT `fk_dno` FOREIGN KEY (`deptno`) REFERENCES `depall` (`dno`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 48 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of dept
@@ -101,20 +101,20 @@ CREATE TABLE `employee`  (
   INDEX `deptno`(`deptno`) USING BTREE,
   INDEX `employname`(`employname`) USING BTREE,
   CONSTRAINT `fk_deptno` FOREIGN KEY (`deptno`) REFERENCES `dept` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 221 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of employee
 -- ----------------------------
 INSERT INTO `employee` VALUES (1, 1, '鲁潜22', '21', '男', '441623200110158757', '13825361944', '2022-02-12', '_50@hotmail.com', '广东省深圳市', '3500', 'true');
 INSERT INTO `employee` VALUES (1, 2, '邵金鑫', '21', '男', '110101200106072592', '18968451285', '2022-02-12', '	.zs@yahoo.com', '北京市北京市辖区东城区', '3800', 'true');
-INSERT INTO `employee` VALUES (47, 2, '邵金鑫', '21', '男', '110101200106072592', '18968451285', '2022-02-12', '	.zs@yahoo.com', '北京市北京市辖区东城区', '3800', 'true');
+INSERT INTO `employee` VALUES (17, 2, '邵金鑫', '21', '男', '110101200106072592', '18968451285', '2022-02-12', '123@qq.com', '广东省佛山市', '3800', 'true');
 INSERT INTO `employee` VALUES (1, 3, '陈昊强', '28', '男', '	110101199503072072', '	4706-51611314', '2022-02-12', '	_56@gmail.com', '北京市北京市辖区东城区', '8000', 'true');
 INSERT INTO `employee` VALUES (1, 4, '潘 琪', '23', '女', '110101199903075088', '8667-21583259', '2022-02-12', '24@yahoo.com', '河南省三门峡市', '3200', 'true');
 INSERT INTO `employee` VALUES (1, 5, '洪弘文', '20', '男', '	310101200203072479', '	3461-57848206', '2022-02-12', '	91@hotmail.com', '上海市上海市市辖区黄浦区', '5000', 'true');
 INSERT INTO `employee` VALUES (1, 6, '顾金鑫', '21', '男', '	440106199003078230', '	95655935425', '2022-02-12', '_588@hotmail.com', '广东省广州市天河区', '3500', 'true');
 INSERT INTO `employee` VALUES (1, 7, '卢文昊', '21', '男', '	440106199003072699', '	626-83028149', '2022-02-12', '	.zts@yahoo.com', '广东省广州市天河区', '3500', 'true');
-INSERT INTO `employee` VALUES (47, 7, '卢文昊', '21', '男', '	440106199003072699', '	626-83028149', '2022-02-12', '	.zts@yahoo.com', '广东省广州市天河区', '3500', 'true');
+INSERT INTO `employee` VALUES (17, 7, '卢文昊', '21', '男', '	440106199003072699', '	626-83028149', '2022-02-12', '123@qq.com', '河南省洛阳市', '3500', 'true');
 INSERT INTO `employee` VALUES (1, 8, '韦苑博', '28', '男', '440106199003077115', '3141-91971190', '2022-02-12', '	94@gmail.com', '广东省广州市天河区', '3500', 'true');
 INSERT INTO `employee` VALUES (1, 9, '江涛', '23', '男', '440106199003077174', '156-45629045', '2022-02-12', '95@gmail.com', '广东省汕头市', '3500', 'true');
 INSERT INTO `employee` VALUES (1, 10, '严耀杰', '20', '男', '	440106199003072656', '5733-56739802', '2022-02-12', '	96@gmail.com', '广东省广州市天河区', '3500', 'true');
@@ -325,8 +325,8 @@ INSERT INTO `employee` VALUES (17, 215, '洪弘文1', '20', '男', '	31010120020
 INSERT INTO `employee` VALUES (17, 216, '顾金鑫1', '21', '男', '	440106199003078230', '	95655935425', '2022-02-12', '_588@hotmail.com', '广东省广州市天河区', '3500', 'true');
 INSERT INTO `employee` VALUES (17, 217, '卢文昊1', '21', '男', '	440106199003072699', '	626-83028149', '2022-02-12', '	.zts@yahoo.com', '广东省广州市天河区', '3500', 'true');
 INSERT INTO `employee` VALUES (17, 218, '韦苑博1', '28', '男', '440106199003077115', '3141-91971190', '2022-02-12', '	94@gmail.com', '广东省广州市天河区', '3500', 'true');
-INSERT INTO `employee` VALUES (17, 219, '江涛1', '23', '男', '	440106199003077174', '156-45629045', '2022-02-12', '	95@gmail.com', '广东省广州市天河区', '3500', 'true');
-INSERT INTO `employee` VALUES (17, 220, '李四1', '18', '男', '441623200210151548', '13825361949', '2022-5-7', '1382536@qq.com', '广东省广州市', '3002', 'true');
+INSERT INTO `employee` VALUES (47, 219, '江涛1', '23', '男', '	440106199003077174', '156-45629045', '2022-02-12', '231@gmail.com', '广东省汕头市', '3500', 'true');
+INSERT INTO `employee` VALUES (47, 220, '李四1', '18', '男', '441623200210151548', '13825361949', '2022-5-7', '1382536@qq.com', '澳门特别行政区花地玛堂区', '3002', 'true');
 
 -- ----------------------------
 -- Table structure for employesalary
@@ -602,16 +602,16 @@ INSERT INTO `employesalarydetail` VALUES (17, 214, '潘 琪1', 'true', 'true', '
 INSERT INTO `employesalarydetail` VALUES (17, 216, '顾金鑫1', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
 INSERT INTO `employesalarydetail` VALUES (17, 217, '卢文昊1', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
 INSERT INTO `employesalarydetail` VALUES (17, 218, '韦苑博1', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
-INSERT INTO `employesalarydetail` VALUES (17, 219, '江涛1', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
-INSERT INTO `employesalarydetail` VALUES (17, 220, '李四1', 'true', 'true', 'true', 'true', 'true', 100, 3002, 'true');
+INSERT INTO `employesalarydetail` VALUES (47, 219, '江涛1', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
+INSERT INTO `employesalarydetail` VALUES (47, 220, '李四1', 'true', 'true', 'true', 'true', 'true', 100, 3002, 'true');
 INSERT INTO `employesalarydetail` VALUES (1, 1, '鲁潜22', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
 INSERT INTO `employesalarydetail` VALUES (17, 215, '洪弘文1', 'true', 'true', 'true', 'true', 'true', 100, 5000, 'true');
 INSERT INTO `employesalarydetail` VALUES (16, 210, '严耀杰1', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
-INSERT INTO `employesalarydetail` VALUES (1, 2, '邵金鑫1', 'true', 'true', 'true', 'true', 'true', 100, 3800, 'true');
-INSERT INTO `employesalarydetail` VALUES (1, 7, '卢文昊', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
+INSERT INTO `employesalarydetail` VALUES (17, 2, '邵金鑫', 'true', 'true', 'true', 'true', 'true', 100, 3800, 'true');
+INSERT INTO `employesalarydetail` VALUES (17, 7, '卢文昊', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
 INSERT INTO `employesalarydetail` VALUES (1, 10, '严耀杰', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
-INSERT INTO `employesalarydetail` VALUES (47, 2, '邵金鑫', 'true', 'true', 'true', 'true', 'true', 100, 3800, 'true');
-INSERT INTO `employesalarydetail` VALUES (47, 7, '卢文昊', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
+INSERT INTO `employesalarydetail` VALUES (17, 2, '邵金鑫', 'true', 'true', 'true', 'true', 'true', 100, 3800, 'true');
+INSERT INTO `employesalarydetail` VALUES (17, 7, '卢文昊', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
 
 -- ----------------------------
 -- Table structure for employesub

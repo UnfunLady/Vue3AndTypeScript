@@ -29,7 +29,6 @@
 import { reactive, ref, toRefs, defineComponent, onMounted, getCurrentInstance } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { editGroupInit } from '@/types/department'
-import Header from '@/components/HeaderView/HeaderView.vue'
 export default defineComponent({
     emits: ['change'],
     setup(props, ctx) {

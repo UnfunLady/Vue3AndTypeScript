@@ -1,6 +1,6 @@
 <template>
     <div>
-        <HeaderView title="创建新部门" msg="创建新的一个工作部门之前,请确认不要重复" />
+        <Header title="创建新部门" msg="创建新的一个工作部门之前,请确认不要重复" />
         <br>
         <el-card>
             <div style="max-width:400px;margin:0 auto;">
@@ -69,7 +69,6 @@
 
 <script lang='ts' setup>
 import { reactive, ref, toRefs, defineComponent, onMounted, getCurrentInstance, computed } from 'vue'
-import HeaderView from "@/components/HeaderView/HeaderView.vue";
 import { addDepartmentDataInit } from '@/types/department'
 import { UploadInstance, UploadProps, UploadFile, UploadRawFile, FormInstance, ElMessageBox } from 'element-plus';
 import { ElMessage, genFileId } from 'element-plus'

@@ -358,7 +358,7 @@ export default defineComponent({
             data.addOrUpdateFormRef.validate(async (valid) => {
                 if (valid) {
                     // 表单验证通过 发送请求
-                    const res = await addOrUpdateDateEmploy(API, data.addOrUpdateEmployeForm);
+                    const res = await addOrUpdateDateEmploy(API, { default: data.addOrUpdateEmployeForm, old: data.employeForm.deptId });
                     if (res.code == 200) {
                         ElMessage.success(res.msg);
                         // 清空数据

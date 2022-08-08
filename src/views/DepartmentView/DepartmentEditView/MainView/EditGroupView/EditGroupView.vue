@@ -14,8 +14,6 @@ import { useRoute } from 'vue-router'
 import { editGroupInit } from '@/types/department'
 import Show from './showGroupInfo/showGroupInfo.vue'
 import Edit from './editGroupInfo/editGroupInfo.vue'
-import Header from '@/components/HeaderView/HeaderView.vue'
-
 const data = reactive(new editGroupInit())
 const changeEdit = (row: any) => {
     data.editGroupData.isEdit = true;

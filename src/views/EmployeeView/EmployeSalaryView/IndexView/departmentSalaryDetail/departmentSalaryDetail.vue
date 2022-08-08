@@ -1,7 +1,7 @@
 <template>
     <div v-show="$route.params.deptInfo" v-loading="isLoading" element-loading-text="正在加载数据中...">
         <!-- 整体工资明细 -->
-        <HeaderView msg="这是针对整个小团队的明细,如想修改具体某位员工的数据请在详细信息处修改" title="温馨提示" />
+        <Header msg="这是针对整个小团队的明细,如想修改具体某位员工的数据请在详细信息处修改" title="温馨提示" />
         <el-card style="margin-top:50px">
             <el-table stripe border :data="employeSalaryForm.groupInfo" empty-text="暂无数据">
                 <el-table-column label="团队号" prop="id" align="center" />
@@ -43,14 +43,10 @@
 import { reactive, ref, toRefs, defineComponent, getCurrentInstance } from 'vue'
 import { useRoute, } from 'vue-router';
 import { ElMessage } from 'element-plus';
-import HeaderView from '@/components/HeaderView/HeaderView.vue';
 import { EmployeSalaryInitData, getEmployeSalaryInfo, updateEmployeSalaryInfo, } from '@/types/employe'
 
 export default defineComponent({
     name: 'departmentSalaryDetail',
-    components: {
-        HeaderView
-    },
     setup() {
         // 获取全部API
         const API = getCurrentInstance().appContext.config.globalProperties.$API;

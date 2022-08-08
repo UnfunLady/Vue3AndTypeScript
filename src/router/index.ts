@@ -126,6 +126,17 @@ const routes: Array<RouteRecordRaw> = [
               icon: 'School'
             },
           },
+          {
+            path: '/DeleteDepartment',
+            name: 'DeleteDepartment',
+            component: () => import(/* webpackChunkName: "about" */ '../views/DepartmentView/DeleteDepartmentView/DeleteDepartmentView.vue'),
+            meta: {
+              name: '解散部门或小组',
+              icon: 'Delete'
+            },
+
+          },
+
         ]
       },
       {

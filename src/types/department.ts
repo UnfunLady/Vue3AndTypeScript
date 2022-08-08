@@ -116,6 +116,22 @@ export class addDepartmentDataInit {
     }
 }
 
+// 解散部门或小组用到的数据
+export interface deleteDepartmentOrGroup {
+    // 所有部门信息
+    allDeptInfo: [],
+    // 解散小组信息
+    delGroupInfo: [],
+    // 是否点击了解散小组
+    isDelGroup: boolean
+}
+export class deleteDepartmentOrGroupInit {
+    deleteDepartmentOrGroupInfo: deleteDepartmentOrGroup = {
+        allDeptInfo: [],
+        delGroupInfo: [],
+        isDelGroup: false
+    }
+}
 // 无头像更新
 export const updateDepartmentNoAvatar = (API: any, data: any) => {
     return API.department.reqUpdateDepartmentNoAvatar(data);
