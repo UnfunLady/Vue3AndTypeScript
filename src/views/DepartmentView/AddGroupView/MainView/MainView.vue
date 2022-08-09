@@ -240,6 +240,7 @@ const confirmSava = async () => {
 const backOne = () => {
     initData.addGroupData.active = 0
     //置空表单
+    initData.addGroupData.addEmployeData = []
 }
 
 </script>

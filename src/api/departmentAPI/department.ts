@@ -20,11 +20,22 @@ const reqGetAllEmploye = () => {
 const reqAddGroup = (data: any) => {
     return request({ url: '/addGroup', method: 'post', data })
 }
+// 解散小组
+const delGroup = (data: any) => {
+    return request({ url: '/delGroup', method: 'post', data })
+}
+
+// 解散部门
+const delDept = (data: any) => {
+    return request({ url: '/delDept', method: 'post', data })
+}
 const department = {
     reqUpdateDepartmentNoAvatar,
     reqUpdateDepartmentAvatar,
     reqUpdateGroupInfo,
     reqGetAllEmploye,
-    reqAddGroup
+    reqAddGroup,
+    delGroup,
+    delDept
 }
 export default department   

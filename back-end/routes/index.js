@@ -8,6 +8,7 @@ const path = require("path") // 处理路径的模块
 //上传图片的模板
 var multer = require('multer');
 const { first } = require('lodash');
+const { TRUE } = require('sass');
 //生成的图片放入uploads文件夹下
 var upload = multer({ dest: 'uploads/' })
 /* GET home page. */
@@ -588,8 +589,168 @@ router.post('/api/addGroup', (req, res) => {
 
 })
 
+// 解散小组
+router.post('/api/delGroup', (req, res) => {
+  const { id } = req.body;
+  // 查询小组剩下的员工
+  const preSql = `select e.employno from employee e where e.deptno=${id}`
+  connect.query(preSql, (error, results) => {
+    if (error) throw error
+    if (results.length > 0) {
+      // 如果有循环删除掉
+      const success = results.every((item, index) => {
+        const delEmployeSql = `delete from employee e where e.employno=${item.employno} and e.deptno=${id} `
+        const delSuccess = connect.query(delEmployeSql, (err, result) => {
+          console.log(result);
+          if (err) throw err
+          if (result.affectedRows > 0) {
+            // 删除成功返回true
+            return true
+          }
+        })
+        return delSuccess
+      })
+      // 如果全部都删除完了 执行删除小组操作
+      if (success) {
+        const sql = `delete from dept where dept.id=${id}`
+        connect.query(sql, (e, r) => {
+          if (e) throw e
+          if (r.affectedRows > 0) {
+            res.send({
+              code: 200,
+              msg: '解散小组成功!'
+            })
+          } else {
+            res.send({
+              code: 202,
+              msg: '解散小组失败!'
+            })
+          }
+        })
+      }
+    } else {
+      // 如果小组已经没有员工了 直接执行删除小组的操作
+      const sql = `delete from dept where dept.id=${id}`
+      connect.query(sql, (e, r) => {
+        if (e) throw e
+        if (r.affectedRows > 0) {
+          res.send({
+            code: 200,
+            msg: '解散小组成功!'
+          })
+        } else {
+          res.send({
+            code: 202,
+            msg: '解散小组失败!'
+          })
+        }
+      })
+    }
+  })
+})
 
 
+// 解散部门
+router.post('/api/delDept', (req, res) => {
+  const { children } = req.body
+  // 查询部门下的小组号  如果有则查询小组员工 如果有就删除 之后再删除部门
+  if (children && children.length > 0) {
+    // 统计小组是否被删完
+    var isOk = 0;
+    children.forEach((item, index) => {
+      // 根据小组号查询所有员工
+      const preSql = `select e.employno from employee e where e.deptno=${item.id}`
+      connect.query(preSql, (error, results) => {
+        if (error) throw error
+        // 如果有员工
+        if (results.length >= 0) {
+          // 根据查到的所有员工 组成删除sql执行删除
+          const delSuccess = results.every((i) => {
+            const delSql = `delete from employee e where e.employno=${i.employno} and e.deptno=${item.id} `
+            const delEmployeSuccess = connect.query(delSql, (err, result) => {
+              if (err) throw err
+              if (result.affectedRows >= 0) {
+                return true
+              }
+            })
+            return delEmployeSuccess;
+          })
+          // 员工删除完毕 解散小组
+          const delGroupSql = `delete from dept where id=${item.id}`
+          connect.query(delGroupSql, (iserr, isresults) => {
+            if (isresults.affectedRows > 0) {
+              isOk += 1;
+              if (isOk === children.length) { // 说明所有部门都删除完了
+                // 没有小组了 直接删除部门
+                const delDeptSql = `delete from depall where dno=${req.body.dno} `
+                connect.query(delDeptSql, (ise, isr) => {
+                  if (isr.affectedRows > 0) {
+                    res.send({
+                      code: 200,
+                      msg: 'success'
+                    })
+                  } else {
+                    res.send({
+                      code: 202,
+                      msg: '解散部门失败！'
+                    })
+                  }
+                })
+
+              }
+            }
+          })
+        }
+        // 没有员工
+        else {
+          // 没有员工 解散小组
+          const delGroupSql = `delete from dept where id=${item.id}`
+          const delGroupSuccess = connect.query(delGroupSql, (iserr, isresults) => {
+            if (isresults.affectedRows > 0) {
+              isOk += 1;
+              // 说明所有部门都删除完了
+              if (isOk === children.length) {
+                // 没有小组了 直接删除部门
+                const delDeptSql = `delete from depall where dno=${req.body.dno} `
+                connect.query(delDeptSql, (ise, isr) => {
+                  if (isr.affectedRows > 0) {
+                    res.send({
+                      code: 200,
+                      msg: 'success'
+                    })
+                  } else {
+                    res.send({
+                      code: 202,
+                      msg: '解散部门失败！'
+                    })
+                  }
+                })
+              }
+            }
+          })
+        }
+      })
+    })
+  }
+  else {
+    // 没有小组了 直接删除部门
+    const delDeptSql = `delete from depall where dno=${req.body.dno} `
+    connect.query(delDeptSql, (e, r) => {
+      if (e) throw e
+      if (r.affectedRows > 0) {
+        res.send({
+          code: 200,
+          msg: '解散部门成功 '
+        })
+      } else {
+        res.send({
+          code: 202,
+          msg: '解散部门失败'
+        })
+      }
+    })
+  }
+})
 
 // 新增部门
 router.post('/api/addDeptpartment', upload.single('file'), (req, res) => {
@@ -653,6 +814,52 @@ router.post('/api/addDeptpartment', upload.single('file'), (req, res) => {
       }
     }
   })
+
+})
+
+
+// 首页第一张图echarts各部门总人数
+router.get('/api/deptTotal', (req, res) => {
+  // 全部部门名
+  // select de.dname,de.count from depall de
+  // 标题
+  // title:'各部门总人数'
+  const sql = `select de.dname as name,de.count as value from depall de
+  `
+  connect.query(sql, (err, results) => {
+    if (results.length > 0) {
+      res.send({
+        code: 200,
+        deptInfo: [...results],
+        title: '各部门总人数'
+      })
+    }
+  })
+
+})
+
+// 第二张图 获取部门细节 平均工资 总人数 小组数
+router.get('/api/deptDetail', (req, res) => {
+  const sql = `
+  select depall.dname as name,round(avg(employsalary),0) as avg ,depall.count,depall.groupCount from employee,dept,depall WHERE employee.deptno=dept.id AND dept.deptno=depall.dno GROUP BY depall.dname
+  
+
+`
+  connect.query(sql, (err, results) => {
+    if (err) throw err
+    if (results.length > 0) {
+      res.send({
+        code: 200,
+        deptDetailInfo: [...results]
+      })
+    } else {
+      res.send({
+        code: 202,
+        msg: '获取数据出错'
+      })
+    }
+  })
+
 
 })
 module.exports = router;

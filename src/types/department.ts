@@ -154,3 +154,13 @@ export const getAllEmploye = (API: any) => {
 export const addGroup = (API: any, data: any) => {
     return API.department.reqAddGroup(data)
 }
+
+// 解散小组 
+export const reqDelGroup = (API: any, data: any) => {
+    return API.department.delGroup(data);
+}
+
+// 解散部门
+export const reqDelDept = (API: any, data: any) => {
+    return API.department.delDept(data);
+}

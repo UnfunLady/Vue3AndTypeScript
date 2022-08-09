@@ -41,8 +41,9 @@
 
 <script lang='ts'>
 import { ElMessageBox, ElMessage } from 'element-plus';
-import { reactive, ref, toRefs, defineComponent, onMounted, inject } from 'vue'
+import { reactive, ref, toRefs, defineComponent, onMounted, inject, getCurrentInstance } from 'vue'
 import { useRouter } from 'vue-router';
+import { reqDelGroup } from '@/types/department'
 export default defineComponent({
     emits: ['back'],
     props: ['delGroupInfo'],
@@ -50,13 +51,34 @@ export default defineComponent({
     setup(props, ctx) {
         // 路由
         const router = useRouter()
+        // API
+        const API = getCurrentInstance().appContext.config.globalProperties.$API;
         // 返回
         const back = () => {
             ctx.emit('back')
         }
         // 解散小组
-        const delGroup = (row: any) => {
+        const delGroup = async (row: any) => {
             if (row && row.count === 0) {
+                ElMessageBox.confirm(`是否解散该小组`, '警告!', {
+                    dangerouslyUseHTMLString: true,
+                    confirmButtonText: '坚持解散',
+                    cancelButtonText: '取消操作',
+                    confirmButtonClass: 'dButton',
+                    type: 'error',
+                    icon: 'Delete'
+                }).then(async () => {
+                    const res = await reqDelGroup(API, row);
+                    if (res.code === 200) {
+                        ElMessage.success('解散小组成功!')
+                        back()
+                    } else {
+                        ElMessage.error(res.msg)
+                    }
+
+                }).catch(() => {
+                    ElMessage.warning('您取消了解散操作!')
+                })
 
             } else {
                 ElMessageBox.confirm(`<span style="color:red">${row.deptname}还有员工存在${row.count}人,</span>是否坚持解散该小组`, '警告!', {
@@ -66,14 +88,20 @@ export default defineComponent({
                     confirmButtonClass: 'dButton',
                     type: 'error',
                     icon: 'Delete'
-                }).then(() => {
-                    ElMessage.success('解散小组成功！')
+                }).then(async () => {
+                    const res = await reqDelGroup(API, row);
+                    if (res.code === 200) {
+                        ElMessage.success('解散小组成功!')
+                        back()
+                    } else {
+                        ElMessage.error(res.msg)
+                    }
                 }).catch(() => {
-                    ElMessage.warning('您取消了解散操作！')
+                    ElMessage.warning('您取消了解散操作!')
                 })
             }
         }
-        // 点击编辑小组成员
+        //迁移小组成员
         const moveGroupEmploye = (row: any) => {
             router.push({
                 name: 'editemploye',
@@ -83,10 +111,12 @@ export default defineComponent({
                 }
             })
         }
+
         return {
             back,
             delGroup,
-            moveGroupEmploye
+            moveGroupEmploye,
+
 
         }
 
