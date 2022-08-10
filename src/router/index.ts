@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 // import {createRouter,createWebHistory,routeRecordRaw} from 'vue-router
+import useStore from '@/store'
+import { ElMessage } from 'element-plus'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -17,7 +19,8 @@ const routes: Array<RouteRecordRaw> = [
           isShow: true,
           name: '员工菜单',
           icon: 'User',
-          keepAlive: true
+          keepAlive: true,
+          isAuth: true
         },
         children: [
           {
@@ -27,7 +30,8 @@ const routes: Array<RouteRecordRaw> = [
             meta: {
               name: '员工管理',
               icon: 'Discount',
-              keepAlive: true
+              keepAlive: true,
+              isAuth: true
             }
           },
           {
@@ -38,7 +42,8 @@ const routes: Array<RouteRecordRaw> = [
             meta: {
               name: '薪资管理',
               icon: 'Money',
-              keepAlive: true
+              keepAlive: true,
+              isAuth: true
             },
             children: [
               {
@@ -48,7 +53,8 @@ const routes: Array<RouteRecordRaw> = [
                 meta: {
                   name: '全部部门',
                   keepAlive: true,
-                  activePath: '/salaryEmploye'
+                  activePath: '/salaryEmploye',
+                  isAuth: true
                 },
               },
               {
@@ -57,7 +63,8 @@ const routes: Array<RouteRecordRaw> = [
                 component: () => import('../views/EmployeeView/EmployeSalaryView/IndexView/departmentSalaryDetail/departmentSalaryDetail.vue'),
                 meta: {
                   name: '部门整体工资明细',
-                  activePath: '/salaryEmploye'
+                  activePath: '/salaryEmploye',
+                  isAuth: true
                 },
               },
               {
@@ -66,7 +73,8 @@ const routes: Array<RouteRecordRaw> = [
                 component: () => import('../views/EmployeeView/EmployeSalaryView/IndexView/employeDetailView/employeDetailView.vue'),
                 meta: {
                   name: '员工工资明细',
-                  activePath: '/salaryEmploye'
+                  activePath: '/salaryEmploye',
+                  isAuth: true
                 },
               },
 
@@ -85,7 +93,8 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           isShow: true,
           name: '部门菜单',
-          icon: 'House'
+          icon: 'House',
+          isAuth: true
         },
         children: [
           {
@@ -94,7 +103,8 @@ const routes: Array<RouteRecordRaw> = [
             component: () => import(/* webpackChunkName: "about" */ '../views/DepartmentView/DepartmentEditView/DepartmentEditView.vue'),
             meta: {
               name: '现有部门信息',
-              icon: 'Connection'
+              icon: 'Connection',
+              isAuth: true
             },
           },
           {
@@ -105,7 +115,8 @@ const routes: Array<RouteRecordRaw> = [
               name: '编辑小组信息',
               icon: 'Connection',
               activePath: '/departmentView',
-              hidden: true
+              hidden: true,
+              isAuth: true
             },
           },
           {
@@ -114,7 +125,8 @@ const routes: Array<RouteRecordRaw> = [
             component: () => import(/* webpackChunkName: "about" */ '../views/DepartmentView/AddGroupView/AddGroupView.vue'),
             meta: {
               name: '组织新小组',
-              icon: 'Notebook'
+              icon: 'Notebook',
+              isAuth: true
             },
           },
           {
@@ -123,7 +135,8 @@ const routes: Array<RouteRecordRaw> = [
             component: () => import(/* webpackChunkName: "about" */ '../views/DepartmentView/AddDepartmentView/AddDepartmentView.vue'),
             meta: {
               name: '创建新部门',
-              icon: 'School'
+              icon: 'School',
+              isAuth: true
             },
           },
           {
@@ -132,7 +145,8 @@ const routes: Array<RouteRecordRaw> = [
             component: () => import(/* webpackChunkName: "about" */ '../views/DepartmentView/DeleteDepartmentView/DeleteDepartmentView.vue'),
             meta: {
               name: '解散部门或小组',
-              icon: 'Delete'
+              icon: 'Delete',
+              isAuth: true
             },
 
           },
@@ -143,9 +157,12 @@ const routes: Array<RouteRecordRaw> = [
         path: '/main',
         name: 'main',
         component: () => import('@/views/MainView/MainView.vue'),
+        meta: {
+          name: '首页信息',
+          isAuth: true
+        }
       },
     ]
-
   },
   {
     path: '/about',
@@ -165,4 +182,29 @@ const router = createRouter({
   routes: routes,
   history: createWebHistory(process.env.BASE_URL)
 })
+
+router.beforeEach((to, from, next) => {
+  // 获取用户信息
+  const { user } = useStore()
+
+  if (to.meta.isAuth) {
+    if (user.getUserToken !== '' && user.userInfo.userList.isLogin === true) {
+      next();
+    } else {
+      ElMessage.warning('请先登录!')
+      next('/login')
+    }
+  } else {
+    if (user.getUserToken !== '' && user.userInfo.userList.isLogin === true) {
+      if (to.path === '/login') {
+        ElMessage.warning('您已经登录过了!')
+        next('/main')
+      }
+    }
+    next()
+
+  }
+})
+
+
 export default router

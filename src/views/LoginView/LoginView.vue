@@ -31,9 +31,12 @@ import { ElMessage } from "element-plus";
 import { ElLoading } from "element-plus";
 // 引入路由
 import { useRouter } from "vue-router";
+import useStore from '@/store/index'
 export default defineComponent({
   name: "Login",
   setup() {
+    // 使用pinia
+    const { user } = useStore();
     // 通过类的示例实现
     const data = reactive(new InitData());
     // 路由
@@ -50,7 +53,6 @@ export default defineComponent({
     };
     // 获取挂在原型上的全部api方法
     const API = getCurrentInstance().appContext.config.globalProperties.$API;
-
     // 登录验证的方法
     const submitForm = () => {
       //#region
@@ -62,7 +64,9 @@ export default defineComponent({
       //#endregion
       data.loginFormRef?.validate(async (valid: boolean) => {
         if (valid) {
-          const res = await API.reqUserLogin(data.loginForm);
+          const res = await API.employe.reqUserLogin(data.loginForm);
+          console.log(res);
+
           // 设置加载遮挡
           const loading = ElLoading.service({
             lock: true,
@@ -70,14 +74,17 @@ export default defineComponent({
             background: "rgba(0,0,0,0.5)",
           });
           if (res.code == 200) {
+
             ElMessage.success("账号验证成功~");
             // 关闭遮挡层
             loading.close();
             //存储token到localstorage
-            localStorage.setItem("UserToken", res.token);
+            user.setToken(res.token);
+            user.setUserInfo(res.Info)
+            // localStorage.setItem("UserToken", res.token);
             //  跳转到主页
             setTimeout(() => {
-              router.push({ name: 'home' })
+              router.push({ name: 'main' })
             }, 1000)
 
           }

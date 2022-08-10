@@ -57,13 +57,12 @@
             </el-col>
             <el-col :span="4" class="rightInfo">
               <div class="avatar">
-                <el-avatar :size="50"
-                  src="https://himg.bdimg.com/sys/portrait/item/public.1.9d62a83f.ak8wyGYgvIRgx1ZEi2Lv4A.jpg" />
+                <el-avatar :size="50" :src="user.userInfo.userList.userInfo['avatar']" />
               </div>
               <div class="nickname">
                 <el-dropdown>
                   <span class="el-dropdown-link">
-                    UnfunLady
+                    {{ user.userInfo.userList.userInfo['nickname'] }}
                     <el-icon class="el-icon--right">
                       <arrow-down />
                     </el-icon>
@@ -72,7 +71,7 @@
                     <el-dropdown-menu>
                       <el-dropdown-item>个人信息</el-dropdown-item>
                       <el-dropdown-item>修改密码</el-dropdown-item>
-                      <el-dropdown-item>退出登录</el-dropdown-item>
+                      <el-dropdown-item @click="userLogout">退出登录</el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
                 </el-dropdown>
@@ -91,11 +90,14 @@
 <script lang="ts">
 import { defineComponent, ref, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
-
+import useStore from "@/store";
+import { ElMessage } from "element-plus";
 
 export default defineComponent({
   name: "HomeView",
   setup() {
+    // pinia
+    const { user } = useStore();
     const router = useRouter();
     const route = useRoute();
     // 获取全部路由 并过滤要展示的
@@ -120,10 +122,14 @@ export default defineComponent({
       // 菜单栏显示自定义激活 如果没有就激活新的路由路径
       let Path: any = router.currentRoute.value.meta.activePath
       activeIndex.value = Path || newPath
-
-
     }, { immediate: true });
 
+    // 退出登录
+    const userLogout = () => {
+      user.userOut()
+      ElMessage.success('退出登录成功!')
+      router.push('/login')
+    }
 
 
     return {
@@ -131,7 +137,9 @@ export default defineComponent({
       // children
       closeMenu,
       isCollapse,
-      activeIndex
+      activeIndex,
+      user,
+      userLogout
     }
   }
 });
