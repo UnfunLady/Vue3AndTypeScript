@@ -7,7 +7,7 @@ const fs = require('fs')
 const path = require("path") // 处理路径的模块
 //上传图片的模板
 var multer = require('multer');
-const { first } = require('lodash');
+const { first, now } = require('lodash');
 const { TRUE } = require('sass');
 //生成的图片放入uploads文件夹下
 var upload = multer({ dest: 'uploads/' })
@@ -22,8 +22,8 @@ router.post('/api/login', function (req, res, next) {
   const sql = `select *from users where username='${username}' and password= '${password}'`
   connect.query(sql, (err, results) => {
     if (err) throw err;
-    const { nickname, avatar, token } = results[0];
     if (results.length > 0) {
+      const { nickname, avatar, token, username, level } = results[0];
       // const secret = "woshizengyu"
       // let token = jwt.sign({ username, password }, secret, { expiresIn: "10h" })
       res.send({
@@ -32,7 +32,9 @@ router.post('/api/login', function (req, res, next) {
         token,
         Info: {
           avatar,
-          nickname
+          nickname,
+          username,
+          level
         }
 
       })
@@ -859,6 +861,61 @@ router.get('/api/deptDetail', (req, res) => {
       })
     }
   })
+
+
+})
+
+// 第三张图
+// 第四张图
+
+// 修改密码
+router.post('/api/editPassword', (req, res) => {
+  const { nowPassword, newPassword } = req.body.editInfo;
+  const { user } = req.body
+  if (nowPassword === newPassword) {
+    res.send({
+      code: 202,
+      msg: '新旧密码不能相同！'
+    })
+  } else {
+    const preSql = `select password from users where username='${user}'`
+    connect.query(preSql, (e, r) => {
+      if (r.length > 0) {
+        console.log(r[0].password);
+        // 如果旧密码相同
+        if (r[0].password == nowPassword) {
+          // 修改密码
+          const sql = `update users set password='${newPassword}' where username='${user}'`
+          connect.query(sql, (err, results) => {
+            if (err) res.send({ code: 202, msg: '修改密码失败!' })
+            if (results.affectedRows > 0) {
+              res.send({
+                code: 200,
+                msg: 'success'
+              })
+            } else {
+              res.send({
+                code: 202,
+                msg: '修改密码失败!'
+              })
+            }
+          })
+        } else {
+          res.send({
+            code: 202,
+            msg: '旧密码错误！'
+          })
+        }
+      } else {
+        res.send({
+          code: 202,
+          msg: '修改密码失败！'
+        })
+
+      }
+    })
+  }
+
 
 
 })

@@ -12,7 +12,7 @@
                 <!-- 遍历团队名 -->
                 <el-form-item label="所属团队">
                     <el-select size="large" v-model="employeForm.deptId" placeholder="请选择所属团队"
-                        :disabled="employeForm.dno == null ? true : false" @change="getEmploye">
+                        :disabled="employeForm.dno === null ? true : false" @change="getEmploye">
                         <el-option v-for="item in employeForm.groupInfo" :key="item['id']" :label="item['deptname']"
                             :value="item['id']"></el-option>
                     </el-select>
@@ -67,13 +67,12 @@
              :background="background" 
         -->
         <div class="pagenation" v-if="employeForm.employeInfo.length > 0">
-            <el-pagination :disabled="employeForm.deptId !== null || employeForm.employeInfo !== null ? false : true"
-                v-show="employeForm.groupInfo != null" v-model:currentPage="employeForm.page"
-                v-model:page-size="employeForm.size" layout="->,total, sizes, prev,pager, next,jumper"
-                :page-sizes="[8, 10, 15]" :total="employeForm.count" @size-change="handleSizeChange"
-                @current-change="getEmploye" />
+            <!-- pagination组件 -->
+            <Pagination :disabled="employeForm.deptId != null || employeForm.employeInfo.length > 0 ? false : true"
+                v-show="employeForm.groupInfo != null" :pageSizes="[8, 10, 15]" :page="employeForm.page"
+                :size="employeForm.size" :currentPage="employeForm.page" :total="employeForm.count"
+                @pagination="testPagination" />
         </div>
-
         <el-dialog class="addOrUpdateDialog" draggable :title="addOrUpdateEmployeForm.isUpdate ? '更新员工信息' : '增加新员工'"
             v-model="dialogVisiable" @close="cancelAddOrUpdate">
             <el-form :rules="rules" class="addOrUpdateElForm" label-width="120px" :model="addOrUpdateEmployeForm"
@@ -343,6 +342,7 @@ export default defineComponent({
             // 获取全部团队小组信息
             await getGroupByDno(API, data.addOrUpdateEmployeForm);
         }
+        console.log(data.employeForm.groupInfo != null);
 
 
         // 修改添加或修改里面的团队选择时 获取团队小组
@@ -371,6 +371,7 @@ export default defineComponent({
                 }
             })
         }
+
 
 
         // 删除员工
@@ -433,7 +434,13 @@ export default defineComponent({
             }
 
         }
+        // pagination方法
+        const testPagination = (query: any) => {
+            data.employeForm.page = query.page
+            data.employeForm.size = query.size;
+            getEmploye();
 
+        }
         return {
             ...toRefs(data),
             getGroup,
@@ -449,7 +456,8 @@ export default defineComponent({
             cancelAddOrUpdate,
             getGroupByUpdate,
             deleteEmployeCheck,
-            cancelDelete
+            cancelDelete,
+            testPagination
 
         }
     }

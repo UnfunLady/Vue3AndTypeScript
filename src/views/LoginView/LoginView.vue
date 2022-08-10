@@ -1,18 +1,21 @@
 <template>
   <div class="login">
-    <el-form ref="loginFormRef" :model="loginForm" status-icon :rules="rules" label-width="70px" class="loginForm">
-      <h3>LOGIN</h3>
-      <!-- <p style="width: 100%;text-align: center;">login</p> -->
-      <el-form-item label="用户名" prop="username">
-        <el-input v-model="loginForm.username" type="text" autocomplete="off" />
-      </el-form-item>
-      <el-form-item label="密码" prop="password">
-        <el-input v-model="loginForm.password" type="password" autocomplete="off" />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" class="subButton" @click="submitForm()">登 录</el-button>
-      </el-form-item>
-    </el-form>
+    <div class="bgForm">
+      <el-form ref="loginFormRef" :model="loginForm" status-icon :rules="rules" label-width="70px" class="loginForm">
+        <h3 class="header-title">LOGIN</h3>
+        <!-- <p style="width: 100%;text-align: center;">login</p> -->
+        <el-form-item label="用户名" prop="username">
+          <el-input v-model="loginForm.username" type="text" :clearable="true" autocomplete="true" />
+        </el-form-item>
+        <el-form-item label="密码" prop="password">
+          <el-input v-model="loginForm.password" type="password" show-password autocomplete="off" />
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" class="subButton" @click="submitForm()">登 录</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+
   </div>
 </template>
 
@@ -65,8 +68,6 @@ export default defineComponent({
       data.loginFormRef?.validate(async (valid: boolean) => {
         if (valid) {
           const res = await API.employe.reqUserLogin(data.loginForm);
-          console.log(res);
-
           // 设置加载遮挡
           const loading = ElLoading.service({
             lock: true,
@@ -74,7 +75,6 @@ export default defineComponent({
             background: "rgba(0,0,0,0.5)",
           });
           if (res.code == 200) {
-
             ElMessage.success("账号验证成功~");
             // 关闭遮挡层
             loading.close();
@@ -107,18 +107,15 @@ export default defineComponent({
 .login {
   width: 100%;
   height: 100%;
-  background-color: #79a0c9;
+  // background-color: #f1f4f6;
+  background-image: url('../../assets/bg.jpg');
   box-sizing: border-box;
   padding-top: 200px;
 
   .el-form {
     text-align: center;
 
-    h3 {
-      font-size: 30px;
-      color: #79a0c9;
-      margin: 20px 0px;
-    }
+
   }
 
   .el-button {
@@ -141,35 +138,47 @@ export default defineComponent({
     }
   }
 
-  .loginForm {
+
+
+  .bgForm {
     width: 500px;
     padding: 40px;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.889);
     border-radius: 10px;
     margin: 0 auto;
 
-    .subButton {
-      width: 100%;
-      height: 40px;
-    }
   }
 
-  .el-loading-spinner .path {
-    -webkit-animation: loading-dash 1.5s ease-in-out infinite;
-    animation: loading-dash 1.5s ease-in-out infinite;
-    stroke-dasharray: 90, 150;
-    stroke-dashoffset: 0;
-    stroke-width: 2;
-    /* stroke: var(--el-color-primary); */
-    stroke-linecap: round;
-    stroke: rgb(255, 255, 255) !important;
-  }
+  .subButton {
 
-  .el-loading-spinner .el-loading-text {
-    /* color: var(--el-color-primary); */
-    color: rgb(255, 255, 255) !important;
-    margin: 3px 0;
-    font-size: 14px;
+    width: 100%;
+    height: 40px;
   }
+}
+
+.el-loading-spinner .path {
+  -webkit-animation: loading-dash 1.5s ease-in-out infinite;
+  animation: loading-dash 1.5s ease-in-out infinite;
+  stroke-dasharray: 90, 150;
+  stroke-dashoffset: 0;
+  stroke-width: 2;
+  /* stroke: var(--el-color-primary); */
+  stroke-linecap: round;
+  stroke: rgb(255, 255, 255) !important;
+}
+
+.el-loading-spinner .el-loading-text {
+  /* color: var(--el-color-primary); */
+  color: rgb(255, 255, 255) !important;
+  margin: 3px 0;
+  font-size: 14px;
+}
+
+.header-title {
+
+  font-size: 30px;
+  color: #79a0c9;
+  margin: 20px 0px;
+
 }
 </style>

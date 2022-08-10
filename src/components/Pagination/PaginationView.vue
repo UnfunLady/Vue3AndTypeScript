@@ -1,7 +1,8 @@
 <template>
     <div>
-        <el-pagination :total="total" :current-page="page" :page-size="size" :page-sizes="pageSizes"
-            @current-change="handleCurrentChange" :layout="layout" @size-change="handleSizeChange">
+        <el-pagination :disabled="disabled" :total="total" :current-page="page" :page-size="size"
+            :page-sizes="pageSizes" @current-change="handleCurrentChange" :layout="layout"
+            @size-change="handleSizeChange">
         </el-pagination>
     </div>
 </template>
@@ -21,18 +22,25 @@ export default defineComponent({
         },
         // 页容量布局
         pageSizes: {
-            type: [],
-            default: [5, 10, 15]
+            type: Array,
+            default: [8, 10, 15]
+        },
+        // 是否禁用
+        disabled: {
+            type: Boolean,
+            default: false
         }
     },
-    emits: ['Pagination'],
+    emits: ['pagination'],
     setup(props, ctx) {
         function handleCurrentChange(val: number) {
             const query = {
                 page: val,
                 size: props.size
             }
-            ctx.emit('Pagination', query)
+            ctx.emit('pagination', query)
+
+
         }
 
         function handleSizeChange(val: number) {
@@ -40,7 +48,7 @@ export default defineComponent({
                 page: props.page,
                 size: val
             }
-            ctx.emit('Pagination', query)
+            ctx.emit('pagination', query)
         }
         return {
             handleCurrentChange,

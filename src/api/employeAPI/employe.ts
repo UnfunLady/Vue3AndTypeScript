@@ -9,6 +9,14 @@ interface loginData {
 const reqUserLogin = (data: loginData) => {
     return request({ url: '/login', method: 'post', data })
 }
+
+// 修改密码
+const editPassword = (data: any) => {
+    return request({
+        url: '/editPassword', data, method: 'post'
+    })
+}
+
 // 部门有关
 interface deptData {
     deptno?: number,
@@ -125,6 +133,7 @@ const employe = {
     reqGetSalaryInfo,
     reqUpdateSalaryInfo,
     reqGetSalaryDetailInfo,
-    reqUpdateSalaryDetail
+    reqUpdateSalaryDetail,
+    editPassword
 }
 export default employe
