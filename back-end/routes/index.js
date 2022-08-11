@@ -58,35 +58,30 @@ router.post('/api/login', function (req, res, next) {
 // 部门一系列信息
 // 获取全部部门信息
 router.get('/api/deptInfo', function (req, res, next) {
-  if (authToken(req.headers.token)) {
-    const sql = `select *from depall`;
-    connect.query(sql, (err, results) => {
-      connect.query('select *from dept', (e, r) => {
-        if (err || e) throw err;
-        if (results.length > 0) {
-          res.send({
-            code: 200,
-            msg: '操作成功',
-            deptInfo: [
-              ...results
-            ],
-            groupInfo: [...r]
-          })
-        } else {
-          res.send({
-            code: 202,
-            msg: '操作失败',
-          })
-        }
-      })
 
+  const sql = `select *from depall`;
+  connect.query(sql, (err, results) => {
+    connect.query('select *from dept', (e, r) => {
+      if (err || e) throw err;
+      if (results.length > 0) {
+        res.send({
+          code: 200,
+          msg: '操作成功',
+          deptInfo: [
+            ...results
+          ],
+          groupInfo: [...r]
+        })
+      } else {
+        res.send({
+          code: 202,
+          msg: '操作失败',
+        })
+      }
     })
-  } else {
-    res.send({
-      code: 203,
-      msg: '身份过期请重新登录'
-    })
-  }
+
+  })
+
 })
 
 // 根据部门号查找部门下的全部团队
