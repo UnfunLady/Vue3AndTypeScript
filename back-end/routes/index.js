@@ -5,12 +5,21 @@ const os = require("os")
 const jwt = require('jsonwebtoken');
 const fs = require('fs')
 const path = require("path") // 处理路径的模块
+// 引入token相关util
+const { createToken, authToken } = require('../utils/index')
 //上传图片的模板
 var multer = require('multer');
 const { first, now } = require('lodash');
 const { TRUE } = require('sass');
 //生成的图片放入uploads文件夹下
 var upload = multer({ dest: 'uploads/' })
+// token秘钥
+// const secret = "UnfunLady"
+//  生成token方法
+// const createToken = username =>
+//   jwt.sign(username, secret, {
+//     expiresIn: 60 * 60 * 240 // 设置token的有效期 单位（秒）   
+//   });
 /* GET home page. */
 router.get('/', function (req, res, next) {
   res.render('index', { title: 'Express' });
@@ -23,9 +32,9 @@ router.post('/api/login', function (req, res, next) {
   connect.query(sql, (err, results) => {
     if (err) throw err;
     if (results.length > 0) {
-      const { nickname, avatar, token, username, level } = results[0];
-      // const secret = "woshizengyu"
-      // let token = jwt.sign({ username, password }, secret, { expiresIn: "10h" })
+      const { nickname, avatar, username, level } = results[0];
+      const token = createToken({ username });
+
       res.send({
         code: 200,
         msg: '账号密码验证成功!',
@@ -45,36 +54,39 @@ router.post('/api/login', function (req, res, next) {
       })
     }
   })
-
-
-
-
 })
 // 部门一系列信息
 // 获取全部部门信息
 router.get('/api/deptInfo', function (req, res, next) {
-  const sql = `select *from depall`;
-  connect.query(sql, (err, results) => {
-    connect.query('select *from dept', (e, r) => {
-      if (err || e) throw err;
-      if (results.length > 0) {
-        res.send({
-          code: 200,
-          msg: '操作成功',
-          deptInfo: [
-            ...results
-          ],
-          groupInfo: [...r]
-        })
-      } else {
-        res.send({
-          code: 202,
-          msg: '操作失败',
-        })
-      }
-    })
+  if (authToken(req.headers.token)) {
+    const sql = `select *from depall`;
+    connect.query(sql, (err, results) => {
+      connect.query('select *from dept', (e, r) => {
+        if (err || e) throw err;
+        if (results.length > 0) {
+          res.send({
+            code: 200,
+            msg: '操作成功',
+            deptInfo: [
+              ...results
+            ],
+            groupInfo: [...r]
+          })
+        } else {
+          res.send({
+            code: 202,
+            msg: '操作失败',
+          })
+        }
+      })
 
-  })
+    })
+  } else {
+    res.send({
+      code: 203,
+      msg: '身份过期请重新登录'
+    })
+  }
 })
 
 // 根据部门号查找部门下的全部团队

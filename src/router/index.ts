@@ -186,15 +186,18 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   // 获取用户信息
   const { user } = useStore()
-
+  // 如果路由需要认证的话
   if (to.meta.isAuth) {
+    // 先判断token如果不为空 则继续  后台node也会验证token是否过期
     if (user.getUserToken !== '' && user.userInfo.userList.isLogin === true) {
       next();
     } else {
+      // 没有token就跳到登录
       ElMessage.warning('请先登录!')
       next('/login')
     }
   } else {
+    // 如果登录了有token 不能再去登录界面
     if (user.getUserToken !== '' && user.userInfo.userList.isLogin === true) {
       if (to.path === '/login') {
         ElMessage.warning('您已经登录过了!')
