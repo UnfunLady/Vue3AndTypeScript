@@ -1,24 +1,11 @@
-# vuets
+# backdend是node的后台接口  sql是mysql的数据库 导入即可
 
-## Project setup
+## back-end新建终端
 ```
-npm install.
+npm start运行 默认端口3000
 ```
 
-### Compiles and hot-reloads for development
+### vuets新建终端
 ```
 npm run serve
 ```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
