@@ -3,14 +3,14 @@
 Vue3.x+typeScript+pinia状态管理
 ```
 
-## back-end是node的后台接口  
+## back-end是node的后台接口 (express框架) 
 ```
  全部接口在routes/index.js下
 ```
 
-## mysql时数据库  导入即可 
+## Mysql是数据库  导入即可 
 ```
-需要mysql8.0以上 因为8.0版本以上支持多个触发器
+需要Mysql版本8.0以上 因为8.0版本以上支持多个触发器
 ```
 
 ## 第一步：在cmd或终端运行项目 
