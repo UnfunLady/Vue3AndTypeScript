@@ -1,3 +1,7 @@
+## 项目运行环境 
+```
+Vue3.x+typeScript+pinia状态管理
+```
 
 ## back-end是node的后台接口  
 ```
@@ -19,7 +23,7 @@ npm install 安装依赖模块
 npm start 启动后台 默认端口3000
 ```
 
-##  第三步：main.js新建终端
+##  第三步：main.ts新建终端
 ```
 npm run serve 启动项目即可
 ```
