@@ -2,8 +2,9 @@
   <div class="common-layout">
     <el-container>
       <el-aside :width="isCollapse ? '60px' : '210px'">
+        <!-- :unique-opened="true" 是否只展示一个菜单栏 -->
         <el-menu :collapse="isCollapse" background-color="#476080" class="el-menu-vertical-demo"
-          :collapse-transition="true" :default-active="activeIndex" :unique-opened="true" text-color="#fff" router>
+          :collapse-transition="true" :default-active="activeIndex" text-color="#fff" router>
           <el-menu-item index="/main">
             <el-icon>
               <Menu />
@@ -33,7 +34,6 @@
 
         </el-menu>
       </el-aside>
-
       <el-container>
         <el-header height="50px">
           <el-row :gutter="24">
@@ -175,9 +175,12 @@ export default defineComponent({
 
     // 退出登录
     const userLogout = () => {
-      user.userOut()
-      ElMessage.success('退出登录成功!')
+
       router.push('/login')
+
+      ElMessage.success('退出登录成功!')
+      user.userOut()
+      router.go(0)
     }
     // 个人信息关闭
     const handleClose = () => {

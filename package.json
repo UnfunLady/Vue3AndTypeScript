@@ -18,8 +18,10 @@
     "pinia": "^2.0.17",
     "pinia-use-persist": "0.0.21",
     "vue": "^3.2.13",
+    "vue-animate-number": "^0.4.2",
     "vue-property-decorator": "^9.1.2",
-    "vue-router": "^4.0.10"
+    "vue-router": "^4.0.10",
+    "vue3-count-to": "^1.1.2"
   },
   "devDependencies": {
     "@types/nprogress": "^0.2.0",

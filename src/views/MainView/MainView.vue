@@ -10,6 +10,7 @@
 import { defineComponent, getCurrentInstance, onMounted, reactive } from 'vue'
 import { mainViewDataInit, oneCharts, twoCharts } from '@/types/main'
 import * as echarts from 'echarts';
+import axios from 'axios';
 
 export default defineComponent({
     setup() {
@@ -22,7 +23,6 @@ export default defineComponent({
             oneCharts(document.getElementById('one')!, oneRes)
             const twoRes = await API.main.getDeptDetailInfo();
             twoCharts(document.getElementById('two')!, twoRes)
-
         })
 
 

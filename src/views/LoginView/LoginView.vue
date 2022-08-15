@@ -24,6 +24,7 @@ import {
   toRefs,
   reactive,
   getCurrentInstance,
+  onMounted,
 } from "vue";
 // 导入登录form表单
 // import { hello } from "@/types/login";
@@ -37,6 +38,7 @@ import useStore from '@/store/index'
 export default defineComponent({
   name: "Login",
   setup() {
+  
     // 使用pinia
     const { user } = useStore();
     // 通过类的示例实现
@@ -74,7 +76,7 @@ export default defineComponent({
             background: "rgba(0,0,0,0.5)",
           });
           if (res.code == 200) {
-            ElMessage.success("账号验证成功~");
+            ElMessage.success("登陆成功~");
             // 关闭遮挡层
             loading.close();
             //存储token到localstorage

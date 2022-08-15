@@ -13,9 +13,10 @@
             </el-table-column>
             <el-table-column label="操作" align="center">
                 <template #default="{ row }">
-                    <el-button type="info" size="small" icon="Delete" @click="delGroup(row)">解散小组
+                    <el-button style="height:30px" type="info" size="small" icon="Delete" @click="delGroup(row)">解散小组
                     </el-button>
-                    <el-button color="#DE4E49" size="small" icon="Delete" @click="delDept(row)">解散部门</el-button>
+                    <el-button style="height:30px" color="#DE4E49" size="small" icon="Delete" @click="delDept(row)">解散部门
+                    </el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -92,12 +93,7 @@ const delDept = (row: any) => {
 }
 
 </script>
-<style lang='scss' scoped>
-.el-button {
-    color: white;
-    height: 30px;
-}
-
+<style lang='scss' >
 .dButton:hover {
     background-color: rgba(255, 0, 0, 0.871) !important;
 }

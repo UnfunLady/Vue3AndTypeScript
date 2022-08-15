@@ -123,9 +123,8 @@ export default defineComponent({
     }
 });
 </script>
-<style lang='scss' scope>
+<style lang='scss' scoped>
 .el-table .el-button {
-
     height: 30px;
     font-size: 12px;
 }

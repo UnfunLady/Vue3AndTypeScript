@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 // import {createRouter,createWebHistory,routeRecordRaw} from 'vue-router
 import useStore from '@/store'
 import { ElMessage } from 'element-plus'
+import { watch } from 'vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -77,9 +78,6 @@ const routes: Array<RouteRecordRaw> = [
                   isAuth: true
                 },
               },
-
-
-
 
             ]
           }
@@ -162,6 +160,40 @@ const routes: Array<RouteRecordRaw> = [
           isAuth: true
         }
       },
+      {
+        path: '/evilControl',
+        name: 'evilControl',
+        component: () => import('@/views/EvilControl/index.vue'),
+        redirect: '/chinaInfo',
+        meta: {
+          isShow: true,
+          name: '疫情防控',
+          isAuth: true,
+          icon: 'FirstAidKit'
+        },
+        children: [
+          {
+            path: '/chinaInfo',
+            name: 'chinaInfo',
+            component: () => import('@/views/EvilControl/chinaInfo/chinaInfo.vue'),
+            meta: {
+              name: '全国疫情信息',
+              isAuth: true,
+              icon: 'Location'
+            }
+          },
+          {
+            path: '/companyInfo',
+            name: 'companyInfo',
+            component: () => import('@/views/EvilControl/companyInfo/companyInfo.vue'),
+            meta: {
+              name: '公司防控信息',
+              isAuth: true,
+              icon: 'OfficeBuilding'
+            }
+          },
+        ]
+      }
     ]
   },
   {
@@ -186,6 +218,52 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   // 获取用户信息
   const { user } = useStore()
+  // 生成背景
+  watch(user, (newValue, oldValue) => {
+    // 如果有用户名
+    if (user.userInfo.userList.userInfo['nickname'] != undefined) {
+      // 根据用户名字和账号绘制背景图
+      // 作者：https://www.cnblogs.com/lulu-beibei/p/15918996.html
+      var drawAndShareImage = function (text: string, text1: string, callback) {
+        var canvas = document.createElement('canvas')
+        canvas.width = 570
+        canvas.height = 200
+        var context = canvas.getContext('2d')
+        context.rect(0, 0, canvas.width, canvas.height)
+        var h = null
+        var w = null
+        for (let i = 0; i < 2; i++) {
+          if (i === 0) {
+            w = 0
+            h = 70
+          } else if (i === 1) {
+            w = 250
+            h = 120
+          }
+          context.rotate((-8 * Math.PI) / 180) // 水印初始偏转角度
+          context.font = '14px microsoft yahei'
+          context.fillStyle = 'rgba(0, 0, 0, .15)'
+          var mainText = text + '(' + text1 + ')'
+          context.fillText(mainText, w, h)
+          context.rotate((8 * Math.PI) / 180) // 把水印偏转角度调整为原来的，不然他会一直转
+        }
+        callback(canvas.toDataURL('image/png'))
+      }
+      var div1 = document.createElement('div')
+      div1.className = 'needNameDw'
+      document.getElementById('app').appendChild(div1)
+      const img = document.getElementsByClassName('needNameDw')[0]
+      drawAndShareImage(user.userInfo.userList.userInfo['nickname'], user.userInfo.userList.userInfo['username'], (url) => {
+        // 需要覆盖所有dom 加上z-index: 9999;
+        img.setAttribute('style', 'background:url("' + url + '");position: absolute;top: 0;left: 0;width: 100%;height: 100%;pointer-events: none;')
+      })
+    } else {
+
+    }
+
+  }, { immediate: true, deep: true })
+
+  document.title = to.meta.name as string || '具体信息'
   // 如果路由需要认证的话
   if (to.meta.isAuth) {
     // 先判断token如果不为空 则继续  后台node也会验证token是否过期
@@ -193,7 +271,7 @@ router.beforeEach((to, from, next) => {
       next();
     } else {
       // 没有token就跳到登录
-      ElMessage.warning('请先登录!')
+      ElMessage.warning('请您登录账号!')
       next('/login')
     }
   } else {

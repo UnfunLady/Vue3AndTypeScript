@@ -9,6 +9,8 @@ import Header from '@/components/HeaderView/HeaderView.vue'
 import Pagination from '@/components/Pagination/PaginationView.vue'
 import { createPinia } from 'pinia'
 import { usePersist } from 'pinia-use-persist'
+// 动态数字
+import { CountTo } from 'vue3-count-to';
 // 创建pinia对象
 const pinia = createPinia();
 // 使用persist
@@ -20,6 +22,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 app.component('Header', Header)
 app.component('Pagination', Pagination)
+app.component('count-to', CountTo)
 app.config.globalProperties.$API = api
 app.use(router).use(pinia).use(ElementPlus).mount('#app')
 

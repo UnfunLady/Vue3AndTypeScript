@@ -4,6 +4,11 @@
 </template>
 
 <script lang="ts" setup>
+import { watch } from 'vue-demi';
+import useStore from './store';
+const { user } = useStore();
+
+
 </script>
 
 <style lang="scss">

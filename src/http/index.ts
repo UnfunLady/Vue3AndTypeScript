@@ -33,8 +33,6 @@ request.interceptors.request.use(config => {
 })
 
 request.interceptors.response.use(res => {
-
-
     const code: number = res.data.code
     // 如果身份过期
     if (code === 203) {
@@ -55,10 +53,6 @@ request.interceptors.response.use(res => {
             return res.data
         }
     }
-
-
-
-
 }, err => {
     ElMessage({
         message: '请求失败!' + err

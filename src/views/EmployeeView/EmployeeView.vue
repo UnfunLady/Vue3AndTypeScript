@@ -28,7 +28,7 @@
                 </el-form-item>
             </el-form>
         </el-card>
-        <el-card style="margin:20px" v-if="employeForm.employeInfo.length > 0">
+        <el-card style="margin:20px;" v-if="employeForm.employeInfo.length > 0">
             <el-button type="primary" icon="Plus" size="large" style="margin-bottom:30px" @click="addEmploye"
                 :disabled="employeForm.employeInfo.length > 0 ? false : true">增加员工
             </el-button>
@@ -464,7 +464,7 @@ export default defineComponent({
 })
 </script>
 
-<style scope>
+<style scoped>
 .pagenation {
     text-align: center;
 }
