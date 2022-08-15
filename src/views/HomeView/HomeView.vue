@@ -333,7 +333,7 @@ h2 {
     height: 100%;
 
     .el-sub-menu .el-menu-item {
-      background-color: #273f5ba4;
+      background-color: #24466ea4;
 
     }
 
