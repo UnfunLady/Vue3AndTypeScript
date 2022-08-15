@@ -1,4 +1,3 @@
-# backdend是node的后台接口  sql是mysql的数据库 导入即可
 
 ## back-end新建终端
 ```
