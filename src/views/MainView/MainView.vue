@@ -2,8 +2,7 @@
     <div class="father">
         <div id="one" class="one"></div>
         <div id="two" class="two"></div>
-        <div class="three"></div>
-        <div class="four"></div>
+
     </div>
 </template>
 
@@ -44,7 +43,7 @@ export default defineComponent({
 .one,
 .two {
     width: 80vh;
-    height: 50vh;
+    height: 60vh;
 
     margin: 30px 30px 30px 30px;
 

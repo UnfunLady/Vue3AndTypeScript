@@ -10,7 +10,8 @@ var usersRouter = require('./routes/users');
 var app = express();
 const { authToken } = require('./utils/index.js')
 const verify = (req, res, next) => {
-  if (req.path == '/api/login') {
+  //  忽略图片请求 req.path.substring(1, req.path.lastIndexOf('/')) == 'images'
+  if (req.path == '/api/login' || req.path.substring(1, req.path.lastIndexOf('/')) == 'images') {
     next();
   } else {
     if (!req.headers.token) {

@@ -2,7 +2,7 @@
   <div class="common-layout">
     <el-container>
       <el-aside :width="isCollapse ? '60px' : '210px'">
-        <el-menu :collapse="isCollapse" background-color="#304156" class="el-menu-vertical-demo"
+        <el-menu :collapse="isCollapse" background-color="#476080" class="el-menu-vertical-demo"
           :collapse-transition="true" :default-active="activeIndex" :unique-opened="true" text-color="#fff" router>
           <el-menu-item index="/main">
             <el-icon>
@@ -110,7 +110,7 @@
 
   <!-- 修改密码 -->
   <el-dialog v-model="editPassword" draggable title="修改密码" width="30%" :before-close="editClose">
-    <el-form :model="editPasswordForm" :rules="rules" ref="editPasswordRef" label-width="auto" style="width:80%">
+    <el-form :model="editPasswordForm" :rules="rules" ref="editPasswordRef" label-width="auto" style="width:90%">
       <el-form-item label="当前密码：" prop="nowPassword">
         <el-input type="text" v-model="editPasswordForm.nowPassword" size="large" placeholder="请输入原来的密码"></el-input>
       </el-form-item>
@@ -333,12 +333,12 @@ h2 {
     height: 100%;
 
     .el-sub-menu .el-menu-item {
-      background-color: #1f2d3d;
+      background-color: #273f5ba4;
 
     }
 
     .el-menu-item:hover {
-      background-color: #001528;
+      background-color: #93969920;
     }
   }
 }
@@ -367,5 +367,9 @@ h2 {
 .el-breadcrumb {
   font-size: 14px !important;
 
+}
+
+.el-menu-item.is-active {
+  color: #92959b
 }
 </style>
