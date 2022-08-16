@@ -192,10 +192,22 @@ const routes: Array<RouteRecordRaw> = [
               icon: 'OfficeBuilding'
             }
           },
+
         ]
-      }
+      },
+      {
+        // 内嵌vue文档
+        path: '/learnVue',
+        name: 'learnVue',
+        component: () => import('@/views/LearnVue/LearnVue.vue'),
+        meta: {
+          name: 'vue中文文档',
+          isAuth: true
+        }
+      },
     ]
   },
+
   {
     path: '/about',
     name: 'about',

@@ -5,6 +5,15 @@ type EChartsOption = echarts.EChartsOption
 interface chinaInfo {
     title: string,
     allInfo: Array<Object>,
+    evilData: {},
+    updateTime: number | string,
+    echarts: {
+        xData: Array<string | number>,
+        yData: {
+            countData: Array<string | number>,
+            moreData: Array<string | number>
+        }
+    }
 }
 
 export class chinaInfoInit {
@@ -40,6 +49,7 @@ export class chinaInfoInit {
                 title: '累计死亡',
                 color: '#333333',
                 data: []
+
             },
             {
                 id: 5,
@@ -47,108 +57,142 @@ export class chinaInfoInit {
                 color: '#34aa70',
                 data: []
             },
-        ]
+        ],
+        evilData: {},
+        updateTime: 0,
+        echarts: {
+            xData: [],
+            yData: {
+                moreData: [],
+                countData: []
+            }
+        }
     }
 }
 
-
-export const getAllEvilInfo = () => {
-    return new Promise(resolve => {
-        axios({
-            url: 'https://c.m.163.com/ug/api/wuhan/app/data/list-total'
-        }).then((res) => {
-            resolve(res)
-        })
-    })
+// 获取疫情数据
+export const getAllEvilInfo = (API: any) => {
+    return API.evilControl.reqGetEvilInfo();
 }
-
-export const chart = (dom: HTMLElement) => {
+// echarts
+export const chart = (dom: HTMLElement, data: any) => {
     var myChart = echarts.init(dom);
     var option: EChartsOption;
-    const colors = ['#5470C6', '#91CC75', '#EE6666'];
-
     option = {
         tooltip: {
             trigger: 'axis',
             axisPointer: {
-                type: 'shadow'
+                type: 'cross',
+                crossStyle: {
+                    color: '#7F7D80',
+                  
+                },
+                label:{
+                    precision:0
+                }
+                
             }
         },
-        legend: {},
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
+        toolbox: {
+            feature: {
+                dataView: { show: true, readOnly: false },
+                magicType: { show: true, type: ['line', 'bar'] },
+                restore: { show: true },
+
+            }
+        },
+        legend: {
+            data: ['总数', '相较昨日']
         },
         xAxis: [
             {
                 type: 'category',
-                data: ['境外输入', '无症状感染者', '现有确诊', '累计确诊', '累计死亡', '累计治愈']
+                data: data.chinaInfo.echarts.xData,
+                axisPointer: {
+                    type: 'shadow'
+                },
             }
         ],
         yAxis: [
             {
-                type: 'value'
+                type: 'log',
+                name: '现存人数',
+
+                interval: 10000,
+                axisLabel: {
+                    formatter: '{value} 人'
+                }
+            },
+            {
+                type: 'log',
+                name: '相较昨日',
+                interval: 10000,
+
+                axisLabel: {
+                    formatter: '多{value} 人'
+                }
             }
         ],
         series: [
             {
-                name: '境外输入',
+                name: '总数',
                 type: 'bar',
-                emphasis: {
-                    focus: 'series'
+                barWidth: 55,
+                tooltip: {
+                    valueFormatter: function (value: number) {
+                        return value + '人';
+                    }
                 },
-                data: [11514, 11514, 11514, 11514, 11514, 11514]
-            },
-            {
-                name: '无症状感染者',
-                type: 'bar',
-
-                emphasis: {
-                    focus: 'series'
-                },
-                data: [11514, 11514, 11514, 11514, 11514, 11514]
-            },
-            {
-                name: '现有确诊',
-                type: 'bar',
-
-                emphasis: {
-                    focus: 'series'
-                },
-                data: [11514, 11514, 11514, 11514, 11514, 11514]
-            },
-            {
-                name: '累计确诊',
-                type: 'bar',
-
-                emphasis: {
-                    focus: 'series'
-                },
-                data: [11514, 11514, 11514, 11514, 11514, 11514]
-            },
-            {
-                name: '累计死亡',
-                type: 'bar',
-                data: [11514, 11514, 11514, 11514, 11514, 11514],
-                emphasis: {
-                    focus: 'series'
-                },
-
-            },
-            {
-                name: '累计治愈',
-                type: 'bar',
-                emphasis: {
-                    focus: 'series'
-                },
-                data: [11514, 11514, 11514, 11514, 11514, 11514]
+                data: data.chinaInfo.echarts.yData.countData
+                , itemStyle: { color: '#C7C7C7' }
             },
 
+            {
+                name: '相较昨日',
+                type: 'line',
+                yAxisIndex: 1,
+                lineStyle: {
+
+                    color: '#ffa352',
+                },
+                tooltip: {
+                    valueFormatter: function (value: number) {
+                        return '+' + value + '人';
+                    }
+                },
+                data: data.chinaInfo.echarts.yData.moreData
+            }
         ]
     };
 
     option && myChart.setOption(option);
 
+}
+// 全国疫情数据数字细节赋值
+export const numberInit = (data: any) => {
+    // 设计的有问题只能一个个赋值
+    data.chinaInfo.allInfo[0]['data'] = {
+        oneNumber: data.chinaInfo.evilData['suspectedCount'],
+        twoNumber: data.chinaInfo.evilData['suspectedIncr']
+    };
+    data.chinaInfo.allInfo[1]['data'] = {
+        oneNumber: data.chinaInfo.evilData['seriousCount'],
+        twoNumber: data.chinaInfo.evilData['seriousIncr']
+    };
+    data.chinaInfo.allInfo[2]['data'] = {
+        oneNumber: data.chinaInfo.evilData['currentConfirmedCount'],
+        twoNumber: data.chinaInfo.evilData['currentConfirmedIncr']
+    };
+    data.chinaInfo.allInfo[3]['data'] = {
+        oneNumber: data.chinaInfo.evilData['confirmedCount'],
+        twoNumber: data.chinaInfo.evilData['confirmedIncr']
+    };
+    data.chinaInfo.allInfo[4]['data'] = {
+        oneNumber: data.chinaInfo.evilData['deadCount'],
+        twoNumber: data.chinaInfo.evilData['deadIncr']
+    };
+    data.chinaInfo.allInfo[5]['data'] = {
+        oneNumber: data.chinaInfo.evilData['curedCount'],
+        twoNumber: data.chinaInfo.evilData['curedIncr']
+    };
 }

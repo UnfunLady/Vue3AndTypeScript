@@ -38,7 +38,7 @@ import useStore from '@/store/index'
 export default defineComponent({
   name: "Login",
   setup() {
-  
+
     // 使用pinia
     const { user } = useStore();
     // 通过类的示例实现

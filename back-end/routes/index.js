@@ -13,14 +13,6 @@ const { first, now } = require('lodash');
 const { TRUE } = require('sass');
 //生成的图片放入uploads文件夹下
 var upload = multer({ dest: 'uploads/' })
-// token秘钥
-// const secret = "UnfunLady"
-//  生成token方法
-// const createToken = username =>
-//   jwt.sign(username, secret, {
-//     expiresIn: 60 * 60 * 240 // 设置token的有效期 单位（秒）   
-//   });
-/* GET home page. */
 router.get('/', function (req, res, next) {
   res.render('index', { title: 'Express' });
 });
@@ -29,12 +21,13 @@ router.post('/api/login', function (req, res, next) {
   // 获取账号密码
   const { username, password } = req.body
   const sql = `select *from users where username='${username}' and password= '${password}'`
+  console.log(sql);
   connect.query(sql, (err, results) => {
+
     if (err) throw err;
     if (results.length > 0) {
       const { nickname, avatar, username, level } = results[0];
       const token = createToken({ username });
-
       res.send({
         code: 200,
         msg: '账号密码验证成功!',

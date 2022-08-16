@@ -11,11 +11,253 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 15/08/2022 09:36:12
+ Date: 16/08/2022 17:45:14
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for covidinfo
+-- ----------------------------
+DROP TABLE IF EXISTS `covidinfo`;
+CREATE TABLE `covidinfo`  (
+  `depallid` int(0) NULL DEFAULT NULL,
+  `deptid` int(0) NOT NULL,
+  `employid` int(0) NOT NULL,
+  `fisrtInoculation` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'false' COMMENT '第一针接种情况',
+  `secondInoculation` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'false' COMMENT '第二针',
+  `threeInoculation` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'false' COMMENT '第三针',
+  PRIMARY KEY (`employid`, `deptid`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of covidinfo
+-- ----------------------------
+INSERT INTO `covidinfo` VALUES (1, 1, 1, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 1, 2, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (7, 17, 2, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 1, 3, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (16, 76, 3, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 1, 4, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (16, 76, 4, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 1, 5, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 1, 6, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 1, 7, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (7, 17, 7, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (16, 76, 7, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 1, 8, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 1, 10, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 1, 11, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (16, 76, 11, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 1, 12, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 1, 14, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 1, 16, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 1, 17, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 1, 18, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 1, 19, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 2, 21, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 2, 22, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 2, 23, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 2, 24, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 2, 25, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 2, 26, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 2, 27, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 2, 28, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 2, 29, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 2, 30, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 2, 31, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 2, 32, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 2, 33, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (16, 76, 33, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 2, 34, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 2, 35, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 2, 36, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 2, 37, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 2, 38, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (16, 76, 38, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 2, 39, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 2, 40, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 3, 41, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 3, 42, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 3, 43, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 3, 44, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 3, 45, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 3, 46, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 3, 47, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 3, 48, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 3, 49, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 3, 50, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 3, 51, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 3, 52, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 3, 53, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 3, 54, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 3, 55, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 3, 56, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 3, 57, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 3, 58, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 3, 59, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 3, 60, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 4, 61, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 4, 62, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 4, 63, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 4, 64, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 4, 65, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 4, 66, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 4, 67, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 4, 68, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 4, 69, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 4, 70, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 4, 71, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 4, 72, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 4, 73, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 4, 74, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 4, 75, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 4, 76, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 4, 77, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 4, 78, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 4, 79, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (1, 4, 80, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 5, 81, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 5, 82, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 5, 83, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 5, 84, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 5, 85, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 5, 86, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 5, 87, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 5, 88, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 5, 89, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 5, 90, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 5, 91, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 5, 92, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 5, 93, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 5, 94, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 5, 95, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 5, 96, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 5, 97, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 5, 98, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 5, 99, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 5, 100, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 6, 101, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 6, 102, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 6, 103, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 6, 104, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 6, 105, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 6, 106, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 6, 107, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 6, 108, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 6, 109, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 6, 110, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 7, 111, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 7, 112, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 7, 113, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 7, 114, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 7, 115, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 7, 116, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 7, 117, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 7, 118, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 7, 119, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (2, 7, 120, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (3, 8, 121, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (3, 8, 122, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (3, 8, 123, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (3, 8, 124, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (3, 8, 125, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (3, 8, 126, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (3, 8, 127, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (3, 8, 128, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (3, 8, 129, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (3, 8, 130, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (3, 9, 131, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (3, 9, 132, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (3, 9, 133, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (3, 9, 134, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (3, 9, 135, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (3, 9, 136, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (3, 9, 137, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (3, 9, 138, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (3, 9, 139, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (3, 9, 140, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (4, 10, 141, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (4, 10, 142, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (4, 10, 143, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (4, 10, 144, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (4, 10, 145, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (4, 10, 146, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (4, 10, 147, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (4, 10, 148, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (4, 10, 149, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (4, 10, 150, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (4, 11, 151, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (4, 11, 152, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (4, 11, 153, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (4, 11, 154, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (4, 11, 155, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (4, 11, 156, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (4, 11, 157, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (4, 11, 158, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (4, 11, 159, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (4, 11, 160, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (4, 12, 161, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (4, 12, 162, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (4, 12, 163, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (4, 12, 164, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (4, 12, 165, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (4, 12, 166, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (4, 12, 167, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (4, 12, 168, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (4, 12, 169, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (4, 12, 170, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (5, 13, 171, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (5, 13, 172, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (5, 13, 173, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (5, 13, 174, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (5, 13, 175, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (5, 13, 176, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (5, 13, 177, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (5, 13, 178, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (5, 13, 179, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (5, 13, 180, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (5, 14, 181, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (5, 14, 182, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (5, 14, 183, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (5, 14, 184, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (5, 14, 185, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (5, 14, 186, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (5, 14, 187, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (5, 14, 188, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (5, 14, 189, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (5, 14, 190, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (5, 15, 191, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (5, 15, 192, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (5, 15, 193, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (5, 15, 194, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (5, 15, 195, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (5, 15, 196, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (5, 15, 197, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (5, 15, 198, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (5, 15, 199, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (5, 15, 200, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (6, 16, 201, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (6, 16, 202, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (6, 16, 203, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (6, 16, 204, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (6, 16, 205, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (6, 16, 206, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (6, 16, 207, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (6, 16, 208, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (6, 16, 209, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (6, 16, 210, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (7, 17, 211, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (7, 17, 212, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (7, 17, 213, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (7, 17, 214, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (7, 17, 215, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (7, 17, 216, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (7, 17, 217, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (7, 17, 218, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (7, 17, 219, 'false', 'false', 'false');
+INSERT INTO `covidinfo` VALUES (7, 17, 220, 'false', 'false', 'false');
 
 -- ----------------------------
 -- Table structure for depall
@@ -28,20 +270,21 @@ CREATE TABLE `depall`  (
   `avatar` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `count` int(0) NOT NULL DEFAULT 0,
   `groupCount` int(0) NOT NULL DEFAULT 0,
+  `isAllCovid` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'false',
   PRIMARY KEY (`dno`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of depall
 -- ----------------------------
-INSERT INTO `depall` VALUES (1, '爬虫团队', '参与分布式爬虫和数据采集系统的架构设计和开发,负责大规模文本、图像数据的抓取、抽取，去重、分类，垃圾过滤，质量识别等工作', 'https://img0.baidu.com/it/u=3104250705,162290846&fm=253&fmt=auto&app=138&f=JPG', 76, 4);
-INSERT INTO `depall` VALUES (2, '后端团队', '设计开发以及测试并且维护后端的各个子系统，负责线上服务器运行期间的安全以及稳定性，负责相关后台服务的工发工作', '\r\nhttps://mms2.baidu.com/it/u=1219526164,3946276492&fm=253&app=138&f=JPEG', 40, 3);
-INSERT INTO `depall` VALUES (3, 'UI团队', '负责软件界面的美术设计、创意工作和制作工作，根据各种相关软件的用户群，提出构思新颖、有高度吸引力的创意设计', 'https://img1.baidu.com/it/u=3213166844,1927952924&fm=253&fmt=auto&app=138&f=PNG', 20, 2);
-INSERT INTO `depall` VALUES (4, '前端团队', '配合UI设计师实现预期的视觉交互效果，定期的更新和优化产品，保持产品的生命力和可用性，配合后端工程师完成相关应用的开发工作', 'https://img2.baidu.com/it/u=2213282682,62301055&fm=253&fmt=auto&app=138&f=JPEG', 30, 3);
-INSERT INTO `depall` VALUES (5, '运维团队', '设计并开发高效的监控平台和告警平台，以可控的方式，尽可能高效的完成产品功能的迭代的变更工作', 'https://img0.baidu.com/it/u=3231418332,3200306261&fm=253&fmt=auto&app=138&f=JPEG', 30, 3);
-INSERT INTO `depall` VALUES (6, '经营团队', '以可控的方式，尽可能高效的完成产品功能的迭代的变更工作，搞好市场调查与预测，选定产品发展方向，制定长期发展规划', 'https://img1.baidu.com/it/u=312885407,2370214083&fm=253&fmt=auto&app=138&f=JPEG', 10, 1);
-INSERT INTO `depall` VALUES (7, '行政团队', '负责公司全体员工的后勤保障工作，负责接待来宾（比如：政府部门、职能部门人员），接听或转接外部电话，负责公司员工的考勤管理', 'https://img0.baidu.com/it/u=3450002477,2924136512&fm=253&fmt=auto&app=138&f=PNG', 12, 1);
-INSERT INTO `depall` VALUES (16, '测试团队', '在规定的条件下对程序进行操作，以发现程序错误，衡量软件质量，并对其是否能满足设计要求进行评估', 'http://127.0.0.1:3000/images/1660026076047.jpg', 5, 1);
+INSERT INTO `depall` VALUES (1, '爬虫团队', '参与分布式爬虫和数据采集系统的架构设计和开发,负责大规模文本、图像数据的抓取、抽取，去重、分类，垃圾过滤，质量识别等工作', 'https://img0.baidu.com/it/u=3104250705,162290846&fm=253&fmt=auto&app=138&f=JPG', 76, 4, 'false');
+INSERT INTO `depall` VALUES (2, '后端团队', '设计开发以及测试并且维护后端的各个子系统，负责线上服务器运行期间的安全以及稳定性，负责相关后台服务的工发工作', '\r\nhttps://mms2.baidu.com/it/u=1219526164,3946276492&fm=253&app=138&f=JPEG', 40, 3, 'false');
+INSERT INTO `depall` VALUES (3, 'UI团队', '负责软件界面的美术设计、创意工作和制作工作，根据各种相关软件的用户群，提出构思新颖、有高度吸引力的创意设计', 'https://img1.baidu.com/it/u=3213166844,1927952924&fm=253&fmt=auto&app=138&f=PNG', 20, 2, 'false');
+INSERT INTO `depall` VALUES (4, '前端团队', '配合UI设计师实现预期的视觉交互效果，定期的更新和优化产品，保持产品的生命力和可用性，配合后端工程师完成相关应用的开发工作', 'https://img2.baidu.com/it/u=2213282682,62301055&fm=253&fmt=auto&app=138&f=JPEG', 30, 3, 'false');
+INSERT INTO `depall` VALUES (5, '运维团队', '设计并开发高效的监控平台和告警平台，以可控的方式，尽可能高效的完成产品功能的迭代的变更工作', 'https://img0.baidu.com/it/u=3231418332,3200306261&fm=253&fmt=auto&app=138&f=JPEG', 30, 3, 'false');
+INSERT INTO `depall` VALUES (6, '经营团队', '以可控的方式，尽可能高效的完成产品功能的迭代的变更工作，搞好市场调查与预测，选定产品发展方向，制定长期发展规划', 'https://img1.baidu.com/it/u=312885407,2370214083&fm=253&fmt=auto&app=138&f=JPEG', 10, 1, 'false');
+INSERT INTO `depall` VALUES (7, '行政团队', '负责公司全体员工的后勤保障工作，负责接待来宾（比如：政府部门、职能部门人员），接听或转接外部电话，负责公司员工的考勤管理', 'https://img0.baidu.com/it/u=3450002477,2924136512&fm=253&fmt=auto&app=138&f=PNG', 12, 1, 'false');
+INSERT INTO `depall` VALUES (16, '测试团队', '在规定的条件下对程序进行操作，以发现程序错误，衡量软件质量，并对其是否能满足设计要求进行评估', 'http://127.0.0.1:3000/images/1660026076047.jpg', 6, 1, 'false');
 
 -- ----------------------------
 -- Table structure for dept
@@ -53,6 +296,7 @@ CREATE TABLE `dept`  (
   `deptname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `location` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `count` int(0) NOT NULL DEFAULT 0,
+  `countCovid` int(0) NOT NULL DEFAULT 0 COMMENT '三针接种人数',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_dno`(`deptno`) USING BTREE,
   CONSTRAINT `fk_dno` FOREIGN KEY (`deptno`) REFERENCES `depall` (`dno`) ON DELETE RESTRICT ON UPDATE RESTRICT
@@ -61,24 +305,24 @@ CREATE TABLE `dept`  (
 -- ----------------------------
 -- Records of dept
 -- ----------------------------
-INSERT INTO `dept` VALUES (1, 1, '爬虫团队1组', '广州', 16);
-INSERT INTO `dept` VALUES (2, 1, '爬虫团队2组', '深圳', 20);
-INSERT INTO `dept` VALUES (3, 1, '爬虫团队3组', '广州', 20);
-INSERT INTO `dept` VALUES (4, 1, '爬虫团队4组', '长沙', 20);
-INSERT INTO `dept` VALUES (5, 2, '后端团队1组', '广州', 20);
-INSERT INTO `dept` VALUES (6, 2, '后端团队2组', '深圳', 10);
-INSERT INTO `dept` VALUES (7, 2, '后端团队3组', '北京', 10);
-INSERT INTO `dept` VALUES (8, 3, 'UI团队1组', '北京', 10);
-INSERT INTO `dept` VALUES (9, 3, 'UI团队2组', '深圳', 10);
-INSERT INTO `dept` VALUES (10, 4, '前端团队1组', '广州', 10);
-INSERT INTO `dept` VALUES (11, 4, '前端团队2组', '广州', 10);
-INSERT INTO `dept` VALUES (12, 4, '前端团队3组', '北京', 10);
-INSERT INTO `dept` VALUES (13, 5, '运维团队1组', '广州', 10);
-INSERT INTO `dept` VALUES (14, 5, '运维团队2组', '广州', 10);
-INSERT INTO `dept` VALUES (15, 5, '运维团队3组', '深圳', 10);
-INSERT INTO `dept` VALUES (16, 6, '经营团队1组', '广州', 10);
-INSERT INTO `dept` VALUES (17, 7, '行政团队1组', '广州', 12);
-INSERT INTO `dept` VALUES (76, 16, '测试团队1组', '上海', 5);
+INSERT INTO `dept` VALUES (1, 1, '爬虫团队1组', '广州', 16, 0);
+INSERT INTO `dept` VALUES (2, 1, '爬虫团队2组', '深圳', 20, 0);
+INSERT INTO `dept` VALUES (3, 1, '爬虫团队3组', '广州', 20, 0);
+INSERT INTO `dept` VALUES (4, 1, '爬虫团队4组', '长沙', 20, 0);
+INSERT INTO `dept` VALUES (5, 2, '后端团队1组', '广州', 20, 0);
+INSERT INTO `dept` VALUES (6, 2, '后端团队2组', '深圳', 10, 0);
+INSERT INTO `dept` VALUES (7, 2, '后端团队3组', '北京', 10, 0);
+INSERT INTO `dept` VALUES (8, 3, 'UI团队1组', '北京', 10, 0);
+INSERT INTO `dept` VALUES (9, 3, 'UI团队2组', '深圳', 10, 0);
+INSERT INTO `dept` VALUES (10, 4, '前端团队1组', '广州', 10, 0);
+INSERT INTO `dept` VALUES (11, 4, '前端团队2组', '广州', 10, 0);
+INSERT INTO `dept` VALUES (12, 4, '前端团队3组', '北京', 10, 0);
+INSERT INTO `dept` VALUES (13, 5, '运维团队1组', '广州', 10, 0);
+INSERT INTO `dept` VALUES (14, 5, '运维团队2组', '广州', 10, 0);
+INSERT INTO `dept` VALUES (15, 5, '运维团队3组', '深圳', 10, 0);
+INSERT INTO `dept` VALUES (16, 6, '经营团队1组', '广州', 10, 0);
+INSERT INTO `dept` VALUES (17, 7, '行政团队1组', '广州', 12, 0);
+INSERT INTO `dept` VALUES (76, 16, '测试团队1组', '上海', 6, 0);
 
 -- ----------------------------
 -- Table structure for employee
@@ -100,6 +344,7 @@ CREATE TABLE `employee`  (
   PRIMARY KEY (`employno`, `deptno`) USING BTREE,
   INDEX `deptno`(`deptno`) USING BTREE,
   INDEX `employname`(`employname`) USING BTREE,
+  INDEX `employno`(`employno`) USING BTREE,
   CONSTRAINT `fk_deptno` FOREIGN KEY (`deptno`) REFERENCES `dept` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 222 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
@@ -110,6 +355,7 @@ INSERT INTO `employee` VALUES (1, 1, '鲁潜22', '21', '男', '44162320011015875
 INSERT INTO `employee` VALUES (1, 2, '邵金鑫', '21', '男', '110101200106072592', '18968451285', '2022-02-12', '	.zs@yahoo.com', '北京市北京市辖区东城区', '3800', 'true');
 INSERT INTO `employee` VALUES (17, 2, '邵金鑫', '21', '男', '110101200106072592', '18968451285', '2022-02-12', '123@qq.com', '广东省佛山市', '3800', 'true');
 INSERT INTO `employee` VALUES (1, 3, '陈昊强', '28', '男', '	110101199503072072', '	4706-51611314', '2022-02-12', '	_56@gmail.com', '北京市北京市辖区东城区', '8000', 'true');
+INSERT INTO `employee` VALUES (76, 3, '韦苑博1', '28', '男', '440106199003077115', '3141-91971190', '2022-02-12', '	94@gmail.com', '广东省广州市天河区', '3500', 'true');
 INSERT INTO `employee` VALUES (1, 4, '潘 琪', '23', '女', '110101199903075088', '8667-21583259', '2022-02-12', '24@yahoo.com', '河南省三门峡市', '3200', 'true');
 INSERT INTO `employee` VALUES (76, 4, '潘 琪', '23', '女', '110101199903075088', '8667-21583259', '2022-02-12', '24@yahoo.com', '河南省三门峡市', '3200', 'true');
 INSERT INTO `employee` VALUES (1, 5, '洪弘文', '20', '男', '	310101200203072479', '	3461-57848206', '2022-02-12', '	91@hotmail.com', '上海市上海市市辖区黄浦区', '5000', 'true');
@@ -606,15 +852,16 @@ INSERT INTO `employesalarydetail` VALUES (17, 220, '李四1', 'true', 'true', 't
 INSERT INTO `employesalarydetail` VALUES (1, 1, '鲁潜22', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
 INSERT INTO `employesalarydetail` VALUES (17, 215, '洪弘文1', 'true', 'true', 'true', 'true', 'true', 100, 5000, 'true');
 INSERT INTO `employesalarydetail` VALUES (16, 210, '严耀杰1', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
-INSERT INTO `employesalarydetail` VALUES (17, 2, '邵金鑫', 'true', 'true', 'true', 'true', 'true', 100, 3800, 'true');
-INSERT INTO `employesalarydetail` VALUES (17, 7, '卢文昊', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
+INSERT INTO `employesalarydetail` VALUES (1, 2, '邵金鑫', 'true', 'true', 'true', 'true', 'true', 100, 3800, 'true');
+INSERT INTO `employesalarydetail` VALUES (1, 7, '卢文昊', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
 INSERT INTO `employesalarydetail` VALUES (1, 10, '严耀杰', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
-INSERT INTO `employesalarydetail` VALUES (17, 2, '邵金鑫', 'true', 'true', 'true', 'true', 'true', 100, 3800, 'true');
-INSERT INTO `employesalarydetail` VALUES (17, 7, '卢文昊', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
-INSERT INTO `employesalarydetail` VALUES (76, 4, '潘 琪', 'true', 'true', 'true', 'true', 'true', 100, 3200, 'true');
-INSERT INTO `employesalarydetail` VALUES (76, 7, '卢文昊', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
-INSERT INTO `employesalarydetail` VALUES (76, 11, '鲁潜1', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
+INSERT INTO `employesalarydetail` VALUES (1, 2, '邵金鑫', 'true', 'true', 'true', 'true', 'true', 100, 3800, 'true');
+INSERT INTO `employesalarydetail` VALUES (1, 7, '卢文昊', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
+INSERT INTO `employesalarydetail` VALUES (1, 4, '潘 琪', 'true', 'true', 'true', 'true', 'true', 100, 3200, 'true');
+INSERT INTO `employesalarydetail` VALUES (1, 7, '卢文昊', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
+INSERT INTO `employesalarydetail` VALUES (1, 11, '鲁潜1', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
 INSERT INTO `employesalarydetail` VALUES (76, 33, '陈昊1', 'true', 'true', 'true', 'true', 'true', 100, 8000, 'true');
+INSERT INTO `employesalarydetail` VALUES (76, 3, '韦苑博1', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
 INSERT INTO `employesalarydetail` VALUES (76, 38, '韦苑博1', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
 
 -- ----------------------------
@@ -657,32 +904,39 @@ INSERT INTO `users` VALUES ('admin', '12345', '0', '1', 'https://himg.bdimg.com/
 INSERT INTO `users` VALUES ('hello', 'world', '0', '0', 'https://himg.bdimg.com/sys/portrait/item/public.1.9d62a83f.ak8wyGYgvIRgx1ZEi2Lv4A.jpg', 'Luyuxi', '');
 
 -- ----------------------------
--- Triggers structure for table dept
+-- Triggers structure for table covidinfo
 -- ----------------------------
-DROP TRIGGER IF EXISTS `salary`;
+DROP TRIGGER IF EXISTS `add_count`;
 delimiter ;;
-CREATE TRIGGER `salary` AFTER INSERT ON `dept` FOR EACH ROW BEGIN
+CREATE TRIGGER `add_count` AFTER INSERT ON `covidinfo` FOR EACH ROW begin
+-- 接种三针疫苗情况
+DECLARE covidSuccessCount int(255);
+-- 获取三针都是true的人数更新到 小组表
+set covidSuccessCount=(SELECT count(*) from covidinfo  WHERE (deptid=new.deptid AND fisrtInoculation='true' AND secondInoculation='true' AND threeInoculation='true'));
+-- 更新
+update dept set countCovid=covidSuccessCount where id=new.deptid;
 
-INSERT INTO `vueandts`.`employesalary`(`deptno`, `deptid`) VALUES (new.deptno, new.id);
-END
+
+end
 ;;
 delimiter ;
 
 -- ----------------------------
--- Triggers structure for table dept
+-- Triggers structure for table covidinfo
 -- ----------------------------
-DROP TRIGGER IF EXISTS `dpall`;
+DROP TRIGGER IF EXISTS `update_count`;
 delimiter ;;
-CREATE TRIGGER `dpall` AFTER UPDATE ON `dept` FOR EACH ROW BEGIN
-DECLARE dpno int(255);
-DECLARE allCount int(255);
--- 总人数修改时 修改部门人数
-set dpno=(select deptno from dept WHERE dept.id=new.id);
-set allCount=(select  sum(dept.count) from dept where dept.deptno=dpno);
-UPDATE depall SET count=allCount WHERE dno=dpno;
--- 部门团队人数修改
-update depall set groupCount=(select count(*) from dept where deptno=new.deptno) WHERE dno=new.deptno;
-END
+CREATE TRIGGER `update_count` AFTER UPDATE ON `covidinfo` FOR EACH ROW begin
+-- 接种三针疫苗情况
+DECLARE covidSuccessCount int(255);
+-- 获取三针都是true的人数更新到 小组表
+set covidSuccessCount=(SELECT count(*) from covidinfo  WHERE (deptid=new.deptid AND fisrtInoculation='true' AND secondInoculation='true' AND threeInoculation='true'));
+-- 更新
+update dept set countCovid=covidSuccessCount where id=new.deptid;
+
+
+
+end
 ;;
 delimiter ;
 
@@ -698,16 +952,45 @@ END
 delimiter ;
 
 -- ----------------------------
--- Triggers structure for table employee
+-- Triggers structure for table dept
 -- ----------------------------
-DROP TRIGGER IF EXISTS `triggercountadd`;
+DROP TRIGGER IF EXISTS `salary`;
 delimiter ;;
-CREATE TRIGGER `triggercountadd` AFTER INSERT ON `employee` FOR EACH ROW begin
-declare newcoun int(255);
-set newcoun=(select count(*) from employee,dept where employee.deptno=dept.id and employee.deptno=new.deptno);
-update dept  set  count =newcoun where dept.id=new.deptno;
-INSERT INTO `vueandts`.`employesalarydetail`(`deptno`, `employno`, `employname`,`salary`) VALUES (new.deptno, new.employno, new.employname,new.employsalary);
-end
+CREATE TRIGGER `salary` AFTER INSERT ON `dept` FOR EACH ROW BEGIN
+INSERT INTO `vueandts`.`employesalary`(`deptno`, `deptid`) VALUES (new.deptno, new.id);
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Triggers structure for table dept
+-- ----------------------------
+DROP TRIGGER IF EXISTS `update`;
+delimiter ;;
+CREATE TRIGGER `update` AFTER UPDATE ON `dept` FOR EACH ROW BEGIN
+-- 获取部门号
+DECLARE dpno int(255);
+-- 获取团队总人数
+DECLARE allCount int(255);
+-- 存放接种完毕的人数
+DECLARE allCovid int(255);
+-- 获取团队总人数和接种人数对比
+DECLARE deptCount int(255);
+-- 总人数修改时 修改部门人数
+set dpno=(select deptno from dept WHERE dept.id=new.id);
+set allCount=(select  sum(dept.count) from dept where dept.deptno=dpno);
+UPDATE depall SET count=allCount WHERE dno=dpno;
+-- 部门团队人数修改
+update depall set groupCount=(select count(*) from dept where deptno=new.deptno) WHERE dno=new.deptno;
+-- 判断是否全部疫苗接种完 如果接种完 部门就设置全部接种为true
+set allCovid=(select countCovid from dept where id =new.id);
+set deptCount=(select count from dept where id =new.id);
+if(allCovid=deptCount) then 
+update depall set isAllCovid ='true' where dno=dpno;
+else update depall set isAllCovid ='false' where dno=dpno;
+end if;
+
+END
 ;;
 delimiter ;
 
@@ -732,13 +1015,39 @@ delimiter ;
 -- ----------------------------
 -- Triggers structure for table employee
 -- ----------------------------
+DROP TRIGGER IF EXISTS `triggercountadd`;
+delimiter ;;
+CREATE TRIGGER `triggercountadd` AFTER INSERT ON `employee` FOR EACH ROW begin
+declare newcoun int(255);
+-- 查询新员工的部门号
+declare depallId int (255);
+-- 更新小组总数
+set newcoun=(select count(*) from employee,dept where employee.deptno=dept.id and employee.deptno=new.deptno);
+update dept  set  count =newcoun where dept.id=new.deptno;
+-- 工资细节插入新的
+INSERT INTO `vueandts`.`employesalarydetail`(`deptno`, `employno`, `employname`,`salary`) VALUES (new.deptno, new.employno, new.employname,new.employsalary);
+-- 查询新员工部门号用于插入到疫苗表
+set depallId=(select DISTINCT dept.deptno from dept WHERE id=new.deptno);
+-- 插入数据到疫苗表
+INSERT INTO `vueandts`.`covidinfo`(`depallid`, `deptid`, `employid`, `fisrtInoculation`, `secondInoculation`, `threeInoculation`) VALUES (depallId, new.deptno, new.employno, 'false', 'false', 'false');
+end
+;;
+delimiter ;
+
+-- ----------------------------
+-- Triggers structure for table employee
+-- ----------------------------
 DROP TRIGGER IF EXISTS `triggercountdelete`;
 delimiter ;;
 CREATE TRIGGER `triggercountdelete` AFTER DELETE ON `employee` FOR EACH ROW begin
 declare newcoun int(255);
+-- 删除后更新总数
 set newcoun=(select count(*) from employee,dept where employee.deptno=dept.id and employee.deptno=old.deptno);
 update dept  set  count =newcoun where dept.id=old.deptno;
+-- 删除员工明细
 delete from employesalarydetail where employno=old.employno AND deptno=old.deptno;
+-- 删除员工疫苗表
+delete from covidinfo where employid=old.employno AND deptid=old.deptno;
 end
 ;;
 delimiter ;
