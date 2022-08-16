@@ -116,17 +116,17 @@ const initEchartsxData = () => {
     data.chinaInfo.allInfo.map((i) => {
         data.chinaInfo.echarts.xData.push(i['title']);
     })
-    // y轴数据
+   
 }
 
 // echarts 赋值给x轴数据
 const initEchartsyData = () => {
-    // x轴数据 6个
+    // y轴数据 
     data.chinaInfo.allInfo.map((i) => {
         data.chinaInfo.echarts.yData.countData.push(i['data']['oneNumber'])
         data.chinaInfo.echarts.yData.moreData.push(i['data']['twoNumber'])
     })
-    // y轴数据
+ 
 }
 
 
