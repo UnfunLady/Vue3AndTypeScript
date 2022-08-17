@@ -464,7 +464,7 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
+<style >
 .pagenation {
     text-align: center;
 }

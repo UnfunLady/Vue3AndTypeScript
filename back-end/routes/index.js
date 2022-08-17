@@ -915,8 +915,79 @@ router.post('/api/editPassword', (req, res) => {
       }
     })
   }
-
-
-
 })
+
+// 获取部门接种信息
+router.get('/api/getCompanyEvilInfo', (req, res) => {
+  // 获取部门信息
+  const preSql = `
+  SELECT depall.*,count(covidinfo.employid) AS noCovid FROM covidinfo ,depall 
+  WHERE depallid=dno GROUP BY depallid ORDER BY depallid asc
+  `
+  connect.query(preSql, (e, r) => {
+    if (e) res.send({ code: 202, msg: '获取部门信息失败' })
+    if (r && r.length > 0) {
+      // 查询部门没有打三针的员工 合并
+      const sql = `
+      select depall.*,count(*) as noCovid from covidinfo,
+      depall WHERE covidinfo.threeInoculation='false' AND 
+      depall.dno=covidinfo.depallid GROUP BY depallid
+  `
+      connect.query(sql, (err, results) => {
+        if (err) res.send({ code: 202, msg: '获取部门信息失败' })
+        if (results.length > 0) {
+          // 数组去重合并
+          let deptInfo = r.map((item, index) => {
+            return { ...item, ...results[index] };
+          })
+          res.send({
+            code: 200,
+            deptInfo: deptInfo
+          })
+        } else {
+          res.send({ code: 202, msg: '获取部门信息失败' })
+        }
+      })
+
+    } else {
+      res.send({ code: 202, msg: '获取部门信息失败' })
+    }
+  })
+})
+
+// 获取相关员工信息
+router.get('/api/getEmployeEvilInfo', (req, res) => {
+  const { dno } = JSON.parse(req.query.baseInfo);
+  const { page, size } = JSON.parse(req.query.pagination)
+  // 未接种完毕的员工信息
+  const preSql = `SELECT DISTINCT e.*from employee e,dept d WHERE e.employno 
+  in (select c.employid from covidinfo c WHERE c.depallid=${dno} AND threeInoculation='false' )
+   AND e.deptno=d.id  AND d.deptno=${dno} limit ${(page - 1) * size},${size}
+  `
+  connect.query(preSql, (e, r) => {
+    if (e) res.send({ code: 202, msg: '获取信息失败' })
+    if (r.length > 0) {
+      // 员工具体接种信息
+      const sql = `
+      select c.* from covidinfo c ,dept d WHERE c.employid 
+      in (select c.employid from covidinfo c WHERE c.depallid=${dno} AND threeInoculation='false') 
+      AND c.deptid=d.id AND d.deptno=${dno} limit ${(page - 1) * size},${size}
+      `
+      connect.query(sql, (err, results) => {
+        if (err) res.send({ code: 202, msg: '获取信息失败' })
+        if (results.length > 0) {
+          res.send({ code: 200, employeInfo: [...r], employeCount: r.length, evilInfo: [...results], evilCount: results.length })
+        } else {
+          res.send({ code: 202, msg: '获取信息失败' })
+        }
+      })
+    }
+    else {
+      res.send({ code: 202, msg: '获取信息失败' })
+    }
+  })
+})
+
+
+
 module.exports = router;

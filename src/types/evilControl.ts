@@ -1,7 +1,6 @@
-import axios from 'axios';
 import * as echarts from 'echarts';
 type EChartsOption = echarts.EChartsOption
-
+// 全国疫情信息
 interface chinaInfo {
     title: string,
     allInfo: Array<Object>,
@@ -85,12 +84,12 @@ export const chart = (dom: HTMLElement, data: any) => {
                 type: 'cross',
                 crossStyle: {
                     color: '#7F7D80',
-                  
+
                 },
-                label:{
-                    precision:0
+                label: {
+                    precision: 0
                 }
-                
+
             }
         },
         toolbox: {
@@ -144,7 +143,7 @@ export const chart = (dom: HTMLElement, data: any) => {
                     }
                 },
                 data: data.chinaInfo.echarts.yData.countData
-                , itemStyle: { color: '#C7C7C7' }
+                , itemStyle: { color: '#ee6666' }
             },
 
             {
@@ -195,4 +194,44 @@ export const numberInit = (data: any) => {
         oneNumber: data.chinaInfo.evilData['curedCount'],
         twoNumber: data.chinaInfo.evilData['curedIncr']
     };
+}
+
+
+
+
+// 公司疫情信息
+type companyInfo = {
+    allDeptInfo: []
+}
+
+export class companyInfoInit {
+    companyData: companyInfo = {
+        allDeptInfo: []
+    }
+}
+
+
+// 员工相关信息
+type evilEmployeInfo = {
+    // 员工相关信息
+    employeInfo: [],
+    allEmployeInfo: [],
+    page: number | string,
+    size: number | string,
+    count: number | string,
+    isAllEmploye: boolean,
+}
+export class evilEmployeInfoInit {
+    employeData: evilEmployeInfo = {
+        employeInfo: [],
+        allEmployeInfo: [],
+        page: 1,
+        size: 8,
+        count: 5,
+        isAllEmploye: false
+    }
+}
+
+export const getEvilEmployeInfo = (API: any, params: Object) => {
+    return API.evilControl.reqGetEmployeEvilInfo(params)
 }

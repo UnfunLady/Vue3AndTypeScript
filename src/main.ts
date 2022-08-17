@@ -7,6 +7,10 @@ import App from './App.vue'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import Header from '@/components/HeaderView/HeaderView.vue'
 import Pagination from '@/components/Pagination/PaginationView.vue'
+// iconfont
+import '@/assets/icon/iconfont.css'
+import '@/assets/icon/iconfont.js'
+// pinia
 import { createPinia } from 'pinia'
 import { usePersist } from 'pinia-use-persist'
 // 动态数字

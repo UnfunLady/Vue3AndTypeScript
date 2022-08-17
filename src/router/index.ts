@@ -190,9 +190,20 @@ const routes: Array<RouteRecordRaw> = [
               name: '公司防控信息',
               isAuth: true,
               icon: 'OfficeBuilding'
-            }
+            },
           },
-
+          {
+            path: '/showNoCovid',
+            name: 'showNoCovid',
+            component: () => import('@/views/EvilControl/showNoCovid/showNoCovid.vue'),
+            meta: {
+              name: '相关员工信息',
+              isAuth: true,
+              hidden: true,
+              activePath: '/companyInfo',
+              icon: 'OfficeBuilding'
+            },
+          }
         ]
       },
       {
@@ -205,6 +216,18 @@ const routes: Array<RouteRecordRaw> = [
           isAuth: true
         }
       },
+      {
+        // 内嵌Echarts文档
+        path: '/learnEcharts',
+        name: 'learnEcharts',
+        component: () => import('@/views/LearnEcharts/LearnEcharts.vue'),
+        meta: {
+          name: 'Echarts中文文档',
+          isAuth: true
+        }
+      },
+
+
     ]
   },
 

@@ -1,0 +1,72 @@
+{
+  "id": "3456256",
+  "name": "123",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "3872992",
+      "name": "安全",
+      "font_class": "anquan",
+      "unicode": "e65e",
+      "unicode_decimal": 58974
+    },
+    {
+      "icon_id": "5179127",
+      "name": "豌豆",
+      "font_class": "wandou",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "7809339",
+      "name": "立体粉",
+      "font_class": "icon-test",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "10450964",
+      "name": "health健康",
+      "font_class": "health",
+      "unicode": "e64b",
+      "unicode_decimal": 58955
+    },
+    {
+      "icon_id": "49727",
+      "name": "购物车",
+      "font_class": "27",
+      "unicode": "e61d",
+      "unicode_decimal": 58909
+    },
+    {
+      "icon_id": "915621",
+      "name": "消息",
+      "font_class": "xiaoxi",
+      "unicode": "e67c",
+      "unicode_decimal": 59004
+    },
+    {
+      "icon_id": "1621485",
+      "name": "垃圾桶",
+      "font_class": "lajitong",
+      "unicode": "e62b",
+      "unicode_decimal": 58923
+    },
+    {
+      "icon_id": "1664361",
+      "name": "上箭头",
+      "font_class": "shangjiantou1",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "1664362",
+      "name": "下箭头",
+      "font_class": "xiajiantou",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    }
+  ]
+}

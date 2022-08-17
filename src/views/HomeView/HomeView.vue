@@ -31,12 +31,16 @@
               </template>
             </el-menu-item>
           </el-sub-menu>
-          <keep-alive>
-            <el-menu-item index="/learnVue">
-              <img src="@/assets/logo.png" style="width:15px; padding-left: 5px; margin-right: 15px;" alt="">
-              <span>Vue中文文档</span>
-            </el-menu-item>
-          </keep-alive>
+
+          <el-menu-item index="/learnVue">
+            <img src="@/assets/logo.png" style="width:15px; padding-left: 5px; margin-right: 15px;" alt="">
+            <span>Vue中文文档</span>
+          </el-menu-item>
+          <el-menu-item index="/learnEcharts">
+            <img src="@/assets/elogo.png" style="width:15px; padding-left: 5px; margin-right: 15px;" alt="">
+            <span>Echarts中文文档</span>
+          </el-menu-item>
+
 
         </el-menu>
       </el-aside>
