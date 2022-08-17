@@ -250,6 +250,7 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL)
 })
 
+// 全局路由守卫
 router.beforeEach((to, from, next) => {
   // 获取用户信息
   const { user } = useStore()
@@ -259,7 +260,7 @@ router.beforeEach((to, from, next) => {
     if (user.userInfo.userList.userInfo['nickname'] != undefined) {
       // 根据用户名字和账号绘制背景图
       // 作者：https://www.cnblogs.com/lulu-beibei/p/15918996.html
-      var drawAndShareImage = function (text: string, text1: string, callback) {
+      var drawAndShareImage = function (text: string, text1: string, callback: Function) {
         var canvas = document.createElement('canvas')
         canvas.width = 570
         canvas.height = 200
@@ -288,14 +289,11 @@ router.beforeEach((to, from, next) => {
       div1.className = 'needNameDw'
       document.getElementById('app').appendChild(div1)
       const img = document.getElementsByClassName('needNameDw')[0]
-      drawAndShareImage(user.userInfo.userList.userInfo['nickname'], user.userInfo.userList.userInfo['username'], (url) => {
+      drawAndShareImage(user.userInfo.userList.userInfo['nickname'], user.userInfo.userList.userInfo['username'], (url: string) => {
         // 需要覆盖所有dom 加上z-index: 9999;
         img.setAttribute('style', 'background:url("' + url + '");position: absolute;top: 0;left: 0;width: 100%;height: 100%;pointer-events: none;')
       })
-    } else {
-
     }
-
   }, { immediate: true, deep: true })
 
   document.title = to.meta.name as string || '具体信息'

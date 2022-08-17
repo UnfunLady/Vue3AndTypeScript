@@ -22,7 +22,6 @@ export default defineComponent({
         },
         // 页容量布局
         pageSizes: {
-            type: Array,
             default: [8, 10, 15]
         },
         // 是否禁用
