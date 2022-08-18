@@ -2,14 +2,72 @@ import * as echarts from 'echarts';
 type EChartsOption = echarts.EChartsOption
 // 主页数据
 export interface mainViewData {
-    deptInfo: []
+    deptInfo: [],
+    DetailData: {
+        // 部门总数
+        companyDeptCount: number,
+        // 小组总数
+        companyGroupCount: number,
+        // 员工总数
+        companyEmployeCount: number,
+        // 平均工资
+        companyAvgSalary: number,
+        // 男生占比
+        BoyGrilsPercentage: string,
+
+    },
+    showData: Array<Object>
+
 }
 
 export class mainViewDataInit {
     mainViewData: mainViewData = {
-        deptInfo: []
+        deptInfo: [],
+        DetailData: {
+            companyDeptCount: 0,
+            companyGroupCount: 0,
+            companyEmployeCount: 0,
+            companyAvgSalary: 0,
+            BoyGrilsPercentage: '0%'
+        },
+        showData: [
+            {
+                id: 1,
+                title: '公司部门数量',
+                num: null,
+                color: '#ffa352',
+            },
+            {
+                id: 2,
+                title: '公司小组数量',
+                num: null,
+                color: '#791618',
+            },
+            {
+                id: 3,
+                title: '公司员工数量',
+                num: null,
+                color: '#e44a3d',
+            },
+            {
+                id: 4,
+                title: '公司平均底薪',
+                num: null,
+                color: '#333333',
+            },
+            {
+                id: 5,
+                title: '公司男性占比',
+                num: null,
+                color: '#34aa70',
+            },
+
+        ]
     }
+
 }
+
+
 // 第一张图
 export const oneCharts = (dom: HTMLElement, data: any) => {
     var chartDom = dom!;
@@ -126,4 +184,18 @@ export const twoCharts = (dom: HTMLElement, data: any) => {
 
     option && myChart.setOption(option);
 
+}
+
+export const initData = (data: any) => {
+    data.mainViewData.showData[0]['num'] = data.mainViewData.DetailData['companyDeptCount']
+    data.mainViewData.showData[1]['num'] = data.mainViewData.DetailData['companyGroupCount']
+    data.mainViewData.showData[2]['num'] = data.mainViewData.DetailData['companyEmployeCount']
+    data.mainViewData.showData[3]['num'] = data.mainViewData.DetailData['companyAvgSalary']
+    data.mainViewData.showData[4]['num'] = data.mainViewData.DetailData['BoyGrilsPercentage']
+}
+
+
+
+export const getCompanyDetail = (API: any) => {
+    return API.main.getDetail()
 }

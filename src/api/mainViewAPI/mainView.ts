@@ -7,8 +7,14 @@ const getDeptInfo = () => {
 const getDeptDetailInfo = () => {
     return request({ url: 'deptDetail', method: 'get' })
 }
+
+// 获取公司细节部分
+const getDetail = () => {
+    return request({ url: 'companyDetail', method: 'get' })
+}
 const main = {
     getDeptInfo,
-    getDeptDetailInfo
+    getDeptDetailInfo,
+    getDetail
 }
 export default main

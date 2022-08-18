@@ -107,10 +107,12 @@ div.header {
     position: relative;
     height: 130px;
 
+
     .deptInfo {
         h6 {
+            letter-spacing: 4px;
             margin-top: 10px;
-            color: #989898;
+            color: #989898bf;
         }
 
         width: 100px;
@@ -137,14 +139,17 @@ div.header {
 div.warn {
     padding: 10px;
     font-size: 16px;
-    font-family: "Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif";
     background-color: #f56c6c;
+    font-weight: bold;
+    letter-spacing: 4px;
 }
 
 div.ok {
     padding: 10px;
     font-size: 16px;
-    font-family: "Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif";
+
     background-color: #43c283c3;
+    font-weight: bold;
+    letter-spacing: 4px;
 }
 </style>
