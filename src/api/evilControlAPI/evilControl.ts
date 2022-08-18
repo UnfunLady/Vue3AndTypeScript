@@ -15,10 +15,15 @@ const reqGetEmployeEvilInfo = (params: Object) => {
     return request({ url: '/getEmployeEvilInfo', method: 'get', params })
 }
 
+// 获取全部员工信息
+const reqGetAllEmployeEvilInfo = (params: Object) => {
+    return request({ url: '/getAllEmployeEvilInfo', method: 'get', params })
+}
 
 const evilControl = {
     reqGetEvilInfo,
     reqGetCompanyEvilInfo,
-    reqGetEmployeEvilInfo
+    reqGetEmployeEvilInfo,
+    reqGetAllEmployeEvilInfo
 }
 export default evilControl

@@ -6,11 +6,10 @@ const jwt = require('jsonwebtoken');
 const fs = require('fs')
 const path = require("path") // 处理路径的模块
 // 引入token相关util
-const { createToken, authToken } = require('../utils/index')
+const { createToken } = require('../utils/index')
 //上传图片的模板
 var multer = require('multer');
-const { first, now } = require('lodash');
-const { TRUE } = require('sass');
+
 //生成的图片放入uploads文件夹下
 var upload = multer({ dest: 'uploads/' })
 router.get('/', function (req, res, next) {
@@ -21,7 +20,6 @@ router.post('/api/login', function (req, res, next) {
   // 获取账号密码
   const { username, password } = req.body
   const sql = `select *from users where username='${username}' and password= '${password}'`
-  console.log(sql);
   connect.query(sql, (err, results) => {
 
     if (err) throw err;
@@ -172,7 +170,6 @@ router.post('/api/addOrUpdateEmploy', (req, res) => {
   // 如果是更新则走更新的操作
   if (isUpdate) {
     const preSql = `select *from employee where employno=${body.default.employno} and deptno=${body.default.deptno}`
-    console.log(preSql);
     connect.query(preSql, (errors, resu) => {
       if (errors) throw errors
       if (resu && resu.length > 0) {
@@ -325,7 +322,6 @@ router.get('/api/getSaralyInfo', (req, res) => {
 // 修改薪资信息
 router.post('/api/updateSalaryInfo', (req, res) => {
   const { editForm, performance } = req.body;
-  console.log(editForm, performance);
   if (editForm.isuse != null && editForm.deptid != null) {
     const sql = `
       UPDATE employesalary SET isuse = '${editForm.isuse}' WHERE deptid=${editForm.deptid} `;
@@ -341,7 +337,6 @@ router.post('/api/updateSalaryInfo', (req, res) => {
     const sql = `
     UPDATE employesalary SET performance = '${performance.performance}' WHERE deptid=${performance.deptid} `;
     connect.query(sql, (e, r) => {
-      console.log(r);
     })
     res.send({
       code: 200,
@@ -453,7 +448,6 @@ router.post('/api/editDept', upload.single('file'), (req, res) => {
     // 读取文件信息
     fs.readFile(imges.path, (err, data) => {
       if (err) {
-        console.log(err, "图片读取失败")
         res.send({ code: 202, msg: "读取图片失败" })
       }
       var imgesori = imges.originalname; // 图片名称
@@ -477,7 +471,6 @@ router.post('/api/editDept', upload.single('file'), (req, res) => {
         const picPath = "http://" + cms[1].address + ':3000' + '/images/' + pic;
         const sql = `
        UPDATE depall SET avatar='${picPath}',dname='${dname}',depall.explain='${explain}' WHERE dno =${dno};`
-        console.log(sql);
         // 执行修改逻辑
         connect.query(sql, (error, result) => {
           if (error) throw error;
@@ -641,7 +634,6 @@ router.post('/api/delGroup', (req, res) => {
       const success = results.every((item, index) => {
         const delEmployeSql = `delete from employee e where e.employno=${item.employno} and e.deptno=${id} `
         const delSuccess = connect.query(delEmployeSql, (err, result) => {
-          console.log(result);
           if (err) throw err
           if (result.affectedRows > 0) {
             // 删除成功返回true
@@ -919,7 +911,6 @@ router.post('/api/editPassword', (req, res) => {
     const preSql = `select password from users where username='${user}'`
     connect.query(preSql, (e, r) => {
       if (r.length > 0) {
-        console.log(r[0].password);
         // 如果旧密码相同
         if (r[0].password == nowPassword) {
           // 修改密码
@@ -967,20 +958,15 @@ router.get('/api/getCompanyEvilInfo', (req, res) => {
     if (r && r.length > 0) {
       // 查询部门没有打三针的员工 合并
       const sql = `
-      select depall.*,count(*) as noCovid from covidinfo,
-      depall WHERE covidinfo.threeInoculation='false' AND 
-      depall.dno=covidinfo.depallid GROUP BY depallid
+			  SELECT depall.* FROM covidinfo ,depall 
+        WHERE depallid=dno GROUP BY depallid ORDER BY depallid asc
   `
       connect.query(sql, (err, results) => {
         if (err) res.send({ code: 202, msg: '获取部门信息失败' })
         if (results.length > 0) {
-          // 数组去重合并
-          let deptInfo = r.map((item, index) => {
-            return { ...item, ...results[index] };
-          })
           res.send({
             code: 200,
-            deptInfo: deptInfo
+            deptInfo: results
           })
         } else {
           res.send({ code: 202, msg: '获取部门信息失败' })
@@ -1026,6 +1012,35 @@ router.get('/api/getEmployeEvilInfo', (req, res) => {
   })
 })
 
+// 获取部门全部员工接种信息
+router.get('/api/getAllEmployeEvilInfo', (req, res) => {
+  const { dno } = JSON.parse(req.query.baseInfo);
+  const { page, size } = JSON.parse(req.query.pagination)
+  const sql = `SELECT DISTINCT e.*,co.deptid,co.depallid,co.fisrtInoculation,co.secondInoculation,co.threeInoculation from employee e,dept d,covidinfo co WHERE e.employno 
+  in (select c.employid from covidinfo c WHERE c.depallid=${dno} )
+   AND e.deptno=d.id  AND co.depallid=d.deptno AND d.deptno=${dno} AND e.employno=co.employid ORDER BY e.employno asc
+	  limit ${(page - 1) * size},${size}`
 
+  connect.query(sql, (err, results) => {
+    if (err) res.send({ code: 202, msg: '查询数据失败' })
+    if (results.length > 0) {
+      // 获取总数
+      const countSql = `SELECT DISTINCT count(e.employno) as count from employee e,dept d,covidinfo co WHERE e.employno 
+      in (select c.employid from covidinfo c WHERE c.depallid=${dno} )
+       AND e.deptno=d.id  AND co.depallid=d.deptno AND d.deptno=${dno} AND e.employno=co.employid ORDER BY e.employno asc
+       `
+      connect.query(countSql, (e, r) => {
+        if (e) res.send({ code: 202, msg: '查询数据失败' })
+        if (r.length > 0) {
+          res.send({ code: 200, allEmployeEvilInfo: results, count: r[0].count })
+        }
+      })
+
+    } else {
+      res.send({ code: 202, msg: '查询数据失败' })
+    }
+  })
+
+})
 
 module.exports = router;

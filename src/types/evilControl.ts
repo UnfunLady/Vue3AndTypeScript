@@ -218,8 +218,12 @@ type evilEmployeInfo = {
     allEmployeInfo: [],
     page: number | string,
     size: number | string,
-    count: number | string,
+    someCount: number | string,
+    allCount: number | string,
     isAllEmploye: boolean,
+    justCheck: boolean,
+    dialogTableVisible: boolean,
+    updateForm: {}
 }
 export class evilEmployeInfoInit {
     employeData: evilEmployeInfo = {
@@ -227,8 +231,12 @@ export class evilEmployeInfoInit {
         allEmployeInfo: [],
         page: 1,
         size: 8,
-        count: 5,
-        isAllEmploye: false
+        someCount: 0,
+        allCount: 0,
+        isAllEmploye: false,
+        justCheck: false,
+        dialogTableVisible: false,
+        updateForm: {}
     }
 }
 

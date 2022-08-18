@@ -20,7 +20,7 @@
                                 </p>
                             </div>
                             <div class="detailInfo" v-else>
-                                <p>查看接种信息</p>
+                                <p @click="justCheck(item)">查看接种信息</p>
                             </div>
                         </div>
                         <div class="warn" v-if="item['isAllCovid'] == 'false'">
@@ -76,6 +76,15 @@ const showNoCovid = (info: any) => {
     router.push({
         name: 'showNoCovid',
         params: info
+    })
+}
+
+// 查看信息
+const justCheck = (row: any) => {
+    router.push({
+        name: 'showNoCovid',
+        params: { ...row, justCheck: true },
+
     })
 }
 

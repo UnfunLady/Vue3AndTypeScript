@@ -19,7 +19,7 @@
                         }">
                             <!-- https://www.pudn.com/news/6228c8019ddf223e1ad0844a.html -->
                             <count-to :startVal="0" separator="" decimal="" :endVal="item['data']['oneNumber']"
-                                :decimals="0" :duration="2000">
+                                :decimals="0" :duration="2000" @reset="reset">
                             </count-to>
                         </div>
                     </div>
@@ -56,9 +56,12 @@
 </template>
 
 <script lang='ts' setup>
-import { reactive, ref, toRefs, defineComponent, onMounted, getCurrentInstance } from 'vue'
+import { reactive, ref, toRefs, defineComponent, onMounted, getCurrentInstance, nextTick } from 'vue'
 import { chinaInfoInit, getAllEvilInfo, chart, numberInit } from '@/types/evilControl';
 import useStore from '@/store';
+
+
+const instance = getCurrentInstance();
 const data = reactive(new chinaInfoInit())
 const API = getCurrentInstance().appContext.config.globalProperties.$API
 const { evilInfo } = useStore();
@@ -109,6 +112,7 @@ const updateNewEvilInfo = async () => {
     // 将时间转换格式
     data.chinaInfo.updateTime = timestampToTime(evilInfo.getEvilInfo['modifyTime'])
     initEchartsxData()
+    instance.proxy.$forceUpdate();
 }
 // echarts 赋值给x轴数据
 const initEchartsxData = () => {
@@ -116,9 +120,7 @@ const initEchartsxData = () => {
     data.chinaInfo.allInfo.map((i) => {
         data.chinaInfo.echarts.xData.push(i['title']);
     })
-
 }
-
 // echarts 赋值给x轴数据
 const initEchartsyData = () => {
     // y轴数据 
@@ -126,6 +128,11 @@ const initEchartsyData = () => {
         data.chinaInfo.echarts.yData.countData.push(i['data']['oneNumber'])
         data.chinaInfo.echarts.yData.moreData.push(i['data']['twoNumber'])
     })
+
+}
+
+const reset = () => {
+    console.log(1);
 
 }
 
