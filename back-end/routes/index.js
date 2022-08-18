@@ -77,6 +77,44 @@ router.get('/api/deptInfo', function (req, res, next) {
 
 })
 
+// 获取部门细节
+router.get('/api/companyDetail', (req, res) => {
+  // 获取部门总数
+  const oneSql = `SELECT count(d.dno)as companyDeptCount from depall d  `
+  // 获取小组总数
+  const twoSql = `select count(d.id)AS companyGroupCount from dept d`
+  // 获取员工总数
+  const threeSql = `SELECT count(DISTINCT(e.employno)) as companyEmployeCount  from employee e `
+  // 获取平均薪资
+  const fourSql = `select round(avg(e.employsalary),0) as companyAvgSalary from employee e`
+  // 获取男性人数
+  const fiveSql = `select count(DISTINCT(e.employno))as BoyGrilsPercentage from employee e WHERE e.employsex='男'`
+  connect.query(oneSql, (e1, r1) => {
+    if (r1.length > 0) {
+      connect.query(twoSql, (e2, r2) => {
+        if (r2.length > 0) {
+          connect.query(threeSql, (e3, r3) => {
+            if (r3.length > 0) {
+              connect.query(fourSql, (e4, r4) => {
+                if (r4.length > 0) {
+                  connect.query(fiveSql, (e5, r5) => {
+                    if (r5.length > 0) {
+                      const BoyGrilsPercentage = parseFloat(r5[0].BoyGrilsPercentage / r3[0].companyEmployeCount).toFixed(2) * 100 + '%'
+                      res.send({ code: 200, detailData: { companyDeptCount: r1[0].companyDeptCount, companyGroupCount: r2[0].companyGroupCount, companyEmployeCount: r3[0].companyEmployeCount, companyAvgSalary: r4[0].companyAvgSalary, BoyGrilsPercentage } })
+                    }
+                  })
+
+                }
+              })
+            }
+          }
+          )
+        }
+      })
+    }
+  })
+})
+
 // 根据部门号查找部门下的全部团队
 router.get('/api/getDeptByDno', function (req, res, next) {
   const { dno } = req.query;
