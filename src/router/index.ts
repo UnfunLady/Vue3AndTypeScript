@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-// import {createRouter,createWebHistory,routeRecordRaw} from 'vue-router
 import useStore from '@/store'
 import { ElMessage } from 'element-plus'
 import { watch } from 'vue'
@@ -226,7 +225,6 @@ const routes: Array<RouteRecordRaw> = [
           isAuth: true
         }
       },
-
       {
         // 内嵌ElementPlus文档
         path: '/learnElementPlus',
@@ -248,7 +246,6 @@ const routes: Array<RouteRecordRaw> = [
           isAuth: true,
         }
       },
-
       {
         // 内嵌Echarts文档
         path: '/learnEcharts',
@@ -259,15 +256,7 @@ const routes: Array<RouteRecordRaw> = [
           isAuth: true
         }
       },
-
-
     ]
-  },
-
-  {
-    path: '/about',
-    name: 'about',
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
     path: '/login',
@@ -279,11 +268,11 @@ const routes: Array<RouteRecordRaw> = [
     name: '404',
     component: () => import('@/components/NotFound/NotFound.vue'),
 
-  }, {
+  },
+  {
     path: '/:pathMatch(.*)',
     redirect: '/404'
   }
-
 ]
 
 const router = createRouter({
