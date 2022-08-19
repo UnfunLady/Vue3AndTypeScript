@@ -7,9 +7,9 @@
                 <el-form :model="data.addDepartmentData.addDepartmentForm" label-width="auto">
                     <el-form-item label="部门头像:">
                         <div class="uploadAvatar">
-                            <el-upload ref="upload" class="avatar-uploader" :action="uploadUrl" :auto-upload="false"
-                                list-type="picture-card" :on-success="handleAvatarSuccess" :limit="1"
-                                :before-upload="beforeAvatarUpload" :on-exceed="handleExceed">
+                            <el-upload :headers="config" ref="upload" class="avatar-uploader" :action="uploadUrl"
+                                :auto-upload="false" list-type="picture-card" :on-success="handleAvatarSuccess"
+                                :limit="1" :before-upload="beforeAvatarUpload" :on-exceed="handleExceed">
                                 <template #file="{ file }">
                                     <div>
                                         <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
@@ -72,7 +72,7 @@ import { reactive, ref, toRefs, defineComponent, onMounted, getCurrentInstance, 
 import { addDepartmentDataInit } from '@/types/department'
 import { UploadInstance, UploadProps, UploadFile, UploadRawFile, FormInstance, ElMessageBox } from 'element-plus';
 import { ElMessage, genFileId } from 'element-plus'
-import { ElPopper } from 'element-plus/lib/components';
+import useStore from '@/store';
 // 初始化数据
 const data = reactive(new addDepartmentDataInit())
 // 上传的原型
@@ -82,6 +82,14 @@ const API = getCurrentInstance().appContext.config.globalProperties.$API;
 const uploadUrl = computed(() => {
     return `/api/addDeptpartment?dname=${data.addDepartmentData.addDepartmentForm.dname}&explain=${data.addDepartmentData.addDepartmentForm.explain}`
 })
+// 获取用户信息
+const { user } = useStore()
+// 上传文件时候携带的token
+const config = {
+    token: user.getUserToken
+}
+
+
 // 是否预览
 const dialogVisible = ref(false)
 // 预览的url
@@ -140,6 +148,7 @@ const confirmAddDepartment = () => {
     ElMessageBox.confirm('请您确认是否上传了头像,<span style="color: red">未上传头像将添加失败!</span>', '确认信息', {
         confirmButtonText: '是的我确认',
         cancelButtonText: '我再看看',
+        confirmButtonClass: 'cButton',
         type: 'warning',
         dangerouslyUseHTMLString: true,
     }).then(() => {
@@ -156,7 +165,7 @@ const confirmAddDepartment = () => {
 </script>
 <style lang='scss' >
 .showImg {
-    max-width: 800px;
+    max-width: 700px;
 }
 
 .el-dialog {
@@ -172,5 +181,15 @@ const confirmAddDepartment = () => {
     width: 100px;
     height: 60px;
 
+}
+
+.cButton {
+    background-color: rgba(0, 128, 0, 0.812) !important;
+    border: none;
+
+}
+
+.cButton:hover {
+    background-color: rgb(45, 96, 41) !important;
 }
 </style>

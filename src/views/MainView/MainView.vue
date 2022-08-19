@@ -4,7 +4,6 @@
         <div id="two" class="two"></div>
 
         <div id="three" class="three">
-
             <div class="card" v-for="(item) in mainViewData.showData " :key="item['id']">
                 <div class="number" :style="{
                     color: item['color']
@@ -83,7 +82,6 @@ export default defineComponent({
     width: 100%;
     height: 37vh;
     box-shadow: 0 2px 13px 2px rgba(143, 141, 141, 0.17);
-
     border-radius: 10px;
     margin: 30px 30px 30px 30px;
 

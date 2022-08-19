@@ -19,7 +19,7 @@
                         }">
                             <!-- https://www.pudn.com/news/6228c8019ddf223e1ad0844a.html -->
                             <count-to :startVal="0" separator="" decimal="" :endVal="item['data']['oneNumber']"
-                                :decimals="0" :duration="2000" @reset="reset">
+                                :decimals="0" :duration="2000" ref="oneNumber">
                             </count-to>
                         </div>
                     </div>
@@ -56,11 +56,11 @@
 </template>
 
 <script lang='ts' setup>
-import { reactive, ref, toRefs, defineComponent, onMounted, getCurrentInstance, nextTick } from 'vue'
+import { reactive, ref, toRefs, defineComponent, onMounted, getCurrentInstance, nextTick, inject } from 'vue'
 import { chinaInfoInit, getAllEvilInfo, chart, numberInit } from '@/types/evilControl';
 import useStore from '@/store';
-
-
+const reloadRouter = inject('reloadRouter') as Function
+const oneNumber = ref(null)
 const instance = getCurrentInstance();
 const data = reactive(new chinaInfoInit())
 const API = getCurrentInstance().appContext.config.globalProperties.$API
@@ -92,14 +92,14 @@ onMounted(async () => {
 // 时间戳转日期
 const timestampToTime = (timestamp: number | string) => {
     let date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
-    let Y: string, M: string, D: string, h: string, m: string, s: number
+    let Y: string, M: string, D: string, h: string, m: string;
     Y = date.getFullYear() + '-';
     M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
     D = date.getDate() < 10 ? '0' + date.getDate() + ' ' : date.getDate() + ' ';
     h = date.getHours() < 10 ? '0' + date.getHours() : date.getHours() + ':';
-    m = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes() + ':';
-    s = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
-    return Y + M + D + h + m + s;
+    m = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes() + ' ';
+
+    return Y + M + D + h + m;
 }
 // 点击更新最新数据
 const updateNewEvilInfo = async () => {
@@ -112,7 +112,7 @@ const updateNewEvilInfo = async () => {
     // 将时间转换格式
     data.chinaInfo.updateTime = timestampToTime(evilInfo.getEvilInfo['modifyTime'])
     initEchartsxData()
-    instance.proxy.$forceUpdate();
+    reloadRouter()
 }
 // echarts 赋值给x轴数据
 const initEchartsxData = () => {
@@ -131,10 +131,7 @@ const initEchartsyData = () => {
 
 }
 
-const reset = () => {
-    console.log(1);
 
-}
 
 
 </script>

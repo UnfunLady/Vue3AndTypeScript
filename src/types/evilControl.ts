@@ -84,7 +84,6 @@ export const chart = (dom: HTMLElement, data: any) => {
                 type: 'cross',
                 crossStyle: {
                     color: '#7F7D80',
-
                 },
                 label: {
                     precision: 0
@@ -116,7 +115,6 @@ export const chart = (dom: HTMLElement, data: any) => {
             {
                 type: 'log',
                 name: '现存人数',
-
                 interval: 10000,
                 axisLabel: {
                     formatter: '{value} 人'
@@ -126,7 +124,6 @@ export const chart = (dom: HTMLElement, data: any) => {
                 type: 'log',
                 name: '相较昨日',
                 interval: 10000,
-
                 axisLabel: {
                     formatter: '多{value} 人'
                 }
@@ -151,14 +148,20 @@ export const chart = (dom: HTMLElement, data: any) => {
                 type: 'line',
                 yAxisIndex: 1,
                 lineStyle: {
-
-                    color: '#ffa352',
+                    // 折线颜色
+                    color: '#1F5175',
                 },
+                itemStyle: {
+                    // 圆圈颜色
+                    color: '#1F5175'
+                },
+
                 tooltip: {
                     valueFormatter: function (value: number) {
                         return '+' + value + '人';
                     }
                 },
+
                 data: data.chinaInfo.echarts.yData.moreData
             }
         ]
@@ -239,7 +242,12 @@ export class evilEmployeInfoInit {
         updateForm: {}
     }
 }
-
+// 获取员工数据
 export const getEvilEmployeInfo = (API: any, params: Object) => {
     return API.evilControl.reqGetEmployeEvilInfo(params)
+}
+
+// 修改数据
+export const updateEvilEmployeInfo = (API: any, data: Object) => {
+    return API.evilControl.reqUpdateEmployeEvilInfo(data);
 }

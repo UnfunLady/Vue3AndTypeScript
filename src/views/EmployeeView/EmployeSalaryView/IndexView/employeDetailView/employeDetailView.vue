@@ -479,16 +479,20 @@ export default defineComponent({
 
         // 修改补贴值
         const changeSub = (scope: any) => {
-            nextTick(() => {
-                // 把应发工资追加在scope.row上
-                // 加上nextTick 让下一次渲染的应发工资赋值  不然会把上一次的赋值
-                scope.row.allSalary = parseInt(document.querySelectorAll('.allSalary')[scope.$index].innerHTML);
-            })
-            data.employeSalaryDetailForm.editList.push(scope.row);
-            // set去重
-            data.employeSalaryDetailForm.editList = Array.from(
-                new Set(data.employeSalaryDetailForm.editList)
-            );
+            // 如果补贴关闭了 点击后应该不能生效才对
+            if (scope.row.isuse == 'true') {
+                nextTick(() => {
+                    // 把应发工资追加在scope.row上
+                    // 加上nextTick 让下一次渲染的应发工资赋值  不然会把上一次的赋值
+                    scope.row.allSalary = parseInt(document.querySelectorAll('.allSalary')[scope.$index].innerHTML);
+                })
+                data.employeSalaryDetailForm.editList.push(scope.row);
+                // set去重
+                data.employeSalaryDetailForm.editList = Array.from(
+                    new Set(data.employeSalaryDetailForm.editList)
+                );
+            }
+
         };
 
 

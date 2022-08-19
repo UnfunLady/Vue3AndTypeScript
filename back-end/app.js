@@ -10,13 +10,12 @@ var usersRouter = require('./routes/users');
 var app = express();
 const { authToken } = require('./utils/index.js')
 const verify = (req, res, next) => {
-  console.log(req.path);
   //  忽略图片请求 req.path.substring(1, req.path.lastIndexOf('/')) == 'images'
   if (req.path == '/api/login' || req.path.substring(1, req.path.lastIndexOf('/')) == 'images') {
     next();
   } else {
     if (!req.headers.token) {
-      res.send({ code: 203, msg: '用户身份信息过期,请重新登录' })
+      res.send({ code: 203, msg: '缺少token' })
     } else {
       if (authToken(req.headers.token)) {
         next()

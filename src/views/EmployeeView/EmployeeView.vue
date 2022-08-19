@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="all" >
         <el-card style="margin:20px">
             <el-form :model="employeForm" inline>
                 <el-form-item label="部门名">

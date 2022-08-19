@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div >
         <!-- <router-view v-slot="{ Component }">
             <keep-alive>
                 <component :is="Component" />
@@ -21,5 +21,4 @@ export default defineComponent({
 });
 </script>
 <style lang='scss' scoped>
-
 </style>

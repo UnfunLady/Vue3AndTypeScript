@@ -217,6 +217,39 @@ const routes: Array<RouteRecordRaw> = [
         }
       },
       {
+        // 内嵌TypeScript文档
+        path: '/learnTypeScript',
+        name: 'learnTypeScript',
+        component: () => import('@/views/LearnTypeScript/LearnTypeScript.vue'),
+        meta: {
+          name: 'TypeScript中文文档',
+          isAuth: true
+        }
+      },
+
+      {
+        // 内嵌ElementPlus文档
+        path: '/learnElementPlus',
+        name: 'learnElementPlus',
+        component: () => import('@/views/LearnElementPlus/LearnElementPlus.vue'),
+        meta: {
+          name: 'ElementPlus中文文档',
+          isAuth: true,
+          icon: 'ElementPlus'
+        }
+      },
+      {
+        // 内嵌Pinia文档
+        path: '/learnPinia',
+        name: 'learnPinia',
+        component: () => import('@/views/LearnPinia/LearnPinia.vue'),
+        meta: {
+          name: 'Pinia中文文档',
+          isAuth: true,
+        }
+      },
+
+      {
         // 内嵌Echarts文档
         path: '/learnEcharts',
         name: 'learnEcharts',
@@ -241,7 +274,15 @@ const routes: Array<RouteRecordRaw> = [
     name: 'login',
     component: () => import('@/views/LoginView/LoginView.vue')
   },
+  {
+    path: '/404',
+    name: '404',
+    component: () => import('@/components/NotFound/NotFound.vue'),
 
+  }, {
+    path: '/:pathMatch(.*)',
+    redirect: '/404'
+  }
 
 ]
 

@@ -1,0 +1,21 @@
+<template>
+    <iframe src="https://www.tslang.cn/index.html" id="mobsf" frameborder="0"></iframe>
+</template>
+
+<script lang='ts'>
+import { reactive, ref, toRefs, defineComponent, onMounted } from 'vue'
+export default defineComponent({
+    name: 'learnElementPlus',
+    setup() {
+        return {
+        }
+
+    }
+});
+</script>
+<style lang='scss' scoped>
+#mobsf {
+    width: 100%;
+    height: 90vh
+}
+</style>

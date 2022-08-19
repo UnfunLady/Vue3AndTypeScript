@@ -3,8 +3,8 @@
     <el-container>
       <el-aside :width="isCollapse ? '60px' : '210px'">
         <!-- :unique-opened="true" 是否只展示一个菜单栏 -->
-        <el-menu :collapse="isCollapse" background-color="#476080" class="el-menu-vertical-demo"
-          :collapse-transition="true" :default-active="activeIndex" text-color="#fff" router>
+        <el-menu @select="checkRouter" :collapse="isCollapse" background-color="#476080" class="el-menu-vertical-demo"
+          :collapse-transition="true" :default-active="activeIndex" text-color="#fff">
           <el-menu-item index="/main">
             <el-icon>
               <Menu />
@@ -31,10 +31,21 @@
               </template>
             </el-menu-item>
           </el-sub-menu>
-
           <el-menu-item index="/learnVue">
-            <img src="@/assets/logo.png" style="width:15px; padding-left: 5px; margin-right: 15px;" alt="">
+            <img src="@/assets/logo.png" style="width:13px; padding-left: 5px; margin-right: 16px;" alt="">
             <span>Vue中文文档</span>
+          </el-menu-item>
+          <el-menu-item index="/learnTypeScript">
+            <img src="@/assets/typeScript.jpg" style="width:13px; padding-left: 5px; margin-right: 15px;" alt="">
+            <span>TypeScript中文文档</span>
+          </el-menu-item>
+          <el-menu-item index="/learnElementPlus">
+            <img src="@/assets/elementPlus.png" style="width: 45px;margin-left: -11px;  " alt="">
+            <span>ElementPlus中文文档</span>
+          </el-menu-item>
+          <el-menu-item index="/learnPinia">
+            <img src="@/assets/pinia.png" style="width: 32px; margin-left: -4px;" alt="">
+            <span style="margin-left:7px">Pinia中文文档</span>
           </el-menu-item>
           <el-menu-item index="/learnEcharts">
             <img src="@/assets/elogo.png" style="width:15px; padding-left: 5px; margin-right: 15px;" alt="">
@@ -141,11 +152,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, getCurrentInstance, reactive, ref, watch } from "vue";
+import { defineComponent, getCurrentInstance, inject, reactive, ref, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import useStore from "@/store";
 import { ElMessage } from "element-plus";
-import { number } from "echarts";
 import type { FormInstance } from 'element-plus'
 export default defineComponent({
   name: "HomeView",
@@ -241,8 +251,6 @@ export default defineComponent({
 
     // API
     const API = getCurrentInstance().appContext.config.globalProperties.$API;
-
-
     // 确定修改
     const confirmEdit = (formEl: FormInstance | undefined) => {
       if (!formEl) return
@@ -263,6 +271,20 @@ export default defineComponent({
       })
     }
 
+    // 路由刷新
+    const reload = inject('reloadRouter') as Function;
+    const checkRouter = (params: string) => {
+      // 如果点击了相同路由就刷新
+      if (route.path === params) {
+        reload()
+      } else {
+        router.push(params)
+      }
+
+
+    }
+
+
 
     return {
       list,
@@ -279,7 +301,8 @@ export default defineComponent({
       editPasswordForm,
       editPasswordRef,
       rules,
-      confirmEdit
+      confirmEdit,
+      checkRouter
     }
   }
 });

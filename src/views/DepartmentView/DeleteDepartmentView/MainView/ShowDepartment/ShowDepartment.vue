@@ -1,6 +1,6 @@
 <template>
     <br>
-    <el-card>
+    <el-card ref="deptInfo">
         <el-table :data="data.deleteDepartmentOrGroupInfo.allDeptInfo" border stripe>
             <el-table-column label="部门号" prop="dno" align="center"></el-table-column>
             <el-table-column label="部门名" prop="dname" align="center"></el-table-column>
@@ -23,12 +23,13 @@
     </el-card>
 </template>
 <script lang='ts' setup>
-import { reactive, ref, toRefs, defineComponent, onMounted, getCurrentInstance, defineEmits, provide } from 'vue'
+import { reactive, ref, toRefs, defineComponent, onMounted, getCurrentInstance, defineEmits, provide, inject } from 'vue'
 import { deleteDepartmentOrGroupInit } from '@/types/department'
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { reqDelDept } from '@/types/department'
 import { useRouter } from 'vue-router';
 const router = useRouter();
+const reloadRouter = inject('reloadRouter') as Function;
 // 声明emits
 const $emit = defineEmits(['change'])
 // API
@@ -57,6 +58,9 @@ onMounted(async () => {
 const delGroup = (row: any) => {
     $emit('change', row)
 }
+
+// ref绑定部门强制刷新
+const deptInfo = ref(null);
 // 解散部门
 const delDept = (row: any) => {
     ElMessageBox.confirm(`部门还有<span style="color:red">${row.children.length}</span>个小组共<span style="color:red">${row.count}人</span>,是否坚持解散!`, '风险操作', {
@@ -79,8 +83,9 @@ const delDept = (row: any) => {
         }).then(async () => {
             const res = await reqDelDept(API, row)
             if (res.code === 200) {
+
                 ElMessage.success('解散成功');
-                router.go(0)
+                reloadRouter()
             } else {
                 ElMessage.error(res.msg)
             }
@@ -91,6 +96,8 @@ const delDept = (row: any) => {
         ElMessage.info('您取消了解散操作')
     })
 }
+
+
 
 </script>
 <style lang='scss' >

@@ -1,6 +1,6 @@
 <template>
     <div style="width: 100%">
-        <Header title="防疫相员工信息" msg="疫苗接种相关的员工信息" />
+        <Header title="防疫相员工信息" msg="疫苗接种相关的员工信息,修改时注意前两针与第三针的状况" />
         <br />
         <el-card>
             <el-button icon="Back" style="height: 35px !important" color="#337ecc" @click="back">返回</el-button>
@@ -13,14 +13,14 @@
                 data.employeData.isAllEmploye
                     ? data.employeData.allEmployeInfo
                     : data.employeData.employeInfo
-            " stripe border scrollbar-always-on style="margin-top: 20px">
+            " stripe border scrollbar-always-on style="margin-top: 20px" empty-text="暂无未接种员工">
                 <el-table-column label="部门号" prop="depallid" align="center"></el-table-column>
                 <el-table-column label="小组号" prop="deptid" align="center"></el-table-column>
                 <el-table-column label="员工号" prop="employno" align="center"></el-table-column>
                 <el-table-column label="员工名" prop="employname" align="center"></el-table-column>
                 <el-table-column label="性别" prop="employsex" align="center"></el-table-column>
                 <el-table-column label="员工电话" prop="employphone" align="center"></el-table-column>
-                <el-table-column label="第一针" prop="fisrtInoculation" align="center">
+                <el-table-column label="第一针" prop="firstInoculation" align="center">
                     <template #default="{ row }">
                         <span :style="{ color: row.fisrtInoculation == 'false' ? 'red' : 'green', }">
                             {{ row.fisrtInoculation == "false" ? "未接种" : "已接种" }}</span>
@@ -57,7 +57,7 @@
             <div>
                 <el-form :model="data.employeData.updateForm">
                     <el-form-item label="员工号:">
-                        <el-tag type="info">{{ data.employeData.updateForm['employid'] }}</el-tag>
+                        <el-tag type="info">{{ data.employeData.updateForm['employno'] }}</el-tag>
                     </el-form-item>
                     <el-form-item label="员工名:">
                         <el-tag type="info">{{ data.employeData.updateForm['employname'] }}</el-tag>
@@ -67,22 +67,23 @@
                         <el-tag type="info">{{ data.employeData.updateForm['employphone'] }}</el-tag>
                     </el-form-item>
                     <el-form-item label="第一针是否接种">
-                        <el-select v-model="data.employeData.updateForm['fisrtInoculation']" size="large"
-                            placeholder="请选择">
+                        <el-select :disabled="data.employeData.updateForm['secondInoculation'] == 'true'"
+                            v-model="data.employeData.updateForm['firstInoculation']" size="large" placeholder="请选择">
                             <el-option value="true" label="已接种" :key="0"></el-option>
                             <el-option value="false" label="未接种" :key="1"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="第二针是否接种">
-                        <el-select v-model="data.employeData.updateForm['secondInoculation']" size="large"
-                            placeholder="请选择">
+                        <el-select :disabled="data.employeData.updateForm['threeInoculation'] == 'true'"
+                            v-model="data.employeData.updateForm['secondInoculation']" size="large" placeholder="请选择"
+                            @change="changeFirstEvil">
                             <el-option value="true" label="已接种" :key="0"></el-option>
                             <el-option value="false" label="未接种" :key="1"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="第三针是否接种">
                         <el-select v-model="data.employeData.updateForm['threeInoculation']" size="large"
-                            placeholder="请选择">
+                            placeholder="请选择" @change="changeFirstAndSecond">
                             <el-option value="true" label="已接种" :key="0"></el-option>
                             <el-option value="false" label="未接种" :key="1"></el-option>
                         </el-select>
@@ -93,7 +94,7 @@
             <div>
                 <el-button color="#337ecc" icon="Close" @click="data.employeData.dialogTableVisible = false">取消修改
                 </el-button>
-                <el-button color="#337ecc" icon="Check">确认修改</el-button>
+                <el-button color="#337ecc" icon="Check" @click="confimUpdate">确认修改</el-button>
             </div>
         </el-dialog>
     </div>
@@ -110,10 +111,13 @@ import {
     nextTick,
 } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { evilEmployeInfoInit, getEvilEmployeInfo } from "@/types/evilControl";
+import { evilEmployeInfoInit, getEvilEmployeInfo, updateEvilEmployeInfo } from "@/types/evilControl";
+import { ElMessage } from "element-plus";
+
 // router
 const router = useRouter();
 const route = useRoute();
+const instance = getCurrentInstance();
 //data、API
 const API = getCurrentInstance().appContext.config.globalProperties.$API;
 const data = reactive(new evilEmployeInfoInit());
@@ -177,7 +181,12 @@ const getAllEmployeEvilInfoOrBack = async () => {
     // 获取该部门全部员工信息
     // 改变状态
     data.employeData.isAllEmploye = !data.employeData.isAllEmploye;
-    getAllInfo()
+    if (data.employeData.isAllEmploye) {
+        getAllInfo()
+    } else {
+        getEvilInfo()
+    }
+
 };
 // 获取全部
 const getAllInfo = async () => {
@@ -193,15 +202,44 @@ const getAllInfo = async () => {
         }
     }
 }
-// 修改信息
+// 点击修改信息
 const editEvilInfo = (row: any) => {
-
     data.employeData.updateForm = JSON.parse(JSON.stringify(row));;
-
-
     data.employeData.dialogTableVisible = true;
-
 }
+
+// 点击确认修改
+const confimUpdate = async () => {
+    const res = await updateEvilEmployeInfo(API, data.employeData.updateForm);
+    if (res.code === 200) {
+        ElMessage.success('修改信息成功!')
+        data.employeData.dialogTableVisible = false;
+        if (data.employeData.isAllEmploye) {
+            getAllInfo()
+        } else {
+            getEvilInfo()
+        }
+    } else {
+        ElMessage.error('修改信息失败！')
+        if (data.employeData.isAllEmploye) {
+            getAllInfo()
+        } else {
+            getEvilInfo()
+        }
+    }
+}
+// 第二针为true 第一针必须为true
+const changeFirstEvil = () => {
+    data.employeData.updateForm['firstInoculation'] = data.employeData.updateForm['secondInoculation'];
+}
+
+// 第三针为true时 前两针也必须true
+const changeFirstAndSecond = () => {
+    data.employeData.updateForm['firstInoculation'] = data.employeData.updateForm['threeInoculation'];
+    data.employeData.updateForm['secondInoculation'] = data.employeData.updateForm['threeInoculation'];
+}
+
+
 </script>
 <style lang='scss' scoped>
 </style>
