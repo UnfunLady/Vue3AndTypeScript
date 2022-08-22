@@ -154,6 +154,9 @@ const getEvilInfo = async () => {
         });
         if (res.code === 200) {
             // 合并数据
+            console.log(res.employeInfo);
+            console.log(res.evilInfo);
+
             data.employeData.employeInfo = res.employeInfo.map(
                 (item: object, index: number) => {
                     return { ...item, ...res.evilInfo[index] };

@@ -92,14 +92,14 @@ onMounted(async () => {
 // 时间戳转日期
 const timestampToTime = (timestamp: number | string) => {
     let date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
-    let Y: string, M: string, D: string, h: string, m: string;
+    let Y: string, M: string, D: string, h: string, m: string, s: string | number;
     Y = date.getFullYear() + '-';
     M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
     D = date.getDate() < 10 ? '0' + date.getDate() + ' ' : date.getDate() + ' ';
-    h = date.getHours() < 10 ? '0' + date.getHours() : date.getHours() + ':';
-    m = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes() + ' ';
-
-    return Y + M + D + h + m;
+    h = date.getHours() < 10 ? '0' + date.getHours() + ':' : date.getHours() + ':';
+    m = date.getMinutes() < 10 ? '0' + date.getMinutes() + ':' : date.getMinutes() + ':';
+    s = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds() + ''
+    return Y + M + D + h + m + s;
 }
 // 点击更新最新数据
 const updateNewEvilInfo = async () => {

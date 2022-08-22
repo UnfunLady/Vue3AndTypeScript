@@ -10,7 +10,7 @@
             <img src="@/assets/maria.png" alt="">
         </div>
         <div class="back">
-            <el-button @click="backMain">返回主页</el-button>
+            <el-button @click="backMain">返回</el-button>
         </div>
 
     </div>
@@ -28,7 +28,8 @@ const backMain = () => {
 <style lang='scss' scoped>
 .main {
     overflow: hidden;
-    background-color: rgb(255, 255, 255);
+    background-color: #5c779b;
+
     width: 100vw;
     height: 100vh;
     position: absolute;
@@ -38,7 +39,7 @@ const backMain = () => {
     h3 {
         margin-top: 50px;
         height: 120px;
-        background: linear-gradient(to right, rgb(21, 30, 24), rgb(210, 9, 236), rgb(21, 138, 215), rgb(226, 23, 23), rgb(3, 3, 3), rgb(7, 7, 255), rgb(3, 179, 255));
+        background: linear-gradient(to right, rgb(97, 35, 255), rgb(255, 222, 7), rgb(101, 219, 146), rgb(84, 104, 254));
         background-clip: text;
         color: transparent;
         animation: hue 3s linear infinite;
@@ -137,18 +138,20 @@ const backMain = () => {
             width: 230px;
             height: 60px;
             letter-spacing: 5px;
+            border-radius: 10px;
             color: white;
             font-size: 16px;
             font-weight: 700;
-            box-shadow: 1px 5px 14px 4px gray;
+            box-shadow: 0px 6px 13px 0px #4c4c4c;
             border: none;
-            background: linear-gradient(to right, rgb(114, 106, 106), rgb(40, 40, 63));
+            background: linear-gradient(to right, rgb(114, 106, 106), rgb(87, 87, 108));
             transition: all .2s !important;
         }
 
         .el-button:hover {
             border: none;
             transform: scale(1.05);
+            background: linear-gradient(to right, #6b88ab 30%, rgb(40, 40, 63));
 
         }
     }

@@ -3,7 +3,7 @@ var connection=mysql.createConnection({
     host:'localhost',
     user:'root',
     password:'luyuxi',
-    database:'vueandts',
+    database:'vuets',
     port:3307
 })
 module.exports = connection;

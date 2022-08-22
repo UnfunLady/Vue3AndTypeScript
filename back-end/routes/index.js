@@ -179,7 +179,7 @@ router.post('/api/addOrUpdateEmploy', (req, res) => {
         })
       } else {
         const udSql = `
-    UPDATE vueandts.employee SET deptno = ${body.default.deptno}, employname = '${body.default.employname}', employage = '${body.default.employage}', employsex= '${body.default.employsex}', employidcard = '${body.default.employidcard}',
+    UPDATE  employee SET deptno = ${body.default.deptno}, employname = '${body.default.employname}', employage = '${body.default.employage}', employsex= '${body.default.employsex}', employidcard = '${body.default.employidcard}',
     employphone = '${body.default.employphone}', entryDate = '${body.default.entryDate}', 
     employemail = '${body.default.employemail}', employaddress = '${body.default.employaddress}', 
     employsalary = '${body.default.employsalary}' 
@@ -205,7 +205,7 @@ router.post('/api/addOrUpdateEmploy', (req, res) => {
 
   } else {
     // 插入sql
-    const addSql = `INSERT INTO vueandts.employee(deptno, employname, employage, employsex,employidcard, employphone, entryDate, employemail, employaddress, employsalary)
+    const addSql = `INSERT INTO  employee(deptno, employname, employage, employsex,employidcard, employphone, entryDate, employemail, employaddress, employsalary)
         VALUES (${body.default.deptno}, '${body.default.employname}', '${body.default.employage}', '${body.default.employsex}', '${body.default.employidcard}', '${body.default.employphone}', '${body.default.entryDate}', '${body.default.employemail}', '${body.default.employaddress}', '${body.default.employsalary}');`
     connect.query(addSql, (err, result) => {
       // 插入成功 返回信息

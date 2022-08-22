@@ -272,7 +272,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/:pathMatch(.*)',
     redirect: '/404'
-  }
+  },
 ]
 
 const router = createRouter({

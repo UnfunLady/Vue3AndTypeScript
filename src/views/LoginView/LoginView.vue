@@ -38,7 +38,14 @@ import useStore from '@/store/index'
 export default defineComponent({
   name: "Login",
   setup() {
+    onMounted(() => {
+      window.addEventListener('keydown', keyDown)
+    })
 
+    const keyDown = (e: any) => {
+      if ((e.code == 'Enter' || e.keyCode === 13) && data.loginForm.password.length > 0)
+        submitForm()
+    }
     // 使用pinia
     const { user } = useStore();
     // 通过类的示例实现
@@ -111,6 +118,7 @@ export default defineComponent({
   // background-color: #f1f4f6;
   background-image: url('../../assets/bg.jpg');
   box-sizing: border-box;
+  background-size: cover;
   padding-top: 200px;
 
   .el-form {
@@ -144,11 +152,13 @@ export default defineComponent({
   .bgForm {
     width: 500px;
     padding: 40px;
-    background-color: rgba(255, 255, 255, 0.889);
+    background-color: rgba(255, 255, 255, 0.826);
     border-radius: 10px;
     margin: 0 auto;
 
   }
+
+
 
   .subButton {
 
@@ -176,9 +186,12 @@ export default defineComponent({
 }
 
 .header-title {
+  letter-spacing: 2px;
+  font-size: 35px;
+  background: linear-gradient(to right, #415f7b 40%, #77a1c3);
+  background-clip: text;
+  color: transparent;
 
-  font-size: 30px;
-  color: #79a0c9;
   margin: 20px 0px;
 
 }
