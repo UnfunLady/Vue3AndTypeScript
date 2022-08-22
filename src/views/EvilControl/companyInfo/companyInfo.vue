@@ -48,7 +48,7 @@
 </template>
 
 <script lang='ts' setup>
-import { reactive, ref, toRefs, defineComponent, onMounted, getCurrentInstance } from 'vue'
+import { reactive, onMounted, getCurrentInstance } from 'vue'
 import { companyInfoInit } from '@/types/evilControl'
 import { ElMessage } from 'element-plus';
 import { useRouter } from 'vue-router';

@@ -26,7 +26,7 @@
 </template>
 
 <script lang='ts'>
-import { reactive, ref, toRefs, defineComponent, onMounted, getCurrentInstance } from 'vue'
+import { reactive,toRefs, defineComponent, onMounted, getCurrentInstance } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { editGroupInit } from '@/types/department'
 export default defineComponent({

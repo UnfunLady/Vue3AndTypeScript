@@ -56,7 +56,7 @@
 </template>
 
 <script lang='ts' setup>
-import { reactive, ref, toRefs, defineComponent, onMounted, getCurrentInstance, nextTick, inject } from 'vue'
+import { reactive, ref, onMounted, getCurrentInstance, inject } from 'vue'
 import { chinaInfoInit, getAllEvilInfo, chart, numberInit } from '@/types/evilControl';
 import useStore from '@/store';
 const reloadRouter = inject('reloadRouter') as Function

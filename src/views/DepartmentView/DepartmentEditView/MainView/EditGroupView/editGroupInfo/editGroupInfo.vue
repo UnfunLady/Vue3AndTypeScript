@@ -26,7 +26,7 @@
 
 <script lang='ts'>
 import { ElMessage, FormInstance } from "element-plus";
-import { reactive, ref, toRefs, defineComponent, onMounted, getCurrentInstance } from "vue";
+import { ref, defineComponent, getCurrentInstance } from "vue";
 import { updateGroupInfo } from '@/types/department'
 export default defineComponent({
     name: "editGroupInfo",

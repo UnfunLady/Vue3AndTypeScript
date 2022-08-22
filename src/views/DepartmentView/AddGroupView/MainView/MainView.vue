@@ -172,10 +172,9 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, onMounted, getCurrentInstance } from 'vue'
+import { reactive,  onMounted, getCurrentInstance } from 'vue'
 import { getAllEmploye, addGroupDataInit, addGroup } from '@/types/department'
 import { ElMessage } from 'element-plus';
-import router from '@/router';
 // 初始化数据
 const initData = reactive(new addGroupDataInit());
 // 全局API

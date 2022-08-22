@@ -10,7 +10,7 @@
 import Show from './ShowDepartment/ShowDepartment.vue'
 import Edit from './EditDepartment/EditDepartment.vue'
 import { editDepartmentDataInit } from '@/types/department'
-import { reactive, ref, toRefs, provide } from 'vue'
+import { reactive, toRefs, } from 'vue'
 export default {
     name: 'MainView',
     components: {

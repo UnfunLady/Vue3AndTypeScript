@@ -9,7 +9,7 @@
 </template>
 
 <script lang='ts' setup>
-import { reactive, ref, toRefs, defineComponent, onMounted, getCurrentInstance } from 'vue'
+import { reactive, } from 'vue'
 import { useRoute } from 'vue-router'
 import { editGroupInit } from '@/types/department'
 import Show from './showGroupInfo/showGroupInfo.vue'

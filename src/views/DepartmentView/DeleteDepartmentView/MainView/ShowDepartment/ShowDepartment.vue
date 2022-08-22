@@ -23,12 +23,12 @@
     </el-card>
 </template>
 <script lang='ts' setup>
-import { reactive, ref, toRefs, defineComponent, onMounted, getCurrentInstance, defineEmits, provide, inject } from 'vue'
+import { reactive, ref, onMounted, getCurrentInstance, defineEmits, provide, inject } from 'vue'
 import { deleteDepartmentOrGroupInit } from '@/types/department'
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { reqDelDept } from '@/types/department'
-import { useRouter } from 'vue-router';
-const router = useRouter();
+
+
 const reloadRouter = inject('reloadRouter') as Function;
 // 声明emits
 const $emit = defineEmits(['change'])

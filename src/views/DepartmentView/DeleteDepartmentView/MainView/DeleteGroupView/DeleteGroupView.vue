@@ -41,7 +41,7 @@
 
 <script lang='ts'>
 import { ElMessageBox, ElMessage } from 'element-plus';
-import { reactive, ref, toRefs, defineComponent, onMounted, inject, getCurrentInstance } from 'vue'
+import {  defineComponent,  getCurrentInstance } from 'vue'
 import { useRouter } from 'vue-router';
 import { reqDelGroup } from '@/types/department'
 export default defineComponent({

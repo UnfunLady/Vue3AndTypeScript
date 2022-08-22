@@ -39,7 +39,7 @@
 </template>
 
 <script lang='ts'>
-import { reactive, ref, toRefs, defineComponent, onMounted } from 'vue'
+import {toRefs, defineComponent } from 'vue'
 import { useRouter } from 'vue-router';
 export default defineComponent({
     name: 'EmployeMainView',

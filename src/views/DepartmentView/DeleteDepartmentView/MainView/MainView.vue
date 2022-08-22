@@ -9,7 +9,7 @@
 </template>
 
 <script lang='ts' setup>
-import { reactive, ref, toRefs, defineComponent, onMounted, } from 'vue'
+import { reactive } from 'vue'
 import Show from './ShowDepartment/ShowDepartment.vue'
 import DelGroup from './DeleteGroupView/DeleteGroupView.vue'
 import { deleteDepartmentOrGroupInit } from '@/types/department'

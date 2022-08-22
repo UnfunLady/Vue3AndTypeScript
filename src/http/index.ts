@@ -12,7 +12,7 @@ enum MSGS {
     '身份信息异常'//203
 }
 const request = axios.create({
-    baseURL: '/api',
+    baseURL: '/api',//devServer中proxy代理跨域
     timeout: 5000,
     headers: {
         "Content-Type": "application/json;charset=utf-8",
@@ -46,7 +46,6 @@ request.interceptors.response.use(res => {
             ElMessage.error(MSGS[code] + '       ' + res.data.msg)
             Nprogress.done()
             return Promise.reject(res.data)
-
         }
         else {
             Nprogress.done()
@@ -54,8 +53,8 @@ request.interceptors.response.use(res => {
         }
     }
 }, err => {
-    ElMessage({
-        message: '请求失败!' + err
+    ElMessage.error({
+        message: '请求失败!'
     })
 })
 

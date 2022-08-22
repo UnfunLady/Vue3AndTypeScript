@@ -98,7 +98,7 @@
 </template>
 
 <script lang='ts'>
-import { reactive, ref, toRefs, defineComponent, onMounted, getCurrentInstance } from "vue";
+import { reactive, toRefs, defineComponent, onMounted, getCurrentInstance } from "vue";
 import { departmentDataInit } from "@/types/department";
 import router from "@/router";
 // import Pagination from '@/components/Pagination/PaginationView.vue'

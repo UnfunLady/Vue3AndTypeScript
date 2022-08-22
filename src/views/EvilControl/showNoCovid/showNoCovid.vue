@@ -103,12 +103,8 @@
 <script lang='ts' setup>
 import {
     reactive,
-    ref,
-    toRefs,
-    defineComponent,
     onMounted,
     getCurrentInstance,
-    nextTick,
 } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { evilEmployeInfoInit, getEvilEmployeInfo, updateEvilEmployeInfo } from "@/types/evilControl";

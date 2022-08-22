@@ -5,7 +5,7 @@
 </template>
 
 <script lang='ts'>
-import { reactive, ref, toRefs, defineComponent, onMounted } from 'vue'
+import { defineComponent } from 'vue'
 import MainView from './MainView/MainView.vue'
 
 export default defineComponent({

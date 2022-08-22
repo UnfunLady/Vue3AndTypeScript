@@ -17,7 +17,7 @@
 </template>
 
 <script lang='ts' setup>
-import { reactive, ref, toRefs, defineComponent, onMounted, getCurrentInstance } from 'vue'
+
 import { useRouter } from 'vue-router';
 const router = useRouter()
 const backMain = () => {

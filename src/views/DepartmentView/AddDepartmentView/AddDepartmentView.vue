@@ -68,7 +68,7 @@
 </template>
 
 <script lang='ts' setup>
-import { reactive, ref, toRefs, defineComponent, onMounted, getCurrentInstance, computed } from 'vue'
+import { reactive, ref, getCurrentInstance, computed } from 'vue'
 import { addDepartmentDataInit } from '@/types/department'
 import { UploadInstance, UploadProps, UploadFile, UploadRawFile, FormInstance, ElMessageBox } from 'element-plus';
 import { ElMessage, genFileId } from 'element-plus'

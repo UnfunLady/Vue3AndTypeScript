@@ -63,7 +63,7 @@
 
 <script lang='ts'>
 
-import { reactive, ref, toRefs, defineComponent, onMounted, inject, getCurrentInstance, computed } from 'vue'
+import { reactive, ref, toRefs, defineComponent, getCurrentInstance, computed } from 'vue'
 import { editDepartmentDataInit, updateDepartmentNoAvatar } from '@/types/department'
 import { ElMessage, genFileId } from 'element-plus'
 import type { UploadInstance, UploadProps, UploadFile, UploadRawFile, FormInstance } from 'element-plus';
