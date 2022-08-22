@@ -43,7 +43,6 @@ export default defineComponent({
             if (detail.code === 200) {
                 data.mainViewData.DetailData = detail.detailData;
                 initData(data)
-
             }
         })
 

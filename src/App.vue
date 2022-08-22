@@ -5,9 +5,7 @@
 
 <script lang="ts" setup>
 import { nextTick, provide, ref } from 'vue';
-import useStore from './store';
 const isRouterAlive = ref(true);
-
 // 点击相同路由时刷新 或者在特定情境下更新数据
 const reloadRouter = () => {
   // 不显示路由

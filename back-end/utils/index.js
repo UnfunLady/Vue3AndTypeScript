@@ -5,6 +5,7 @@ const createToken = (username) => {
         expiresIn: '12h'// 设置token的有效期 单位（秒）  
     })
 }
+// 校验token
 const authToken = (token) => {
     if (!token) return false;
     const verifyPayload = jwt.verify(token, secret, (err, payload) => {

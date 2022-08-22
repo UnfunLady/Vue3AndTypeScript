@@ -25,6 +25,7 @@ import {
   reactive,
   getCurrentInstance,
   onMounted,
+  onUnmounted,
 } from "vue";
 // 导入登录form表单
 // import { hello } from "@/types/login";
@@ -41,7 +42,9 @@ export default defineComponent({
     onMounted(() => {
       window.addEventListener('keydown', keyDown)
     })
-
+    onUnmounted(() => {
+      window.removeEventListener('keydown', keyDown);
+    })
     const keyDown = (e: any) => {
       if ((e.code == 'Enter' || e.keyCode === 13) && data.loginForm.password.length > 0)
         submitForm()
