@@ -2,7 +2,6 @@
     <div class="father">
         <div id="one" class="one"></div>
         <div id="two" class="two"></div>
-
         <div id="three" class="three">
             <div class="card" v-for="(item) in mainViewData.showData " :key="item['id']">
                 <div class="number" :style="{
@@ -47,8 +46,6 @@ export default defineComponent({
 
             }
         })
-
-
 
         return {
             ...toRefs(data)
