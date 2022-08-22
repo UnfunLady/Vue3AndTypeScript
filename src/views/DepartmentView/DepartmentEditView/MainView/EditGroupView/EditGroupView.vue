@@ -4,10 +4,8 @@
         <br />
         <Show v-if="!data.editGroupData.isEdit" @change="changeEdit" />
         <Edit v-else :editGroupForm="data.editGroupData.editGroupForm" @back="backShow" />
-
     </div>
 </template>
-
 <script lang='ts' setup>
 import { reactive, } from 'vue'
 import { useRoute } from 'vue-router'
@@ -19,7 +17,6 @@ const changeEdit = (row: any) => {
     data.editGroupData.isEdit = true;
     data.editGroupData.editGroupForm = row;
 }
-
 const backShow = () => {
     data.editGroupData.isEdit = false;
     data.editGroupData.editGroupForm = []

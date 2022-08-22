@@ -3,7 +3,6 @@
         <router-view></router-view>
     </div>
 </template>
-
 <script lang='ts'>
 import { reactive, ref, toRefs, defineComponent, onMounted } from 'vue'
 export default defineComponent({
@@ -11,7 +10,6 @@ export default defineComponent({
     setup() {
         return {
         }
-
     }
 });
 </script>

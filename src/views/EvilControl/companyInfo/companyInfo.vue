@@ -40,13 +40,11 @@
                         </div>
                     </div>
                 </div>
-
             </el-col>
         </el-row>
     </el-card>
     <router-view></router-view>
 </template>
-
 <script lang='ts' setup>
 import { reactive, onMounted, getCurrentInstance } from 'vue'
 import { companyInfoInit } from '@/types/evilControl'
@@ -64,13 +62,10 @@ onMounted(async () => {
     const deptInfo = await API.evilControl.reqGetCompanyEvilInfo()
     if (deptInfo.code === 200) {
         data.companyData.allDeptInfo = deptInfo.deptInfo;
-
     } else {
         ElMessage.error('获取部门信息失败！')
     }
-
 })
-
 // 查看未接种的员工信息
 const showNoCovid = (info: any) => {
     router.push({
@@ -78,16 +73,13 @@ const showNoCovid = (info: any) => {
         params: info
     })
 }
-
 // 查看信息
 const justCheck = (row: any) => {
     router.push({
         name: 'showNoCovid',
         params: { ...row, justCheck: true },
-
     })
 }
-
 </script>
 <style lang='scss' scoped>
 .icon {
@@ -115,7 +107,6 @@ div.header {
     align-items: center;
     position: relative;
     height: 130px;
-
 
     .deptInfo {
         h6 {
@@ -156,7 +147,6 @@ div.warn {
 div.ok {
     padding: 10px;
     font-size: 16px;
-
     background-color: #43c283c3;
     font-weight: bold;
     letter-spacing: 4px;

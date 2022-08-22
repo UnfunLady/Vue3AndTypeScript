@@ -5,11 +5,9 @@ interface evilData {
         evilData: []
     }
 }
-
 class evilDataInit {
     evilData: evilData = JSON.parse(localStorage.getItem('evilControl')) || []
 }
-
 export default defineStore("evilControl", {
     state: () => {
         return {
@@ -33,4 +31,3 @@ export default defineStore("evilControl", {
         enabled: true,
     }
 })
-

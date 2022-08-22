@@ -17,7 +17,6 @@
     </div>
   </div>
 </template>
-
 <script lang="ts">
 import {
   defineComponent,
@@ -97,14 +96,12 @@ export default defineComponent({
             setTimeout(() => {
               router.push({ name: 'main' })
             }, 1000)
-
           }
         } else {
           ElMessage.error(" 登录验证失败,请重新输入~");
         }
       });
     };
-
     return {
       ...toRefs(data),
       rules,
@@ -113,7 +110,6 @@ export default defineComponent({
   },
 });
 </script>
-
 <style scoped lang="scss">
 .login {
   width: 100%;
@@ -126,8 +122,6 @@ export default defineComponent({
 
   .el-form {
     text-align: center;
-
-
   }
 
   .el-button {
@@ -150,21 +144,15 @@ export default defineComponent({
     }
   }
 
-
-
   .bgForm {
     width: 500px;
     padding: 40px;
     background-color: rgba(255, 255, 255, 0.826);
     border-radius: 10px;
     margin: 0 auto;
-
   }
 
-
-
   .subButton {
-
     width: 100%;
     height: 40px;
   }
@@ -194,8 +182,6 @@ export default defineComponent({
   background: linear-gradient(to right, #415f7b 40%, #77a1c3);
   background-clip: text;
   color: transparent;
-
   margin: 20px 0px;
-
 }
 </style>

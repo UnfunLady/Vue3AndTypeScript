@@ -1,5 +1,4 @@
 <template>
-
     <div style="margin-top:10px">
         <el-row :gutter="20">
             <el-col :span="6" v-for="item in deptList" :key="item.dno">
@@ -24,7 +23,6 @@
                             <div class="item" style="min-width:50px">
                                 <span style="color:red"> {{ item.count }}人</span>
                             </div>
-
                         </div>
                         <div class="action">
                             <el-button link @click="goToDetail(item, 'departmentSalaryDetail')">部门整体工资明细
@@ -37,9 +35,8 @@
         </el-row>
     </div>
 </template>
-
 <script lang='ts'>
-import {toRefs, defineComponent } from 'vue'
+import { toRefs, defineComponent } from 'vue'
 import { useRouter } from 'vue-router';
 export default defineComponent({
     name: 'EmployeMainView',
@@ -57,13 +54,10 @@ export default defineComponent({
                 }
             })
         }
-
         return {
             deptList,
             goToDetail,
-
         }
-
     }
 });
 </script>
@@ -75,12 +69,10 @@ export default defineComponent({
         display: flex;
         padding-top: 30px;
         padding-bottom: 30px;
-
     }
 
     .action {
         display: flex;
-
         background-color: #90939936;
         position: absolute;
         left: 0px;
@@ -112,8 +104,6 @@ export default defineComponent({
             margin-top: -7px;
             background-color: #7d7d7d;
         }
-
-
     }
 }
 
@@ -134,7 +124,6 @@ export default defineComponent({
 $bg-purple: #d3dce6;
 
 .ep-bg-purple {
-
     background-color: $bg-purple;
 }
 

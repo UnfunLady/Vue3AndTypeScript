@@ -14,7 +14,6 @@ interface chinaInfo {
         }
     }
 }
-
 export class chinaInfoInit {
     chinaInfo: chinaInfo = {
         title: '全国疫情数据(包含港澳台)',
@@ -48,7 +47,6 @@ export class chinaInfoInit {
                 title: '累计死亡',
                 color: '#333333',
                 data: []
-
             },
             {
                 id: 5,
@@ -68,7 +66,6 @@ export class chinaInfoInit {
         }
     }
 }
-
 // 获取疫情数据
 export const getAllEvilInfo = (API: any) => {
     return API.evilControl.reqGetEvilInfo();
@@ -88,7 +85,6 @@ export const chart = (dom: HTMLElement, data: any) => {
                 label: {
                     precision: 0
                 }
-
             }
         },
         toolbox: {
@@ -96,7 +92,6 @@ export const chart = (dom: HTMLElement, data: any) => {
                 dataView: { show: true, readOnly: false },
                 magicType: { show: true, type: ['line', 'bar'] },
                 restore: { show: true },
-
             }
         },
         legend: {
@@ -142,7 +137,6 @@ export const chart = (dom: HTMLElement, data: any) => {
                 data: data.chinaInfo.echarts.yData.countData
                 , itemStyle: { color: '#ee6666' }
             },
-
             {
                 name: '相较昨日',
                 type: 'line',
@@ -155,20 +149,16 @@ export const chart = (dom: HTMLElement, data: any) => {
                     // 圆圈颜色
                     color: '#1F5175'
                 },
-
                 tooltip: {
                     valueFormatter: function (value: number) {
                         return '+' + value + '人';
                     }
                 },
-
                 data: data.chinaInfo.echarts.yData.moreData
             }
         ]
     };
-
     option && myChart.setOption(option);
-
 }
 // 全国疫情数据数字细节赋值
 export const numberInit = (data: any) => {
@@ -198,22 +188,15 @@ export const numberInit = (data: any) => {
         twoNumber: data.chinaInfo.evilData['curedIncr']
     };
 }
-
-
-
-
 // 公司疫情信息
 type companyInfo = {
     allDeptInfo: []
 }
-
 export class companyInfoInit {
     companyData: companyInfo = {
         allDeptInfo: []
     }
 }
-
-
 // 员工相关信息
 type evilEmployeInfo = {
     // 员工相关信息
@@ -246,7 +229,6 @@ export class evilEmployeInfoInit {
 export const getEvilEmployeInfo = (API: any, params: Object) => {
     return API.evilControl.reqGetEmployeEvilInfo(params)
 }
-
 // 修改数据
 export const updateEvilEmployeInfo = (API: any, data: Object) => {
     return API.evilControl.reqUpdateEmployeEvilInfo(data);

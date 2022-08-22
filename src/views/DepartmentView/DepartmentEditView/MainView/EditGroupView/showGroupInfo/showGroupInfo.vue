@@ -2,7 +2,6 @@
     <div>
         <el-card>
             <el-button color="#296a99" icon="Back" size="large" @click="back">返回</el-button>
-
             <el-table :data="editGroupData.editGroupForm" stripe border style="margin-top:30px">
                 <el-table-column label="部门号" prop="deptno" align="center" />
                 <el-table-column label="小组号" prop="id" align="center" />
@@ -24,9 +23,8 @@
         </el-card>
     </div>
 </template>
-
 <script lang='ts'>
-import { reactive,toRefs, defineComponent, onMounted, getCurrentInstance } from 'vue'
+import { reactive, toRefs, defineComponent, onMounted, getCurrentInstance } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { editGroupInit } from '@/types/department'
 export default defineComponent({
@@ -50,12 +48,10 @@ export default defineComponent({
                 }
             }
         })
-
         // 编辑小组信息
         const editGroupInfo = ({ row }) => {
             ctx.emit('change', row)
             console.log(row);
-
         }
         // 返回
         const back = () => {
@@ -68,7 +64,6 @@ export default defineComponent({
         }
     }
 })
-
 </script>
 <style lang='scss' scoped>
 </style>

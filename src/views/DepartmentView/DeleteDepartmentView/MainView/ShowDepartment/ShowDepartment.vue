@@ -27,8 +27,6 @@ import { reactive, ref, onMounted, getCurrentInstance, defineEmits, provide, inj
 import { deleteDepartmentOrGroupInit } from '@/types/department'
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { reqDelDept } from '@/types/department'
-
-
 const reloadRouter = inject('reloadRouter') as Function;
 // 声明emits
 const $emit = defineEmits(['change'])
@@ -52,13 +50,11 @@ onMounted(async () => {
         })
         data.deleteDepartmentOrGroupInfo.allDeptInfo = res.deptInfo;
     })
-
 })
 // 点击解散小组
 const delGroup = (row: any) => {
     $emit('change', row)
 }
-
 // ref绑定部门强制刷新
 const deptInfo = ref(null);
 // 解散部门
@@ -83,7 +79,6 @@ const delDept = (row: any) => {
         }).then(async () => {
             const res = await reqDelDept(API, row)
             if (res.code === 200) {
-
                 ElMessage.success('解散成功');
                 reloadRouter()
             } else {
@@ -96,9 +91,6 @@ const delDept = (row: any) => {
         ElMessage.info('您取消了解散操作')
     })
 }
-
-
-
 </script>
 <style lang='scss' >
 .dButton:hover {

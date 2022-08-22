@@ -58,7 +58,7 @@
             </el-table>
         </el-card>
         <!-- <Pagination v-model:size="departmentData.size" :total="20" v-model:page="departmentData.page"
-            @pagination="changePagination" :page-sizes="[5, 10, 15]" /> -->
+@pagination="changePagination" :page-sizes="[5, 10, 15]" /> -->
     </div>
     <el-dialog v-model="departmentData.showDetail" @close="closeDetail">
         <template #header="{ titleId }">
@@ -93,10 +93,8 @@
                 </h4>
             </el-form-item>
         </el-form>
-
     </el-dialog>
 </template>
-
 <script lang='ts'>
 import { reactive, toRefs, defineComponent, onMounted, getCurrentInstance } from "vue";
 import { departmentDataInit } from "@/types/department";
@@ -138,13 +136,11 @@ export default defineComponent({
         const showDetail = ({ row }) => {
             data.departmentData.showDetail = true;
             data.departmentData.detailForm = row;
-
         }
         // 关闭详细信息
         const closeDetail = () => {
             data.departmentData.showDetail = false;
         }
-
         // 查看团队信息
         const moveGroupDetail = ({ row }) => {
             router.push({
@@ -155,12 +151,10 @@ export default defineComponent({
                 }
             })
         }
-
         // 点击了修改部门
         const EditDept = ({ row }) => {
             ctx.emit('change', row)
         }
-
         return {
             // changePagination,
             ...toRefs(data),
@@ -168,14 +162,10 @@ export default defineComponent({
             closeDetail,
             moveGroupDetail,
             EditDept
-
         };
     },
-
-
     components: {
         // Pagination,
-
     },
 });
 </script>
@@ -194,12 +184,10 @@ export default defineComponent({
     .detail {
         color: rgb(81, 81, 81);
         font-size: 18px;
-
     }
 }
 
 .form-item {
     margin: 0 auto !important;
-
 }
 </style>

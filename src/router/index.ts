@@ -77,7 +77,6 @@ const routes: Array<RouteRecordRaw> = [
                   isAuth: true
                 },
               },
-
             ]
           }
         ]
@@ -145,9 +144,7 @@ const routes: Array<RouteRecordRaw> = [
               icon: 'Delete',
               isAuth: true
             },
-
           },
-
         ]
       },
       {
@@ -267,19 +264,16 @@ const routes: Array<RouteRecordRaw> = [
     path: '/404',
     name: '404',
     component: () => import('@/components/NotFound/NotFound.vue'),
-
   },
   {
     path: '/:pathMatch(.*)',
     redirect: '/404'
   },
 ]
-
 const router = createRouter({
   routes: routes,
   history: createWebHistory(process.env.BASE_URL)
 })
-
 // 全局路由守卫
 router.beforeEach((to, from, next) => {
   // 获取用户信息
@@ -325,7 +319,6 @@ router.beforeEach((to, from, next) => {
       })
     }
   }, { immediate: true, deep: true })
-
   document.title = to.meta.name as string || '具体信息'
   // 如果路由需要认证的话
   if (to.meta.isAuth) {
@@ -346,9 +339,6 @@ router.beforeEach((to, from, next) => {
       }
     }
     next()
-
   }
 })
-
-
 export default router

@@ -10,7 +10,6 @@
         <!-- 第一步 选择要添加的员工 -->
         <div style="text-align: center;margin-top: 30px;" v-show="initData.addGroupData.active === 0">
             <div style="text-align: center">
-
                 <el-transfer v-model="initData.addGroupData.addEmployeData"
                     style="text-align: left; display: inline-block" filter-placeholder="查询员工姓名" filterable
                     :titles="['工号+姓名', '新小组员工']" :button-texts="['取消添加', '添加员工']" :format="{
@@ -71,7 +70,6 @@
                         </div>
                     </template>
                     {{ initData.addGroupData.selectDeptForm.confirmForm[0].dno }}
-
                 </el-descriptions-item>
                 <el-descriptions-item>
                     <template #label>
@@ -82,7 +80,6 @@
                             小组所在部门名
                         </div>
                     </template>
-
                     {{ initData.addGroupData.selectDeptForm.confirmForm[0].dname }}
                 </el-descriptions-item>
                 <el-descriptions-item>
@@ -105,7 +102,6 @@
                             新增小组员工号
                         </div>
                     </template>
-
                     <div v-if="initData.addGroupData.addEmployeData.length < 4">
                         <el-tag size="small" v-for="item in initData.addGroupData.addEmployeData" :key="item"
                             style="margin-left:5px">
@@ -119,7 +115,6 @@
                         </el-tag>
                         ......
                     </div>
-
                 </el-descriptions-item>
             </el-descriptions>
             <br>
@@ -129,10 +124,8 @@
                     回上一步</el-button>
                 <el-button icon="Check" style="color:white" color="#529a7c" @click="confirmSava">提交保存</el-button>
             </div>
-
         </div>
         <!-- 最后一步显示成功或失败 -->
-
         <!-- 修改成功的展示 -->
         <div v-show="
             initData.addGroupData.active > 2 &&
@@ -144,7 +137,6 @@
                 </template>
             </el-result>
         </div>
-
         <!-- 修改失败的展示 -->
         <div v-show="
             initData.addGroupData.active > 2 &&
@@ -156,8 +148,6 @@
                 </template>
             </el-result>
         </div>
-
-
         <div style="text-align: center;">
             <el-button v-show="initData.addGroupData.active === 1" @click="initData.addGroupData.active--"
                 color="#529a7c" style="color:white" icon="Back">返回上一步
@@ -170,9 +160,8 @@
         </div>
     </div>
 </template>
-
 <script lang="ts" setup>
-import { reactive,  onMounted, getCurrentInstance } from 'vue'
+import { reactive, onMounted, getCurrentInstance } from 'vue'
 import { getAllEmploye, addGroupDataInit, addGroup } from '@/types/department'
 import { ElMessage } from 'element-plus';
 // 初始化数据
@@ -193,7 +182,6 @@ onMounted(async () => {
 const next = () => {
     initData.addGroupData.active > 3 ? initData.addGroupData.active = 0 : initData.addGroupData.active++
 }
-
 // 点击添加或移除时
 const handleChange = (
     value: number | string,
@@ -201,7 +189,6 @@ const handleChange = (
     movedKeys: string[] | number[]
 ) => {
     console.log(value, direction, movedKeys)
-
 }
 // 确认展示
 const cofirmListChange = () => {
@@ -211,7 +198,6 @@ const cofirmListChange = () => {
         return v['dno'] === initData.addGroupData.selectDeptForm.dno
     })
 }
-
 // 最终提交
 const confirmSava = async () => {
     const confirmData = {
@@ -233,7 +219,6 @@ const confirmSava = async () => {
     } else {
         ElMessage.error(res.msg)
     }
-
 }
 // 返回第一步
 const backOne = () => {
@@ -241,9 +226,7 @@ const backOne = () => {
     //置空表单
     initData.addGroupData.addEmployeData = []
 }
-
 </script>
-
 <style lang="scss">
 .mainview .transfer-footer {
     margin-left: 15px;
@@ -260,7 +243,6 @@ const backOne = () => {
 
     .el-input {
         width: 70%;
-
     }
 }
 
@@ -274,12 +256,10 @@ const backOne = () => {
 }
 
 .mainview .el-transfer-panel__body {
-
     height: 550px;
 }
 
 .mainview .el-transfer-panel__list {
-
     height: 550px;
 }
 

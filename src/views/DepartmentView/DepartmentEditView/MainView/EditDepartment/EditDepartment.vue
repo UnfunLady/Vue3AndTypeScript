@@ -39,7 +39,6 @@
                             </el-icon>
                         </el-upload>
                     </div>
-
                 </el-form-item>
                 <el-form-item label="部门名字:" prop="dname">
                     <el-input v-model="editDeptData.editDeptData.dname" placeholder=""></el-input>
@@ -47,22 +46,18 @@
                 <el-form-item label="部门职责:" prop="explain">
                     <el-input v-model="editDeptData.editDeptData.explain" placeholder=""></el-input>
                 </el-form-item>
-
                 <el-form-item label="">
                     <el-button icon="edit" color="#296a99" @click="submit(updateDeptFormRef)" :loading="loading">确认修改
                     </el-button>
                 </el-form-item>
             </el-form>
-
         </el-card>
         <el-dialog v-model="dialogVisible">
             <img class="showImg" :src="dialogImageUrl" alt="Preview Image" />
         </el-dialog>
     </div>
 </template>
-
 <script lang='ts'>
-
 import { reactive, ref, toRefs, defineComponent, getCurrentInstance, computed } from 'vue'
 import { editDepartmentDataInit, updateDepartmentNoAvatar } from '@/types/department'
 import { ElMessage, genFileId } from 'element-plus'
@@ -172,7 +167,6 @@ export default defineComponent({
                                 // 取消loading
                                 loading.value! = false;
                             }, 800)
-
                         }
                         else {
                             // 执行没有修改logo的api
@@ -186,14 +180,10 @@ export default defineComponent({
                             loading.value! = false;
                         }
                     }, 1000)
-
                 } else {
                     ElMessage.warning('请确认输入的数据格式是否正确！')
-
                 }
             })
-
-
         }
         // 计算action
         const uploadUrl = computed(() => {
@@ -210,9 +200,6 @@ export default defineComponent({
                 }
             })
         }
-
-
-
         return {
             ...toRefs(data),
             back,
@@ -230,9 +217,7 @@ export default defineComponent({
             uploadUrl,
             rules,
             goGroupEdit
-
         }
-
     }
 });
 </script>
@@ -253,6 +238,5 @@ export default defineComponent({
 .el-upload-list--picture-card .el-upload-list__item {
     width: 100px;
     height: 60px;
-
 }
 </style>

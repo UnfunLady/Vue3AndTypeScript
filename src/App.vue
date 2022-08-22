@@ -1,8 +1,6 @@
 <template>
   <router-view v-if="isRouterAlive"></router-view>
-
 </template>
-
 <script lang="ts" setup>
 import { nextTick, provide, ref } from 'vue';
 const isRouterAlive = ref(true);
@@ -18,7 +16,6 @@ const reloadRouter = () => {
 // 提供刷新路由方法
 provide('reloadRouter', reloadRouter)
 </script>
-
 <style lang="scss">
 * {
   margin: 0;

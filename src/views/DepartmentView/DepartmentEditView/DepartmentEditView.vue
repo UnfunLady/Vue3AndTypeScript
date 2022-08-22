@@ -3,11 +3,9 @@
     <MainView />
     <router-view></router-view>
 </template>
-
 <script lang='ts'>
 import { defineComponent } from 'vue'
 import MainView from './MainView/MainView.vue'
-
 export default defineComponent({
     name: '',
     components: {
@@ -16,7 +14,6 @@ export default defineComponent({
     setup() {
         return {
         }
-
     }
 });
 </script>

@@ -5,7 +5,6 @@
         <Edit v-else :editDeptData=editDeptData @back="backShow" />
     </div>
 </template>
-
 <script lang='ts'>
 import Show from './ShowDepartment/ShowDepartment.vue'
 import Edit from './EditDepartment/EditDepartment.vue'
@@ -28,7 +27,6 @@ export default {
             data.editDeptData.isEdit = false;
             data.editDeptData.editDeptData = {}
         }
-
         return {
             changeEdit,
             ...toRefs(data),

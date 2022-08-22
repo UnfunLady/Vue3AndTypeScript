@@ -1,6 +1,5 @@
 import request from "@/http";
 import axios from 'axios'
-
 interface loginData {
     username: string,
     password: string
@@ -9,14 +8,12 @@ interface loginData {
 const reqUserLogin = (data: loginData) => {
     return request({ url: '/login', method: 'post', data })
 }
-
 // 修改密码
 const editPassword = (data: any) => {
     return request({
         url: '/editPassword', data, method: 'post'
     })
 }
-
 // 部门有关
 interface deptData {
     deptno?: number,
@@ -32,13 +29,10 @@ const reqAllDept = () => {
 const reqGetDeptByDno = (params: deptData) => {
     return request({ url: '/getDeptByDno', method: 'get', params })
 }
-
 // 根据团队获取员工
 const reqGetGroupEmploye = (params: deptData) => {
     return request({ url: '/getEmployee', method: 'get', params })
 }
-
-
 // 获取省市（高德地图API）
 const reqGetAllProvinceAndAllCity = () => {
     return new Promise(resolve => {
@@ -54,9 +48,7 @@ const reqGetAllProvinceAndAllCity = () => {
             resolve(res)
         })
     })
-
 }
-
 // 添加或修改的数据
 interface addOrUpdateData {
     deptno: number,
@@ -84,7 +76,6 @@ interface deleteEmployeData {
 const reqDeleteEmploye = (data: deleteEmployeData) => {
     return request({ url: '/deleteEmploy', method: 'post', data })
 }
-
 interface searchEmployeData {
     keyword: string | number,
     page: string | number,
@@ -102,7 +93,6 @@ interface SalaryInfo {
 const reqGetSalaryInfo = (params: SalaryInfo) => {
     return request({ url: '/getSaralyInfo', method: 'get', params })
 }
-
 // 修改部门工资明细的细节
 const reqUpdateSalaryInfo = (data: any) => {
     return request({ url: '/updateSalaryInfo', method: 'post', data })
@@ -115,12 +105,10 @@ interface SalaryDetailInfo {
 const reqGetSalaryDetailInfo = (params: SalaryDetailInfo) => {
     return request({ url: '/getSaralyDetailInfo', method: 'get', params })
 }
-
 // 更新员工工资明细
 const reqUpdateSalaryDetail = (data: Object) => {
     return request({ url: '/updateSalaryDetail', method: 'post', data })
 }
-
 const employe = {
     reqAllDept,
     reqUserLogin,

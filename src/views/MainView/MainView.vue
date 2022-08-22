@@ -10,20 +10,15 @@
                     <count-to v-if="Number(item['num'])" :startVal="0" :endVal="item['num']" :decimals="0"
                         :duration="2000">
                     </count-to>
-
                     <span v-else>{{ item['num'] }}</span>
-
                 </div>
                 <div>
                     <span style="color:gray;font-size: 18px;">{{ item['title'] }}</span>
                 </div>
             </div>
-
         </div>
-
     </div>
 </template>
-
 <script lang="ts">
 import { defineComponent, getCurrentInstance, onMounted, reactive, toRefs } from 'vue'
 import { mainViewDataInit, oneCharts, twoCharts, getCompanyDetail, initData } from '@/types/main'
@@ -45,14 +40,12 @@ export default defineComponent({
                 initData(data)
             }
         })
-
         return {
             ...toRefs(data)
         }
     }
 })
 </script>
-
 <style lang="scss" scoped>
 .father {
     display: flex;
@@ -66,9 +59,7 @@ export default defineComponent({
 .two {
     min-width: 80vh;
     min-height: 45vh;
-
     margin: 30px 30px 30px 30px;
-
 }
 
 .three {
@@ -80,36 +71,27 @@ export default defineComponent({
     box-shadow: 0 2px 13px 2px rgba(143, 141, 141, 0.17);
     border-radius: 10px;
     margin: 30px 30px 30px 30px;
-
 }
-
-
 
 .card {
     text-align: center;
     margin: 40px;
     width: 250px;
-
     background-color: white;
-
     border-radius: 4px;
     margin-left: 18px;
     vertical-align: middle;
     display: inline-block;
-
 }
 
 .card span {
     margin: 10px;
     display: inline-block;
     letter-spacing: 2px;
-
 }
 
 .number {
     font-size: 40px;
     font-weight: bold;
-
-
 }
 </style>

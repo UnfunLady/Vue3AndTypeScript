@@ -1,5 +1,4 @@
 import request from "@/http";
-
 // 修改部门无头像
 const reqUpdateDepartmentNoAvatar = (data: any) => {
     return request({ url: '/editDeptNoAvatar', method: 'post', data })

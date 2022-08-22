@@ -2,7 +2,6 @@
     <div>
         <!-- 员工个人薪资管理 -->
         <Header msg="请详细核实每一步要操作的对象以免造成不必要的麻烦" title="温馨提示" />
-
         <!-- 分步 -->
         <el-card style="margin: 30px 0px 30px 0px">
             <el-steps :active="employeSalaryDetailForm.active" align-center finish-status="success">
@@ -34,9 +33,9 @@
                         <div>
                             <el-switch :disabled="scope.row.isuse != 'true'" v-model="scope.row.usesocialSub"
                                 active-icon="Check" inactive-icon="Close" style="
-                  --el-switch-on-color: #13ce66;
-                  --el-switch-off-color: #ff4949;
-                " active-value="true" inactive-value="false" @click="changeSub(scope)" />
+--el-switch-on-color: #13ce66;
+--el-switch-off-color: #ff4949;
+" active-value="true" inactive-value="false" @click="changeSub(scope)" />
                         </div>
                     </template>
                 </el-table-column>
@@ -45,9 +44,9 @@
                         <div>
                             <el-switch :disabled="scope.row.isuse != 'true'" v-model="scope.row.usehouseSub"
                                 active-icon="Check" inactive-icon="Close" style="
-                  --el-switch-on-color: #13ce66;
-                  --el-switch-off-color: #ff4949;
-                " active-value="true" inactive-value="false" @click="changeSub(scope)" />
+--el-switch-on-color: #13ce66;
+--el-switch-off-color: #ff4949;
+" active-value="true" inactive-value="false" @click="changeSub(scope)" />
                         </div>
                     </template>
                 </el-table-column>
@@ -56,9 +55,9 @@
                         <div>
                             <el-switch :disabled="scope.row.isuse != 'true'" v-model="scope.row.useeatSub"
                                 active-icon="Check" inactive-icon="Close" style="
-                  --el-switch-on-color: #13ce66;
-                  --el-switch-off-color: #ff4949;
-                " active-value="true" inactive-value="false" @click="changeSub(scope)" />
+--el-switch-on-color: #13ce66;
+--el-switch-off-color: #ff4949;
+" active-value="true" inactive-value="false" @click="changeSub(scope)" />
                         </div>
                     </template>
                 </el-table-column>
@@ -67,9 +66,9 @@
                         <div>
                             <el-switch :disabled="scope.row.isuse != 'true'" v-model="scope.row.usetransSub"
                                 active-icon="Check" inactive-icon="Close" style="
-                  --el-switch-on-color: #13ce66;
-                  --el-switch-off-color: #ff4949;
-                " active-value="true" inactive-value="false" @click="changeSub(scope)" />
+--el-switch-on-color: #13ce66;
+--el-switch-off-color: #ff4949;
+" active-value="true" inactive-value="false" @click="changeSub(scope)" />
                         </div>
                     </template>
                 </el-table-column>
@@ -78,9 +77,9 @@
                         <div>
                             <el-switch :disabled="scope.row.isuse != 'true'" v-model="scope.row.usehotSub"
                                 active-icon="Check" inactive-icon="Close" style="
-                  --el-switch-on-color: #13ce66;
-                  --el-switch-off-color: #ff4949;
-                " active-value="true" inactive-value="false" @click="changeSub(scope)" />
+--el-switch-on-color: #13ce66;
+--el-switch-off-color: #ff4949;
+" active-value="true" inactive-value="false" @click="changeSub(scope)" />
                         </div>
                     </template>
                 </el-table-column>
@@ -100,13 +99,12 @@
                     <template #default="scope">
                         <div>
                             <el-switch v-model="scope.row.isuse" active-icon="Check" inactive-icon="Close" style="
-                  --el-switch-on-color: #13ce66;
-                  --el-switch-off-color: #ff4949;
-                " active-value="true" inactive-value="false" @click="changeSub(scope)" />
+--el-switch-on-color: #13ce66;
+--el-switch-off-color: #ff4949;
+" active-value="true" inactive-value="false" @click="changeSub(scope)" />
                         </div>
                     </template>
                 </el-table-column>
-
                 <el-table-column label="应发工资" prop="allSalary" align="center">
                     <template #default="scope">
                         <!-- 计算金额 -->
@@ -143,12 +141,10 @@
                                             0.01
                                 }}
                             </span>
-
                         </div>
                     </template>
                 </el-table-column>
             </el-table>
-
             <!--确认提交的信息 -->
             <div v-show="employeSalaryDetailForm.active === 2">
                 <h3 style="margin: 15px">确认提交信息</h3>
@@ -174,7 +170,6 @@
                                 员工姓名
                             </div>
                         </template>
-
                         <el-tag size="small" type="info"> {{ item.employname }}</el-tag>
                     </el-descriptions-item>
                     <el-descriptions-item>
@@ -207,7 +202,6 @@
                                     item.isuse == "true" && item.usehouseSub == "true" ? "有" : "无"
                             }}</el-tag>
                     </el-descriptions-item>
-
                     <el-descriptions-item>
                         <template #label>
                             <div class="cell-item">
@@ -297,7 +291,6 @@
                     </el-descriptions-item>
                 </el-descriptions>
             </div>
-
             <!-- 修改成功的展示 -->
             <div v-show="
                 employeSalaryDetailForm.active > 2 &&
@@ -309,7 +302,6 @@
                     </template>
                 </el-result>
             </div>
-
             <!-- 修改失败的展示 -->
             <div v-show="
                 employeSalaryDetailForm.active > 2 &&
@@ -341,14 +333,12 @@
         </el-card>
         <el-pagination v-show="
             employeSalaryDetailForm.active > 0 && employeSalaryDetailForm.active < 2
-        " :total="employeSalaryDetailForm.DetailForm.count"
-            v-model:current-page="employeSalaryDetailForm.DetailForm.page"
+        " :total="employeSalaryDetailForm.DetailForm.count" v-model:current-page="employeSalaryDetailForm.DetailForm.page"
             v-model:page-size="employeSalaryDetailForm.DetailForm.size" @current-change="changePage"
             :page-sizes="[8, 10, 20]" @size-change="changeSize" layout="->,total, sizes, prev,pager, next,jumper">
         </el-pagination>
     </div>
 </template>
-
 <script lang='ts'>
 import {
     reactive,
@@ -426,8 +416,6 @@ export default defineComponent({
             // 激活步骤加-1
             if (data.employeSalaryDetailForm.active-- < 1)
                 data.employeSalaryDetailForm.active = 0;
-
-
         };
         // 返回第一步
         const backOne = () => {
@@ -474,7 +462,6 @@ export default defineComponent({
             data.employeSalaryDetailForm.DetailForm.page = val;
             getInfo();
         };
-
         // 修改补贴值
         const changeSub = (scope: any) => {
             // 如果补贴关闭了 点击后应该不能生效才对
@@ -490,11 +477,7 @@ export default defineComponent({
                     new Set(data.employeSalaryDetailForm.editList)
                 );
             }
-
         };
-
-
-
         return {
             ...toRefs(data),
             next,
@@ -504,7 +487,6 @@ export default defineComponent({
             changePage,
             changeSub,
             backOne,
-
         };
     },
 });

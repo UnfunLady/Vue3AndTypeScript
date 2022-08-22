@@ -11,7 +11,6 @@ const { createToken } = require('../utils/index')
 var multer = require('multer');
 //生成的图片放入uploads文件夹下
 var upload = multer({ dest: 'uploads/' })
-
 router.get('/', function (req, res, next) {
   res.render('index', { title: 'Express' });
 });
@@ -21,7 +20,6 @@ router.post('/api/login', function (req, res, next) {
   const { username, password } = req.body
   const sql = `select *from users where username='${username}' and password= '${password}'`
   connect.query(sql, (err, results) => {
-
     if (err) throw err;
     if (results.length > 0) {
       const { nickname, avatar, username, level } = results[0];
@@ -36,7 +34,6 @@ router.post('/api/login', function (req, res, next) {
           username,
           level
         }
-
       })
     } else {
       res.send({
@@ -49,7 +46,6 @@ router.post('/api/login', function (req, res, next) {
 // 部门一系列信息
 // 获取全部部门信息
 router.get('/api/deptInfo', function (req, res, next) {
-
   const sql = `select *from depall`;
   connect.query(sql, (err, results) => {
     connect.query('select *from dept', (e, r) => {
@@ -70,11 +66,8 @@ router.get('/api/deptInfo', function (req, res, next) {
         })
       }
     })
-
   })
-
 })
-
 // 获取部门细节
 router.get('/api/companyDetail', (req, res) => {
   // 获取部门总数
@@ -101,7 +94,6 @@ router.get('/api/companyDetail', (req, res) => {
                       res.send({ code: 200, detailData: { companyDeptCount: r1[0].companyDeptCount, companyGroupCount: r2[0].companyGroupCount, companyEmployeCount: r3[0].companyEmployeCount, companyAvgSalary: r4[0].companyAvgSalary, BoyGrilsPercentage } })
                     }
                   })
-
                 }
               })
             }
@@ -112,7 +104,6 @@ router.get('/api/companyDetail', (req, res) => {
     }
   })
 })
-
 // 根据部门号查找部门下的全部团队
 router.get('/api/getDeptByDno', function (req, res, next) {
   const { dno } = req.query;
@@ -133,13 +124,11 @@ router.get('/api/getDeptByDno', function (req, res, next) {
     }
   })
 })
-
 // 根据部门团队号查询 部门团队下的所有成员
 router.get('/api/getEmployee', (req, res) => {
   const { deptId, page, size } = req.query;
   const sql = `select e.*,d.deptname,da.dno from employee e,dept d, depall da where e.deptno=d.id and d.deptno=da.dno and e.deptno=${deptId} order by e.employno limit ${(page - 1) * size},${size}`
   connect.query(sql, (err, results) => {
-
     if (err) throw err;
     // 查询全部条数
     connect.query(`select d.count from  dept d where d.id=${deptId}`, (error, resu) => {
@@ -157,8 +146,6 @@ router.get('/api/getEmployee', (req, res) => {
           msg: '操作失败',
         })
       }
-
-
     })
   })
 })
@@ -179,12 +166,12 @@ router.post('/api/addOrUpdateEmploy', (req, res) => {
         })
       } else {
         const udSql = `
-    UPDATE  employee SET deptno = ${body.default.deptno}, employname = '${body.default.employname}', employage = '${body.default.employage}', employsex= '${body.default.employsex}', employidcard = '${body.default.employidcard}',
-    employphone = '${body.default.employphone}', entryDate = '${body.default.entryDate}', 
-    employemail = '${body.default.employemail}', employaddress = '${body.default.employaddress}', 
-    employsalary = '${body.default.employsalary}' 
-    WHERE deptno=${body.old} and employno = ${body.default.employno};
-    `
+UPDATE  employee SET deptno = ${body.default.deptno}, employname = '${body.default.employname}', employage = '${body.default.employage}', employsex= '${body.default.employsex}', employidcard = '${body.default.employidcard}',
+employphone = '${body.default.employphone}', entryDate = '${body.default.entryDate}',
+employemail = '${body.default.employemail}', employaddress = '${body.default.employaddress}',
+employsalary = '${body.default.employsalary}'
+WHERE deptno=${body.old} and employno = ${body.default.employno};
+`
         // 更新员工
         connect.query(udSql, (e, r) => {
           if (e) throw e
@@ -202,11 +189,10 @@ router.post('/api/addOrUpdateEmploy', (req, res) => {
         })
       }
     })
-
   } else {
     // 插入sql
     const addSql = `INSERT INTO  employee(deptno, employname, employage, employsex,employidcard, employphone, entryDate, employemail, employaddress, employsalary)
-        VALUES (${body.default.deptno}, '${body.default.employname}', '${body.default.employage}', '${body.default.employsex}', '${body.default.employidcard}', '${body.default.employphone}', '${body.default.entryDate}', '${body.default.employemail}', '${body.default.employaddress}', '${body.default.employsalary}');`
+VALUES (${body.default.deptno}, '${body.default.employname}', '${body.default.employage}', '${body.default.employsex}', '${body.default.employidcard}', '${body.default.employphone}', '${body.default.entryDate}', '${body.default.employemail}', '${body.default.employaddress}', '${body.default.employsalary}');`
     connect.query(addSql, (err, result) => {
       // 插入成功 返回信息
       if (result.affectedRows && result.affectedRows > 0) {
@@ -224,7 +210,6 @@ router.post('/api/addOrUpdateEmploy', (req, res) => {
     })
   }
 })
-
 // 删除员工
 router.post('/api/deleteEmploy', (req, res) => {
   const { employno } = req.body;
@@ -243,12 +228,11 @@ router.post('/api/deleteEmploy', (req, res) => {
     }
   })
 })
-
 // 关键字查找
 router.get('/api/searchEmploy', (req, res) => {
   const { keyword, page, size } = req.query;
   const sql = `
-  select e.* ,d.deptname,da.dno from  employee e,dept d,depall da where (e.employno like'%${keyword}%' or e.employname like'%${keyword}%')  AND  e.deptno=d.id GROUP BY e.employno order by e.employno  limit ${(page - 1) * size},${size}`
+select e.* ,d.deptname,da.dno from  employee e,dept d,depall da where (e.employno like'%${keyword}%' or e.employname like'%${keyword}%')  AND  e.deptno=d.id GROUP BY e.employno order by e.employno  limit ${(page - 1) * size},${size}`
   connect.query(`select count(DISTINCT e.employno) as count from  employee e,dept d where e.employno like'%${keyword}%' or e.employname like'%${keyword}%' AND  e.deptno=d.id`, (e, r) => {
     if (e) throw e
     else {
@@ -265,26 +249,20 @@ router.get('/api/searchEmploy', (req, res) => {
           res.send({
             code: 202,
             msg: '查找失败!',
-
           })
         }
-
       })
-
     }
   })
-
-
 })
-
 // 薪资------
 // 获取团队薪资信息
 router.get('/api/getSaralyInfo', (req, res) => {
   const { dno } = req.query;
   if (dno) {
     const sql = `
-    select sa.* from employesalary sa WHERE deptno=${dno}
-    `;
+select sa.* from employesalary sa WHERE deptno=${dno}
+`;
     connect.query(sql, (error, results) => {
       if (results && results.length > 0) {
         connect.query(`select de.* from dept de WHERE deptno=${dno}`, (e, r) => {
@@ -318,13 +296,12 @@ router.get('/api/getSaralyInfo', (req, res) => {
     })
   }
 })
-
 // 修改薪资信息
 router.post('/api/updateSalaryInfo', (req, res) => {
   const { editForm, performance } = req.body;
   if (editForm.isuse != null && editForm.deptid != null) {
     const sql = `
-      UPDATE employesalary SET isuse = '${editForm.isuse}' WHERE deptid=${editForm.deptid} `;
+UPDATE employesalary SET isuse = '${editForm.isuse}' WHERE deptid=${editForm.deptid} `;
     connect.query(sql, (error, results) => {
       if (results.affectedRows > 0) {
         res.send({
@@ -335,7 +312,7 @@ router.post('/api/updateSalaryInfo', (req, res) => {
     })
   } else {
     const sql = `
-    UPDATE employesalary SET performance = '${performance.performance}' WHERE deptid=${performance.deptid} `;
+UPDATE employesalary SET performance = '${performance.performance}' WHERE deptid=${performance.deptid} `;
     connect.query(sql, (e, r) => {
     })
     res.send({
@@ -343,11 +320,7 @@ router.post('/api/updateSalaryInfo', (req, res) => {
       msg: '修改绩效成功'
     })
   }
-
-
-
 })
-
 // 获取员工详细薪资明细
 router.get('/api/getSaralyDetailInfo', (req, res) => {
   const { deptid, page, size } = req.query
@@ -388,17 +361,16 @@ router.get('/api/getSaralyDetailInfo', (req, res) => {
     })
   }
 })
-
 // 修改员工详细
 router.post('/api/updateSalaryDetail', (req, res) => {
   // every返回全部为真的情况
   const updateSuccess = req.body.every((item, index) => {
     const sql = `update employesalarydetail
-    set  deptno =${item.deptno}, employname ='${item.employname}', 
-    usesocialsub ='${item.usesocialSub}', usehousesub ='${item.usehouseSub}', 
-    useeatsub ='${item.useeatSub}', usetranssub ='${item.usetransSub}',
-     usehotsub ='${item.usehotSub}', useperformance =${item.usePerformance},
-      isuse ='${item.isuse}' where  employno =${item.employno};`
+set  deptno =${item.deptno}, employname ='${item.employname}',
+usesocialsub ='${item.usesocialSub}', usehousesub ='${item.usehouseSub}',
+useeatsub ='${item.useeatSub}', usetranssub ='${item.usetransSub}',
+usehotsub ='${item.usehotSub}', useperformance =${item.usePerformance},
+isuse ='${item.isuse}' where  employno =${item.employno};`
     // 执行更新语句
     const updatesuccess = connect.query(sql, (error, results) => {
       if (results.affectedRows > 0)
@@ -417,16 +389,14 @@ router.post('/api/updateSalaryDetail', (req, res) => {
       msg: '修改出现错误请重试'
     })
   }
-
 })
-
 // 没有头像
 router.post('/api/editDeptNoAvatar', (req, res) => {
   const { dno, dname, explain } = req.body.editDeptData;
   const sql = `
-      UPDATE depall SET dname = '${dname}',
-      depall.explain = '${explain}'  WHERE dno = ${dno};
-      `;
+UPDATE depall SET dname = '${dname}',
+depall.explain = '${explain}'  WHERE dno = ${dno};
+`;
   connect.query(sql, (e, results) => {
     if (e) throw e
     if (results && results.affectedRows > 0) {
@@ -435,10 +405,7 @@ router.post('/api/editDeptNoAvatar', (req, res) => {
       res.send({ code: 202, msg: '修改部门信息出错!' })
     }
   })
-
 })
-
-
 // 1.上传头像
 router.post('/api/editDept', upload.single('file'), (req, res) => {
   // // 上传的图片到uploads文件
@@ -452,7 +419,7 @@ router.post('/api/editDept', upload.single('file'), (req, res) => {
       }
       var imgesori = imges.originalname; // 图片名称
       var radname = Date.now() + parseInt(Math.random() * 114514)  // 赋给图片的名称用时间戳+随机数获取
-      var oriname = imgesori.lastIndexOf(".");//获取最后一个.的位置 
+      var oriname = imgesori.lastIndexOf(".");//获取最后一个.的位置
       var hzm = imgesori.substring(oriname, imgesori.length) // 获取图片后缀名
       var pic = radname + hzm // 拼接一个完整的图片名称 随机生成
       // 写入文件
@@ -470,7 +437,7 @@ router.post('/api/editDept', upload.single('file'), (req, res) => {
         // "http://localhost:3000/public/images/"不用public 因为 app.js用了  app.use(express.static(path.join(__dirname, 'public')));  省略了public
         const picPath = "http://" + cms[1].address + ':3000' + '/images/' + pic;
         const sql = `
-       UPDATE depall SET avatar='${picPath}',dname='${dname}',depall.explain='${explain}' WHERE dno =${dno};`
+  UPDATE depall SET avatar='${picPath}',dname='${dname}',depall.explain='${explain}' WHERE dno =${dno};`
         // 执行修改逻辑
         connect.query(sql, (error, result) => {
           if (error) throw error;
@@ -480,16 +447,12 @@ router.post('/api/editDept', upload.single('file'), (req, res) => {
             res.send({ code: 202, msg: "修改失败" })
           }
         })
-
       })
     })
   } else {
     res.send({ code: 202, msg: '图片上传失败' })
   }
 })
-
-
-
 // 修改小组信息
 router.post('/api/editGroupInfo', (req, res) => {
   const { id, deptname, location, count } = req.body
@@ -527,9 +490,7 @@ router.post('/api/editGroupInfo', (req, res) => {
       }
     }
   })
-
 })
-
 // 获取全部员工信息
 router.get('/api/getAllEmploye', (req, res) => {
   const sql = `select DISTINCT employee.employno as 'key',employee.employname as 'label' from employee order by employee.employno`
@@ -548,8 +509,6 @@ router.get('/api/getAllEmploye', (req, res) => {
     }
   })
 })
-
-
 // 新增小组信息
 router.post('/api/addGroup', (req, res) => {
   const { addForm, deptno, location, deptname } = req.body;
@@ -580,10 +539,10 @@ router.post('/api/addGroup', (req, res) => {
                 if (error) throw error
                 // 插入信息到员工表
                 const beforeSql = `INSERT INTO employee(deptno, employno, employname, employage, employsex, employidcard, employphone, entryDate, employemail, employaddress, employsalary, isuse) VALUES
-           (${r[0].id}, ${result[0].employno}, '${result[0].employname}', '${result[0].employage}',
-            '${result[0].employsex}', '${result[0].employidcard}', '${result[0].employphone}', '${result[0].entryDate}',
-             '${result[0].employemail}', '${result[0].employaddress}', '${result[0].employsalary}', '${result[0].isuse}');
-          `
+(${r[0].id}, ${result[0].employno}, '${result[0].employname}', '${result[0].employage}',
+'${result[0].employsex}', '${result[0].employidcard}', '${result[0].employphone}', '${result[0].entryDate}',
+'${result[0].employemail}', '${result[0].employaddress}', '${result[0].employsalary}', '${result[0].isuse}');
+`
                 // 执行插入语句
                 const insertSuccess = connect.query(beforeSql, (er, rs) => {
                   if (er) throw er
@@ -615,13 +574,9 @@ router.post('/api/addGroup', (req, res) => {
           })
         }
       })
-
     }
   })
-
-
 })
-
 // 解散小组
 router.post('/api/delGroup', (req, res) => {
   const { id } = req.body;
@@ -680,8 +635,6 @@ router.post('/api/delGroup', (req, res) => {
     }
   })
 })
-
-
 // 解散部门
 router.post('/api/delDept', (req, res) => {
   const { children } = req.body
@@ -728,7 +681,6 @@ router.post('/api/delDept', (req, res) => {
                     })
                   }
                 })
-
               }
             }
           })
@@ -783,7 +735,6 @@ router.post('/api/delDept', (req, res) => {
     })
   }
 })
-
 // 新增部门
 router.post('/api/addDeptpartment', upload.single('file'), (req, res) => {
   const images = req.file
@@ -819,7 +770,6 @@ router.post('/api/addDeptpartment', upload.single('file'), (req, res) => {
               var cms = couter[cm]
             }
             const picPath = 'http://' + cms[1].address + ':3000' + '/images/' + pic;
-
             const sql = `insert into depall (dname,depall.explain,avatar)  values('${dname}','${explain}','${picPath}')`
             connect.query(sql, (error, results) => {
               if (error) throw error
@@ -835,7 +785,6 @@ router.post('/api/addDeptpartment', upload.single('file'), (req, res) => {
                 })
               }
             })
-
           })
         })
       } else {
@@ -846,10 +795,7 @@ router.post('/api/addDeptpartment', upload.single('file'), (req, res) => {
       }
     }
   })
-
 })
-
-
 // 首页第一张图echarts各部门总人数
 router.get('/api/deptTotal', (req, res) => {
   // 全部部门名
@@ -857,7 +803,7 @@ router.get('/api/deptTotal', (req, res) => {
   // 标题
   // title:'各部门总人数'
   const sql = `select de.dname as name,de.count as value from depall de
-  `
+`
   connect.query(sql, (err, results) => {
     if (results.length > 0) {
       res.send({
@@ -867,15 +813,11 @@ router.get('/api/deptTotal', (req, res) => {
       })
     }
   })
-
 })
-
 // 第二张图 获取部门细节 平均工资 总人数 小组数
 router.get('/api/deptDetail', (req, res) => {
   const sql = `
-  select depall.dname as name,round(avg(employsalary),0) as avg ,depall.count,depall.groupCount from employee,dept,depall WHERE employee.deptno=dept.id AND dept.deptno=depall.dno GROUP BY depall.dname
-  
-
+select depall.dname as name,round(avg(employsalary),0) as avg ,depall.count,depall.groupCount from employee,dept,depall WHERE employee.deptno=dept.id AND dept.deptno=depall.dno GROUP BY depall.dname
 `
   connect.query(sql, (err, results) => {
     if (err) throw err
@@ -891,13 +833,9 @@ router.get('/api/deptDetail', (req, res) => {
       })
     }
   })
-
-
 })
-
 // 第三张图
 // 第四张图
-
 // 修改密码
 router.post('/api/editPassword', (req, res) => {
   const { nowPassword, newPassword } = req.body.editInfo;
@@ -940,27 +878,25 @@ router.post('/api/editPassword', (req, res) => {
           code: 202,
           msg: '修改密码失败！'
         })
-
       }
     })
   }
 })
-
 // 获取部门接种信息
 router.get('/api/getCompanyEvilInfo', (req, res) => {
   // 获取部门信息
   const preSql = `
-  SELECT depall.*,count(covidinfo.employid) AS noCovid FROM covidinfo ,depall 
-  WHERE depallid=dno GROUP BY depallid ORDER BY depallid asc
-  `
+SELECT depall.*,count(covidinfo.employid) AS noCovid FROM covidinfo ,depall
+WHERE depallid=dno GROUP BY depallid ORDER BY depallid asc
+`
   connect.query(preSql, (e, r) => {
     if (e) res.send({ code: 202, msg: '获取部门信息失败' })
     if (r && r.length > 0) {
       // 查询部门没有打三针的员工 合并
       const sql = `
-			  SELECT depall.* FROM covidinfo ,depall 
-        WHERE depallid=dno GROUP BY depallid ORDER BY depallid asc
-  `
+SELECT depall.* FROM covidinfo ,depall
+WHERE depallid=dno GROUP BY depallid ORDER BY depallid asc
+`
       connect.query(sql, (err, results) => {
         if (err) res.send({ code: 202, msg: '获取部门信息失败' })
         if (results.length > 0) {
@@ -972,33 +908,29 @@ router.get('/api/getCompanyEvilInfo', (req, res) => {
           res.send({ code: 202, msg: '获取部门信息失败' })
         }
       })
-
     } else {
       res.send({ code: 202, msg: '获取部门信息失败' })
     }
   })
 })
-
 // 获取相关员工信息
 router.get('/api/getEmployeEvilInfo', (req, res) => {
   const { dno } = JSON.parse(req.query.baseInfo);
   const { page, size } = JSON.parse(req.query.pagination)
   // 未接种完毕的员工信息
-  const preSql = `SELECT DISTINCT e.*from employee e,dept d WHERE e.employno 
-  in (select c.employid from covidinfo c WHERE c.depallid=${dno} AND threeInoculation='false' )
-   AND e.deptno=d.id  AND d.deptno=${dno} limit ${(page - 1) * size},${size}
-  `
-
+  const preSql = `SELECT DISTINCT e.*from employee e,dept d WHERE e.employno
+in (select c.employid from covidinfo c WHERE c.depallid=${dno} AND threeInoculation='false' )
+AND e.deptno=d.id  AND d.deptno=${dno} limit ${(page - 1) * size},${size}
+`
   connect.query(preSql, (e, r) => {
     if (e) res.send({ code: 202, msg: '获取信息失败' })
     if (r.length > 0) {
       // 员工具体接种信息
       const sql = `
-      select c.* from covidinfo c ,dept d WHERE c.employid 
-      in (select c.employid from covidinfo c WHERE c.depallid=${dno} AND threeInoculation='false') 
-      AND c.deptid=d.id AND d.deptno=${dno} limit ${(page - 1) * size},${size}
-      `
-
+select c.* from covidinfo c ,dept d WHERE c.employid
+in (select c.employid from covidinfo c WHERE c.depallid=${dno} AND threeInoculation='false')
+AND c.deptid=d.id AND d.deptno=${dno} limit ${(page - 1) * size},${size}
+`
       connect.query(sql, (err, results) => {
         if (err) res.send({ code: 202, msg: '获取信息失败' })
         if (results.length > 0) {
@@ -1007,36 +939,32 @@ router.get('/api/getEmployeEvilInfo', (req, res) => {
         } else if (results.length === 0) {
           {
             res.send({ code: 200, employeInfo: [], employeCount: 0, evilInfo: [], evilCount: 0 })
-
           }
         }
       })
     }
     else {
       res.send({ code: 200, employeInfo: [], employeCount: 0, evilInfo: [], evilCount: 0 })
-
     }
   })
 })
-
 // 获取部门全部员工接种信息
 router.get('/api/getAllEmployeEvilInfo', (req, res) => {
   const { dno } = JSON.parse(req.query.baseInfo);
   const { page, size } = JSON.parse(req.query.pagination)
-  const sql = `SELECT DISTINCT e.*,co.deptid,co.depallid,co.firstInoculation,co.secondInoculation,co.threeInoculation from employee e,dept d,covidinfo co WHERE e.employno 
-  in (select c.employid from covidinfo c WHERE c.depallid=${dno} )
-   AND e.deptno=d.id  AND co.depallid=d.deptno AND d.deptno=${dno} AND e.employno=co.employid ORDER BY e.employno asc
-	  limit ${(page - 1) * size},${size}`
+  const sql = `SELECT DISTINCT e.*,co.deptid,co.depallid,co.firstInoculation,co.secondInoculation,co.threeInoculation from employee e,dept d,covidinfo co WHERE e.employno
+in (select c.employid from covidinfo c WHERE c.depallid=${dno} )
+AND e.deptno=d.id  AND co.depallid=d.deptno AND d.deptno=${dno} AND e.employno=co.employid ORDER BY e.employno asc
+limit ${(page - 1) * size},${size}`
   connect.query(sql, (err, results) => {
     console.log(sql);
     if (err) res.send({ code: 202, msg: '查询数据失败' })
     if (results && results.length > 0) {
-
       // 获取总数
-      const countSql = `SELECT DISTINCT count(e.employno) as count from employee e,dept d,covidinfo co WHERE e.employno 
-      in (select c.employid from covidinfo c WHERE c.depallid=${dno} )
-       AND e.deptno=d.id  AND co.depallid=d.deptno AND d.deptno=${dno} AND e.employno=co.employid ORDER BY e.employno asc
-       `
+      const countSql = `SELECT DISTINCT count(e.employno) as count from employee e,dept d,covidinfo co WHERE e.employno
+in (select c.employid from covidinfo c WHERE c.depallid=${dno} )
+AND e.deptno=d.id  AND co.depallid=d.deptno AND d.deptno=${dno} AND e.employno=co.employid ORDER BY e.employno asc
+`
       connect.query(countSql, (e, r) => {
         if (e) res.send({ code: 202, msg: '查询数据失败' })
         if (r.length > 0) {
@@ -1045,14 +973,13 @@ router.get('/api/getAllEmployeEvilInfo', (req, res) => {
       })
     }
   })
-
 })
 // 修改接种信息
 router.post('/api/updateEmployeEvilInfo', (req, res) => {
   const { depallid, deptid, employno, firstInoculation, secondInoculation, threeInoculation } = req.body
-  const sql = `UPDATE  covidinfo  SET  depallid  = ${depallid},  firstInoculation  = '${firstInoculation}',  
-  secondInoculation  = '${secondInoculation}',  threeInoculation  = '${threeInoculation}'  
-  WHERE  deptid  = ${deptid} AND  employid  = ${employno};`
+  const sql = `UPDATE  covidinfo  SET  depallid  = ${depallid},  firstInoculation  = '${firstInoculation}',
+secondInoculation  = '${secondInoculation}',  threeInoculation  = '${threeInoculation}'
+WHERE  deptid  = ${deptid} AND  employid  = ${employno};`
   console.log(sql);
   connect.query(sql, (err, results) => {
     if (err) res.send({ code: 202, msg: '修改信息失败' })
@@ -1062,8 +989,5 @@ router.post('/api/updateEmployeEvilInfo', (req, res) => {
       res.send({ code: 202, msg: '修改信息失败' })
     }
   })
-
 })
-
-
 module.exports = router;

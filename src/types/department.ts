@@ -39,7 +39,6 @@ export class editDepartmentDataInit {
     }
     updateDeptFormRef = ref<FormInstance>()
 }
-
 // 修改小组用到的数据
 export interface editGroupData {
     editGroupForm: [],
@@ -51,7 +50,6 @@ export class editGroupInit {
         isEdit: false
     }
 }
-
 //组织新小组用到的数据
 export interface addGroupData {
     // 所有员工信息
@@ -75,7 +73,6 @@ export interface addGroupData {
     },
     addSuccess: boolean
 }
-
 export class addGroupDataInit {
     addGroupData: addGroupData = {
         employeData: [],
@@ -92,10 +89,8 @@ export class addGroupDataInit {
             confirmForm: {}
         },
         addSuccess: false,
-
     }
 }
-
 // 创建新部门用到的数据
 export interface addDepartmentData {
     addDepartmentForm: {
@@ -105,7 +100,6 @@ export interface addDepartmentData {
         [propName: string]: any
     }
 }
-
 export class addDepartmentDataInit {
     addDepartmentData: addDepartmentData = {
         addDepartmentForm: {
@@ -115,7 +109,6 @@ export class addDepartmentDataInit {
         }
     }
 }
-
 // 解散部门或小组用到的数据
 export interface deleteDepartmentOrGroup {
     // 所有部门信息
@@ -140,7 +133,6 @@ export const updateDepartmentNoAvatar = (API: any, data: any) => {
 export const updateDepartmentAvatar = (API: any, data: any) => {
     return API.department.reqUpdateDepartmentAvatar(data);
 }
-
 // 更新小组信息
 export const updateGroupInfo = (API: any, data: any) => {
     return API.department.reqUpdateGroupInfo(data);
@@ -149,17 +141,14 @@ export const updateGroupInfo = (API: any, data: any) => {
 export const getAllEmploye = (API: any) => {
     return API.department.reqGetAllEmploye();
 }
-
 // 新增小组
 export const addGroup = (API: any, data: any) => {
     return API.department.reqAddGroup(data)
 }
-
-// 解散小组 
+// 解散小组
 export const reqDelGroup = (API: any, data: any) => {
     return API.department.delGroup(data);
 }
-
 // 解散部门
 export const reqDelDept = (API: any, data: any) => {
     return API.department.delDept(data);

@@ -10,7 +10,6 @@
         </el-card>
     </div>
 </template>
-
 <script lang='ts'>
 import { toRefs } from 'vue';
 export default {
@@ -24,7 +23,6 @@ export default {
         return {
             msg, title
         }
-
     }
 };
 </script>

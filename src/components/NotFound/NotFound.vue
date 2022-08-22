@@ -1,5 +1,4 @@
 <template>
-
     <div class="main">
         <h3>404 NotFound....</h3>
         <div class="wuyuzi">
@@ -12,24 +11,19 @@
         <div class="back">
             <el-button @click="backMain">返回</el-button>
         </div>
-
     </div>
 </template>
-
 <script lang='ts' setup>
-
 import { useRouter } from 'vue-router';
 const router = useRouter()
 const backMain = () => {
     router.push('/main')
-
 }
 </script>
 <style lang='scss' scoped>
 .main {
     overflow: hidden;
     background-color: #5c779b;
-
     width: 100vw;
     height: 100vh;
     position: absolute;
@@ -56,7 +50,6 @@ const backMain = () => {
             filter: hue-rotate(360deg);
         }
     }
-
 
     .wuyuzi {
         position: absolute;
@@ -90,11 +83,9 @@ const backMain = () => {
 
         100% {
             left: 100%;
-
         }
 
         /*保障后百分之五十都是翻转了180度的形状*/
-
     }
 
     .one {
@@ -107,12 +98,10 @@ const backMain = () => {
         img {
             width: 500px;
             height: 431px;
-
         }
     }
 
     .two {
-
         position: absolute;
         left: 35%;
         top: 48%;
@@ -123,7 +112,6 @@ const backMain = () => {
             width: 500px;
             height: 431px;
             z-index: 99999;
-
         }
     }
 
@@ -132,7 +120,6 @@ const backMain = () => {
         left: 50%;
         top: 75%;
         transform: translate(-50%, -50%);
-
 
         .el-button {
             width: 230px;
@@ -152,7 +139,6 @@ const backMain = () => {
             border: none;
             transform: scale(1.05);
             background: linear-gradient(to right, #6b88ab 30%, rgb(40, 40, 63));
-
         }
     }
 }

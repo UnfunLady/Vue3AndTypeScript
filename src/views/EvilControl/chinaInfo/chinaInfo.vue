@@ -36,7 +36,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="deadTime" style="margin:30px 30px 0 40px;color:gray;float: left;">
                 上次更新时间:{{ data.chinaInfo.updateTime }}
@@ -46,15 +45,9 @@
             </div>
         </div>
         <div class="chart">
-
         </div>
     </div>
-
-
-
-
 </template>
-
 <script lang='ts' setup>
 import { reactive, ref, onMounted, getCurrentInstance, inject } from 'vue'
 import { chinaInfoInit, getAllEvilInfo, chart, numberInit } from '@/types/evilControl';
@@ -88,7 +81,6 @@ onMounted(async () => {
     initEchartsyData()
     chart(document.querySelector('.chart'), data)
 })
-
 // 时间戳转日期
 const timestampToTime = (timestamp: number | string) => {
     let date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
@@ -123,21 +115,15 @@ const initEchartsxData = () => {
 }
 // echarts 赋值给x轴数据
 const initEchartsyData = () => {
-    // y轴数据 
+    // y轴数据
     data.chinaInfo.allInfo.map((i) => {
         data.chinaInfo.echarts.yData.countData.push(i['data']['oneNumber'])
         data.chinaInfo.echarts.yData.moreData.push(i['data']['twoNumber'])
     })
-
 }
-
-
-
-
 </script>
 <style lang='scss' scoped>
 .main {
-
     display: flex;
 
     .allInfo {
@@ -161,14 +147,11 @@ const initEchartsyData = () => {
             display: flex;
             flex-wrap: wrap;
 
-
             .infoCard {
-
                 text-align: center;
                 width: 23.566%;
                 margin: 35px 40px 10px 40px;
                 height: 13vh;
-
             }
 
             .infoCard-main {
@@ -187,14 +170,12 @@ const initEchartsyData = () => {
                 }
             }
         }
-
     }
 
     .chart {
         box-shadow: 2px 2px 10px 2px rgba(203, 201, 201, 0.384);
         flex: 1;
         margin-left: 30px;
-
     }
 }
 </style>

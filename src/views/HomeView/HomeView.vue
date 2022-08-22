@@ -51,8 +51,6 @@
             <img src="@/assets/elogo.png" style="width:15px; padding-left: 5px; margin-right: 15px;" alt="">
             <span>Echarts中文文档</span>
           </el-menu-item>
-
-
         </el-menu>
       </el-aside>
       <el-container>
@@ -128,7 +126,6 @@
       </span>
     </template>
   </el-dialog>
-
   <!-- 修改密码 -->
   <el-dialog v-model="editPassword" draggable title="修改密码" width="30%" :before-close="editClose">
     <el-form :model="editPasswordForm" :rules="rules" ref="editPasswordRef" label-width="auto" style="width:90%">
@@ -148,9 +145,7 @@
       <el-button style="height:35px" color="#3ba272" icon="Check" @click="confirmEdit(editPasswordRef)">确定修改</el-button>
     </div>
   </el-dialog>
-
 </template>
-
 <script lang="ts">
 import { defineComponent, getCurrentInstance, inject, reactive, ref, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
@@ -172,7 +167,6 @@ export default defineComponent({
     let isCollapse = ref(false);
     // 个人信息控制
     const infoVisible = ref(false);
-
     // 修改密码控制
     const editPassword = ref(false);
     //  折叠菜单
@@ -185,14 +179,12 @@ export default defineComponent({
     const sesson = window.sessionStorage;
     sesson.Hearderpath = '/' + router.currentRoute.value.fullPath.split('/')[1].toLowerCase()
     activeIndex.value = sesson.Hearderpath;
-
     // 动态监视路由改变   这样面包屑跳转也可以检测到
     watch(() => route.path, (newPath, oldPath) => {
       // 菜单栏显示自定义激活 如果没有就激活新的路由路径
       let Path: any = router.currentRoute.value.meta.activePath
       activeIndex.value = Path || newPath
     }, { immediate: true });
-
     // 退出登录
     const userLogout = () => {
       router.push('/login')
@@ -204,19 +196,15 @@ export default defineComponent({
     const handleClose = () => {
       infoVisible.value = false;
     }
-
-
     interface editPassword {
       nowPassword: string,
       newPassword: string,
       confirmNewPassword: string
     }
-
     const editPasswordForm: editPassword = reactive({
       nowPassword: '',
       newPassword: '',
       confirmNewPassword: ''
-
     })
     // 修改密码关闭
     const editClose = () => {
@@ -228,7 +216,6 @@ export default defineComponent({
     }
     // 修改密码表单类型
     const editPasswordRef = ref<FormInstance>()
-
     const confirmValidatePass = (rule: any, value: any, callback: any) => {
       if (value == '') {
         return callback(new Error('请按要求输入!'));
@@ -239,14 +226,12 @@ export default defineComponent({
         callback()
       }
     }
-
     // 表单验证
     const rules = {
       nowPassword: [{ required: true, trigger: "blur", message: '旧密码不能为空' }],
       newPassword: [{ required: true, trigger: "blur", message: '新密码不能为空' }],
       confirmNewPassword: [{ validator: confirmValidatePass, trigger: 'blur' }],
     }
-
     // API
     const API = getCurrentInstance().appContext.config.globalProperties.$API;
     // 确定修改
@@ -262,13 +247,11 @@ export default defineComponent({
           } else {
             ElMessage.error(res.msg)
           }
-
         } else {
           ElMessage.error('请确认输入是否正确')
         }
       })
     }
-
     // 路由刷新
     const reload = inject('reloadRouter') as Function;
     const checkRouter = (params: string) => {
@@ -278,12 +261,7 @@ export default defineComponent({
       } else {
         router.push(params)
       }
-
-
     }
-
-
-
     return {
       list,
       // children
@@ -305,17 +283,14 @@ export default defineComponent({
   }
 });
 </script>
-
 <style lang="scss" scoped>
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 260px;
   height: 100%;
-
 }
 
 .el-container {
   height: calc(100vh);
-
 }
 
 .logo {
@@ -330,7 +305,6 @@ h2 {
 }
 
 .el-header {
-
   background-color: white;
   box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
 }
@@ -339,20 +313,16 @@ h2 {
   height: 50px;
   line-height: 50px;
   transform: scale(.8);
-
 }
 
 .rightInfo {
-
   display: flex;
-
 }
 
 .nickname {
   width: 100%;
   line-height: 50px;
   margin-left: 20px;
-
 }
 
 .el-aside::-webkit-scrollbar {
@@ -368,7 +338,6 @@ h2 {
 
     .el-sub-menu .el-menu-item {
       background-color: #24466ea4;
-
     }
 
     .el-menu-item:hover {
@@ -393,14 +362,12 @@ h2 {
 
 .el-dropdown-link {
   cursor: pointer;
-
   display: flex;
   align-items: center;
 }
 
 .el-breadcrumb {
   font-size: 14px !important;
-
 }
 
 .el-menu-item.is-active {

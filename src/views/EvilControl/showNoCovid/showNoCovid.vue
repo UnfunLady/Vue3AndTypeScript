@@ -52,7 +52,6 @@
             :currentPage="data.employeData.page"
             :total="data.employeData.isAllEmploye ? data.employeData.allCount : data.employeData.someCount"
             @pagination="getInfo" />
-
         <el-dialog v-model="data.employeData.dialogTableVisible" title="修改信息" :width="800" center>
             <div>
                 <el-form :model="data.employeData.updateForm">
@@ -62,7 +61,6 @@
                     <el-form-item label="员工名:">
                         <el-tag type="info">{{ data.employeData.updateForm['employname'] }}</el-tag>
                     </el-form-item>
-
                     <el-form-item label="员工电话:">
                         <el-tag type="info">{{ data.employeData.updateForm['employphone'] }}</el-tag>
                     </el-form-item>
@@ -90,7 +88,6 @@
                     </el-form-item>
                 </el-form>
             </div>
-
             <div>
                 <el-button color="#337ecc" icon="Close" @click="data.employeData.dialogTableVisible = false">取消修改
                 </el-button>
@@ -99,7 +96,6 @@
         </el-dialog>
     </div>
 </template>
-
 <script lang='ts' setup>
 import {
     reactive,
@@ -109,7 +105,6 @@ import {
 import { useRouter, useRoute } from "vue-router";
 import { evilEmployeInfoInit, getEvilEmployeInfo, updateEvilEmployeInfo } from "@/types/evilControl";
 import { ElMessage } from "element-plus";
-
 // router
 const router = useRouter();
 const route = useRoute();
@@ -117,14 +112,12 @@ const instance = getCurrentInstance();
 //data、API
 const API = getCurrentInstance().appContext.config.globalProperties.$API;
 const data = reactive(new evilEmployeInfoInit());
-
 onMounted(async () => {
     if (route.params.justCheck) {
         // 点击查看信息
         data.employeData.justCheck = true;
         data.employeData.isAllEmploye = true;
         getAllInfo()
-
     } else {
         if (route.params.dno && !data.employeData.isAllEmploye) {
             getEvilInfo();
@@ -133,10 +126,8 @@ onMounted(async () => {
             data.employeData.isAllEmploye = false;
             data.employeData.justCheck = false;
             router.back();
-
         }
     }
-
 });
 // 获取数据
 const getEvilInfo = async () => {
@@ -152,7 +143,6 @@ const getEvilInfo = async () => {
             // 合并数据
             console.log(res.employeInfo);
             console.log(res.evilInfo);
-
             data.employeData.employeInfo = res.employeInfo.map(
                 (item: object, index: number) => {
                     return { ...item, ...res.evilInfo[index] };
@@ -161,20 +151,17 @@ const getEvilInfo = async () => {
             data.employeData.someCount = res.employeCount;
         }
     }
-
 };
 // 返回
 const back = () => {
     router.back();
 };
-
 //修改页码容量时
 const getInfo = (query: any) => {
     data.employeData.page = query.page;
     data.employeData.size = query.size;
     getEvilInfo();
 };
-
 // 点击获取全部员工信息
 const getAllEmployeEvilInfoOrBack = async () => {
     // 获取该部门全部员工信息
@@ -185,7 +172,6 @@ const getAllEmployeEvilInfoOrBack = async () => {
     } else {
         getEvilInfo()
     }
-
 };
 // 获取全部
 const getAllInfo = async () => {
@@ -206,7 +192,6 @@ const editEvilInfo = (row: any) => {
     data.employeData.updateForm = JSON.parse(JSON.stringify(row));;
     data.employeData.dialogTableVisible = true;
 }
-
 // 点击确认修改
 const confimUpdate = async () => {
     const res = await updateEvilEmployeInfo(API, data.employeData.updateForm);
@@ -231,14 +216,11 @@ const confimUpdate = async () => {
 const changeFirstEvil = () => {
     data.employeData.updateForm['firstInoculation'] = data.employeData.updateForm['secondInoculation'];
 }
-
 // 第三针为true时 前两针也必须true
 const changeFirstAndSecond = () => {
     data.employeData.updateForm['firstInoculation'] = data.employeData.updateForm['threeInoculation'];
     data.employeData.updateForm['secondInoculation'] = data.employeData.updateForm['threeInoculation'];
 }
-
-
 </script>
 <style lang='scss' scoped>
 </style>

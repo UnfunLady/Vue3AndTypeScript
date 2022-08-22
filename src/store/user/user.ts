@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-
 interface userInfo {
     isLogin: boolean,
     userToken: string | number,
@@ -36,9 +35,7 @@ export default defineStore("user", {
                 userToken: '',
                 userInfo: []
             }
-
         }
-
     },
     getters: {
         // 获取token

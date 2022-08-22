@@ -6,10 +6,8 @@
         </el-pagination>
     </div>
 </template>
-
 <script lang='ts'>
 import { defineComponent } from "vue";
-
 export default defineComponent({
     name: "PaginationView",
     props: {
@@ -38,10 +36,7 @@ export default defineComponent({
                 size: props.size
             }
             ctx.emit('pagination', query)
-
-
         }
-
         function handleSizeChange(val: number) {
             const query = {
                 page: props.page,

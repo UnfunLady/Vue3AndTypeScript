@@ -17,13 +17,11 @@
                 <el-form-item>
                     <el-button color="#296a99" icon="Check" size="default" @click="editGroup(editGroupFormRef)">修改信息
                     </el-button>
-
                 </el-form-item>
             </el-form>
         </el-card>
     </div>
 </template>
-
 <script lang='ts'>
 import { ElMessage, FormInstance } from "element-plus";
 import { ref, defineComponent, getCurrentInstance } from "vue";
@@ -37,7 +35,6 @@ export default defineComponent({
         },
     },
     setup(props, ctx) {
-
         // 表单原型
         const editGroupFormRef = ref<FormInstance>()
         // API
@@ -78,7 +75,6 @@ export default defineComponent({
                 }
             })
         }
-
         return {
             back,
             rules,

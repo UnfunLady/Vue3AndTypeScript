@@ -1,5 +1,5 @@
 <template>
-    <div class="all" >
+    <div class="all">
         <el-card style="margin:20px">
             <el-form :model="employeForm" inline>
                 <el-form-item label="部门名">
@@ -57,15 +57,13 @@
                                 </el-button>
                             </template>
                         </el-popconfirm>
-
                     </template>
                 </el-table-column>
-
             </el-table>
         </el-card>
         <!-- :disabled="disabled"
-             :background="background" 
-        -->
+:background="background"
+-->
         <div class="pagenation" v-if="employeForm.employeInfo.length > 0">
             <!-- pagination组件 -->
             <Pagination :disabled="employeForm.deptId != null || employeForm.employeInfo.length > 0 ? false : true"
@@ -156,20 +154,16 @@
                 </el-form-item>
             </el-form>
         </el-dialog>
-
-
     </div>
     <!-- 如果没有部门详细信息 -->
     <el-empty v-if="employeForm.employeInfo.length == 0" description="暂无数据 请自行选择查看的数据" />
 </template>
-
 <script lang="ts">
 import { defineComponent, toRefs, nextTick, ref, getCurrentInstance, reactive, onMounted, watch } from 'vue'
 // 引入employe.ts方法
 import { EmployeeInitData, getGroupByDno, getGroupEmploye, getAllProvinceAndCityList, searchEmploye, addOrUpdateDateEmploy, deleteEmploye } from '@/types/employe'
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { useRoute, useRouter } from 'vue-router';
-
 export default defineComponent({
     name: 'editEmploye',
     setup(props, ctx) {
@@ -193,7 +187,6 @@ export default defineComponent({
                     // 获取团队员工
                     getEmploye();
                 }, 100)
-
             })
         }
         // data.employeForm.dno = route.query.dno;
@@ -215,9 +208,7 @@ export default defineComponent({
             // const { deptId, deptno } = data.employeForm;
             // 该方法从employe.ts定义
             await getGroupByDno(API, data.employeForm);
-
         }
-
         // 选择团队号的时候根据部门号和团队号获取团队成员数据
         async function getEmploye(val: number = 1) {
             // 如果有关键字 则查询关键字
@@ -232,7 +223,6 @@ export default defineComponent({
             // 清空传递的route值 以防干扰
             router.push({ query: {} });
         }
-
         function handleSizeChange(val: number) {
             // 设置页容量
             data.employeForm.size = val;
@@ -281,7 +271,7 @@ export default defineComponent({
             }
             data.addOrUpdateFormRef.resetFields();
         }
-        // 校验邮箱规则 
+        // 校验邮箱规则
         const checkEmail = (rule, value, callback) => {
             const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
             if (!value) {
@@ -337,14 +327,12 @@ export default defineComponent({
             dialogVisiable.value = true;
             // 数据回显到表单上
             data.addOrUpdateEmployeForm = { ...data.addOrUpdateEmployeForm, ...row }
-            // 把全部团队信息赋值给修改表单 
+            // 把全部团队信息赋值给修改表单
             data.addOrUpdateEmployeForm.deptInfo = data.employeForm.deptInfo;
             // 获取全部团队小组信息
             await getGroupByDno(API, data.addOrUpdateEmployeForm);
         }
         console.log(data.employeForm.groupInfo != null);
-
-
         // 修改添加或修改里面的团队选择时 获取团队小组
         async function getGroupByUpdate() {
             // 首先清空团队选项的值
@@ -371,9 +359,6 @@ export default defineComponent({
                 }
             })
         }
-
-
-
         // 删除员工
         function deleteEmployeCheck(row: any) {
             ElMessageBox.confirm(
@@ -402,7 +387,6 @@ export default defineComponent({
                             message: res.msg,
                         })
                     }
-
                 })
                 .catch(() => {
                     ElMessage({
@@ -410,12 +394,9 @@ export default defineComponent({
                         message: '您取消了删除!',
                     })
                 })
-
-
         }
         function cancelDelete() {
             ElMessage.info('您取消了删除')
-
         }
         // 关键字查询
         async function search() {
@@ -428,18 +409,15 @@ export default defineComponent({
             if (res.code == 200) {
                 data.employeForm.employeInfo = res.employeInfo;
                 data.employeForm.count = res.count
-
             } else {
                 ElMessage.warning('所查找的员工并不存在')
             }
-
         }
         // pagination方法
         const testPagination = (query: any) => {
             data.employeForm.page = query.page
             data.employeForm.size = query.size;
             getEmploye();
-
         }
         return {
             ...toRefs(data),
@@ -458,12 +436,10 @@ export default defineComponent({
             deleteEmployeCheck,
             cancelDelete,
             testPagination
-
         }
     }
 })
 </script>
-
 <style >
 .pagenation {
     text-align: center;

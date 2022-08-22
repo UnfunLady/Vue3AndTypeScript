@@ -1,7 +1,6 @@
 <template>
     <iframe src="https://www.tslang.cn/index.html" id="mobsf" frameborder="0"></iframe>
 </template>
-
 <script lang='ts'>
 import { defineComponent } from 'vue'
 export default defineComponent({
@@ -9,7 +8,6 @@ export default defineComponent({
     setup() {
         return {
         }
-
     }
 });
 </script>

@@ -38,13 +38,11 @@
     <!-- 如果没有部门详细信息 -->
     <el-empty v-show="!$route.params.deptInfo" description="安全起见 数据不会保存 若想操作请重新获取数据" />
 </template>
-
 <script lang='ts'>
 import { reactive, ref, toRefs, defineComponent, getCurrentInstance } from 'vue'
 import { useRoute, } from 'vue-router';
 import { ElMessage } from 'element-plus';
 import { EmployeSalaryInitData, getEmployeSalaryInfo, updateEmployeSalaryInfo, } from '@/types/employe'
-
 export default defineComponent({
     name: 'departmentSalaryDetail',
     setup() {
@@ -70,13 +68,9 @@ export default defineComponent({
                 data.employeSalaryForm.groupInfo = res.groupInfo;
                 isLoading.value = false;
             }, 500)
-
-
         } else {
             ElMessage.warning('请重新获取数据')
-
         }
-
         // 改变是否补贴时
         async function changeUse(row: any) {
             // 赋值给表单
@@ -111,16 +105,13 @@ export default defineComponent({
                     performance: null
                 }
             }
-
         }
-
         return {
             ...toRefs(data),
             isLoading,
             changeUse,
             changePerformance
         }
-
     }
 });
 </script>

@@ -3,7 +3,6 @@ import Nprogress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { ElMessage } from 'element-plus'
 import useStore from '@/store'
-
 enum MSGS {
     // 自动递增
     '请求操作成功!' = 200,
@@ -18,7 +17,6 @@ const request = axios.create({
         "Content-Type": "application/json;charset=utf-8",
     }
 })
-
 request.interceptors.request.use(config => {
     Nprogress.start();
     // 判断是否有
@@ -31,7 +29,6 @@ request.interceptors.request.use(config => {
     }
     return config
 })
-
 request.interceptors.response.use(res => {
     const code: number = res.data.code
     // 如果身份过期
@@ -57,5 +54,4 @@ request.interceptors.response.use(res => {
         message: '请求失败!'
     })
 })
-
 export default request;

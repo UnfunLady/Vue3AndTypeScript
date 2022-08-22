@@ -11,7 +11,6 @@ export interface employeInfo {
     size: number,//页容量
     count: number,//团队总人数
     keyword: string,//查询关键字
-
 }
 // 添加或修改员工用到的数据
 export interface addOrUpdateEmploye {
@@ -41,7 +40,6 @@ export interface employeSalary {
     editForm: {
         isuse: string,
         deptid: number | string,
-
     },
     isLoading: boolean,
     // 绩效的百分比
@@ -95,7 +93,6 @@ export class EmployeeInitData {
         size: 8,
         count: 1,
         keyword: '',
-
     }
     addOrUpdateEmployeForm: addOrUpdateEmploye = {
         employno: null,
@@ -124,7 +121,6 @@ export class EmployeeInitData {
     // countyListAll= []
     // 表单类型
     addOrUpdateFormRef = ref<FormInstance>();
-
 }
 // 薪资管理初始化数据
 export class EmployeSalaryInitData {
@@ -140,7 +136,6 @@ export class EmployeSalaryInitData {
             deptid: null,
             performance: null
         },
-
     }
 }
 // 个人员工薪资管理初始化数据
@@ -214,7 +209,6 @@ export const getAllProvinceAndCityList = (API: any, data: any) => {
             //         }
             //     }
             // }
-
             // console.log('省份', data.provinceListAll);
             // console.log('城市', data.cityListAll);
             // console.log('县', data.countyListAll);
@@ -244,7 +238,6 @@ export const getEmployeSalaryInfo = async (API: any, params: Object) => {
     const res = await API.employe.reqGetSalaryInfo(params)
     return res;
 }
-
 // 修改工资的补助请求
 export const updateEmployeSalaryInfo = async (API: any, data: any) => {
     const res = await API.employe.reqUpdateSalaryInfo(data);
@@ -260,5 +253,4 @@ export const getEmployeSalaryDetailInfo = (API: any, params: Object) => {
 export const updateSalaryDetail = (API: any, data: Object) => {
     const res = API.employe.reqUpdateSalaryDetail(data)
     return res
-
 }

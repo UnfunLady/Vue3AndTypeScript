@@ -22,26 +22,21 @@
                                 解散小组
                             </el-button>
                         </el-tooltip>
-
                         <el-tooltip class="box-item" effect="dark" content="可以自行修改员工所属小组迁移员工" placement="top">
                             <el-button style="color:white" icon="Edit" :color="row.count !== 0 ? '#82B366' : '#B3B3B3'"
                                 :disabled="row.count == 0 ? true : false" @click="moveGroupEmploye(row)">
                                 迁移小组人员
                             </el-button>
                         </el-tooltip>
-
                     </template>
-
                 </el-table-column>
             </el-table>
         </el-card>
-
     </div>
 </template>
-
 <script lang='ts'>
 import { ElMessageBox, ElMessage } from 'element-plus';
-import {  defineComponent,  getCurrentInstance } from 'vue'
+import { defineComponent, getCurrentInstance } from 'vue'
 import { useRouter } from 'vue-router';
 import { reqDelGroup } from '@/types/department'
 export default defineComponent({
@@ -75,11 +70,9 @@ export default defineComponent({
                     } else {
                         ElMessage.error(res.msg)
                     }
-
                 }).catch(() => {
                     ElMessage.warning('您取消了解散操作!')
                 })
-
             } else {
                 ElMessageBox.confirm(`<span style="color:red">${row.deptname}还有员工存在${row.count}人,</span>是否坚持解散该小组`, '警告!', {
                     dangerouslyUseHTMLString: true,
@@ -111,15 +104,11 @@ export default defineComponent({
                 }
             })
         }
-
         return {
             back,
             delGroup,
             moveGroupEmploye,
-
-
         }
-
     }
 });
 </script>

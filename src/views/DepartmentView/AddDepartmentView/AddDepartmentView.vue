@@ -57,16 +57,12 @@
                     确认创建
                 </el-button>
             </div>
-
         </el-card>
         <el-dialog v-model="dialogVisible">
             <img class="showImg" :src="dialogImageUrl" alt="Preview Image" />
         </el-dialog>
-
-
     </div>
 </template>
-
 <script lang='ts' setup>
 import { reactive, ref, getCurrentInstance, computed } from 'vue'
 import { addDepartmentDataInit } from '@/types/department'
@@ -88,8 +84,6 @@ const { user } = useStore()
 const config = {
     token: user.getUserToken
 }
-
-
 // 是否预览
 const dialogVisible = ref(false)
 // 预览的url
@@ -141,7 +135,6 @@ const clearForm = () => {
     data.addDepartmentData.addDepartmentForm.dname = '';
     data.addDepartmentData.addDepartmentForm.explain = '';
     upload.value!.clearFiles();
-
 }
 // 确认新增部门
 const confirmAddDepartment = () => {
@@ -159,9 +152,6 @@ const confirmAddDepartment = () => {
         }, 1000)
     })
 }
-
-
-
 </script>
 <style lang='scss' >
 .showImg {
@@ -180,13 +170,11 @@ const confirmAddDepartment = () => {
 .el-upload-list--picture-card .el-upload-list__item {
     width: 100px;
     height: 60px;
-
 }
 
 .cButton {
     background-color: rgba(0, 128, 0, 0.812) !important;
     border: none;
-
 }
 
 .cButton:hover {
