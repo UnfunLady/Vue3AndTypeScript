@@ -195,9 +195,7 @@ export default defineComponent({
 
     // 退出登录
     const userLogout = () => {
-
       router.push('/login')
-
       ElMessage.success('退出登录成功!')
       user.userOut()
       router.go(0)
