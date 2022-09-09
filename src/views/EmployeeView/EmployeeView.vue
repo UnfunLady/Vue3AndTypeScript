@@ -268,6 +268,7 @@ export default defineComponent({
                 province: '',  // 所属省（直辖市）
                 city: '',     // 所属市
                 isUpdate: false,
+                changeGroup: false
             }
             data.addOrUpdateFormRef.resetFields();
         }
@@ -322,6 +323,7 @@ export default defineComponent({
         };
         // 点击修改员工按钮
         async function editEmploye({ row }) {
+            console.log(row);
             // 转为修改状态
             data.addOrUpdateEmployeForm.isUpdate = true;
             dialogVisiable.value = true;
@@ -346,8 +348,8 @@ export default defineComponent({
             data.addOrUpdateFormRef.validate(async (valid) => {
                 if (valid) {
                     // 表单验证通过 发送请求
-                    const res = await addOrUpdateDateEmploy(API, { default: data.addOrUpdateEmployeForm, old: data.employeForm.deptId });
-                    if (res.code == 200) {
+                    const res = await addOrUpdateDateEmploy(API, { default: data.addOrUpdateEmployeForm, old: data.employeForm.deptId, changeGroup: data.addOrUpdateEmployeForm.changeGroup });
+                    if (res.code === 200) {
                         ElMessage.success(res.msg);
                         // 清空数据
                         cancelAddOrUpdate();

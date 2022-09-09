@@ -32,6 +32,7 @@ export interface addOrUpdateEmploye {
     province: string,  // 所属省（直辖市）
     city: string,     // 所属市
     isUpdate: boolean,//是否是更新状态
+    changeGroup: boolean
 }
 // 部门薪资管理
 export interface employeSalary {
@@ -112,6 +113,7 @@ export class EmployeeInitData {
         province: '',  // 所属省（直辖市）
         city: '',     // 所属市
         isUpdate: false,
+        changeGroup: false,
     }
     //全国的省份
     provinceListAll: any = []
@@ -190,9 +192,9 @@ export const getGroupEmploye = async (API: any, data: any) => {
 export const getAllProvinceAndCityList = (API: any, data: any) => {
     API.employe.reqGetAllProvinceAndAllCity().then((results: object) => {
         let res: any = results;
-        if (res.data.status == '1') {
+        if (res.code === 200) {
             // 省份赋值
-            data.provinceListAll = res.data.districts[0].districts;
+            data.provinceListAll = res.districts[0].districts;
             // 市赋值 遍历省 下面的市
             // if (data.provinceListAll.length != 0) {
             //     for (let i = 0; i < data.provinceListAll.length; i++) {

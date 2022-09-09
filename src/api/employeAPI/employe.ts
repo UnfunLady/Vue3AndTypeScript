@@ -34,20 +34,23 @@ const reqGetGroupEmploye = (params: deptData) => {
     return request({ url: '/getEmployee', method: 'get', params })
 }
 // 获取省市（高德地图API）
+// const reqGetAllProvinceAndAllCity = () => {
+//     return new Promise(resolve => {
+//         axios({
+//             url: 'https://restapi.amap.com/v3/config/district', method: 'get', params: {
+//                 // 这个是高德地图API申请的 Key，
+//                 key: '42552fba291f8a50278dddbe2d7460a2',
+//                 keywords: '中国',
+//                 subdistrict: 3,
+//                 extensions: 'base'
+//             }
+//         }).then((res) => {
+//             resolve(res)
+//         })
+//     })
+// }
 const reqGetAllProvinceAndAllCity = () => {
-    return new Promise(resolve => {
-        axios({
-            url: 'https://restapi.amap.com/v3/config/district', method: 'get', params: {
-                // 这个是高德地图API申请的 Key，
-                key: '42552fba291f8a50278dddbe2d7460a2',
-                keywords: '中国',
-                subdistrict: 3,
-                extensions: 'base'
-            }
-        }).then((res) => {
-            resolve(res)
-        })
-    })
+    return request({ url: '/getProvinceCity', method: 'get' })
 }
 // 添加或修改的数据
 interface addOrUpdateData {

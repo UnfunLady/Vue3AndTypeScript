@@ -161,6 +161,8 @@ export default defineComponent({
     const route = useRoute();
     // 获取全部路由 并过滤要展示的
     const list = router.getRoutes().filter(v => v.meta.isShow);
+    console.log(router.getRoutes());
+
     // // 获取菜单列表的子路由
     // const children = list.map((l, i) => l.children[0])
     //  是否折叠菜单

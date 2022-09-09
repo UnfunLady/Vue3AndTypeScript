@@ -1,6 +1,8 @@
+
 var express = require('express');
 var router = express.Router();
 var connect = require('../db/connect')
+const getProvince = require('./province')
 const os = require("os")
 const jwt = require('jsonwebtoken');
 const fs = require('fs')
@@ -14,6 +16,9 @@ var upload = multer({ dest: 'uploads/' })
 router.get('/', function (req, res, next) {
   res.render('index', { title: 'Express' });
 });
+
+// 省市
+router.get('/api/getProvinceCity', getProvince)
 // 登录接口
 router.post('/api/login', function (req, res, next) {
   // 获取账号密码
@@ -132,6 +137,7 @@ router.get('/api/getEmployee', (req, res) => {
     if (err) throw err;
     // 查询全部条数
     connect.query(`select d.count from  dept d where d.id=${deptId}`, (error, resu) => {
+      console.log(resu);
       if (error) throw error;
       if (results.length >= 0) {
         res.send({
@@ -153,28 +159,39 @@ router.get('/api/getEmployee', (req, res) => {
 router.post('/api/addOrUpdateEmploy', (req, res) => {
   const { body } = req
   const { isUpdate } = body.default;
+  const changeGroup = body.changeGroup
   // body.default基本信息 body.old 旧部门信息 因为表是多个主键 修改需要用到旧部门id
-  // 如果是更新则走更新的操作
+  // 如果是更新且移动员工到别的组则走更新的操作
   if (isUpdate) {
-    const preSql = `select *from employee where employno=${body.default.employno} and deptno=${body.default.deptno}`
-    connect.query(preSql, (errors, resu) => {
-      if (errors) throw errors
-      if (resu && resu.length > 0) {
-        res.send({
-          code: 202,
-          msg: '该小组已有相同成员 请移到其他小组'
-        })
-      } else {
-        const udSql = `
-UPDATE  employee SET deptno = ${body.default.deptno}, employname = '${body.default.employname}', employage = '${body.default.employage}', employsex= '${body.default.employsex}', employidcard = '${body.default.employidcard}',
-employphone = '${body.default.employphone}', entryDate = '${body.default.entryDate}',
-employemail = '${body.default.employemail}', employaddress = '${body.default.employaddress}',
-employsalary = '${body.default.employsalary}'
-WHERE deptno=${body.old} and employno = ${body.default.employno};
-`
-        // 更新员工
-        connect.query(udSql, (e, r) => {
-          if (e) throw e
+    if (changeGroup && changeGroup === true) {
+      const preSql = `select *from employee where employno=${body.default.employno} and deptno=${body.default.deptno}`
+      connect.query(preSql, (errors, resu) => {
+        if (errors) throw errors
+        if (resu && resu.length > 0) {
+          res.send({
+            code: 202,
+            msg: '该小组已有相同成员 请移到其他小组'
+          })
+        } else {
+          res.send({
+            code: 202,
+            msg: '修改异常'
+          })
+        }
+      })
+    } else {
+      const udSql = `
+  UPDATE  employee SET deptno = ${body.default.deptno}, employname = '${body.default.employname}', employage = '${body.default.employage}', employsex= '${body.default.employsex}', employidcard = '${body.default.employidcard}',
+  employphone = '${body.default.employphone}', entryDate = '${body.default.entryDate}',
+  employemail = '${body.default.employemail}', employaddress = '${body.default.employaddress}',
+  employsalary = '${body.default.employsalary}'
+  WHERE deptno=${body.old} and employno = ${body.default.employno};
+  `
+      console.log(udSql)
+      // 更新员工
+      connect.query(udSql, (e, r) => {
+        if (e) { res.send({ code: 202, msg: '请确认该部门是否有相同员工！' }) }
+        else {
           if (r && r.affectedRows > 0) {
             res.send({
               code: 200,
@@ -186,9 +203,10 @@ WHERE deptno=${body.old} and employno = ${body.default.employno};
               msg: '修改异常,请确认新数据和原数据是否相同或出现未知异常'
             })
           }
-        })
-      }
-    })
+        }
+
+      })
+    }
   } else {
     // 插入sql
     const addSql = `INSERT INTO  employee(deptno, employname, employage, employsex,employidcard, employphone, entryDate, employemail, employaddress, employsalary)
@@ -248,7 +266,7 @@ select e.* ,d.deptname,da.dno from  employee e,dept d,depall da where (e.employn
         } else {
           res.send({
             code: 202,
-            msg: '查找失败!',
+            msg: '查无此人~',
           })
         }
       })
