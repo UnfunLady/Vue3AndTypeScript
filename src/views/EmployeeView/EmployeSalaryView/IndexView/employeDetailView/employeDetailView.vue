@@ -112,33 +112,33 @@
                         <div>
                             <span class="allSalary">
                                 {{
-                                        // 如果有补贴就显示补贴后的否则显示默认底薪
-                                        scope.row.isuse != 'true'
-                                            ? scope.row.salary
-                                            : (scope.row.usesocialSub == "true"
-                                                ? -employeSalaryDetailForm.DetailForm.subDetail[0]
-                                                    .socialSub
-                                                : employeSalaryDetailForm.DetailForm.subDetail[0]
-                                                    .socialSub) +
-                                            (scope.row.usehouseSub == "true"
-                                                ? employeSalaryDetailForm.DetailForm.subDetail[0]
-                                                    .houseSub
-                                                : 0) +
-                                            (scope.row.useeatSub == "true"
-                                                ? employeSalaryDetailForm.DetailForm.subDetail[0].eatSub
-                                                : 0) +
-                                            (scope.row.usetransSub == "true"
-                                                ? employeSalaryDetailForm.DetailForm.subDetail[0]
-                                                    .transSub
-                                                : 0) +
-                                            (scope.row.usehotSub == "true"
-                                                ? employeSalaryDetailForm.DetailForm.subDetail[0].hotSub
-                                                : 0) +
-                                            scope.row.salary +
-                                            scope.row.usePerformance *
-                                            employeSalaryDetailForm.DetailForm.subDetail[0]
-                                                .performance *
-                                            0.01
+                                // 如果有补贴就显示补贴后的否则显示默认底薪
+                                scope.row.isuse != 'true'
+                                ? scope.row.salary
+                                : (scope.row.usesocialSub == "true"
+                                ? -employeSalaryDetailForm.DetailForm.subDetail[0]
+                                .socialSub
+                                : employeSalaryDetailForm.DetailForm.subDetail[0]
+                                .socialSub) +
+                                (scope.row.usehouseSub == "true"
+                                ? employeSalaryDetailForm.DetailForm.subDetail[0]
+                                .houseSub
+                                : 0) +
+                                (scope.row.useeatSub == "true"
+                                ? employeSalaryDetailForm.DetailForm.subDetail[0].eatSub
+                                : 0) +
+                                (scope.row.usetransSub == "true"
+                                ? employeSalaryDetailForm.DetailForm.subDetail[0]
+                                .transSub
+                                : 0) +
+                                (scope.row.usehotSub == "true"
+                                ? employeSalaryDetailForm.DetailForm.subDetail[0].hotSub
+                                : 0) +
+                                scope.row.salary +
+                                scope.row.usePerformance *
+                                employeSalaryDetailForm.DetailForm.subDetail[0]
+                                .performance *
+                                0.01
                                 }}
                             </span>
                         </div>
@@ -183,9 +183,9 @@
                         </template>
                         <el-tag size="small" type="info">
                             {{
-                                    item.isuse == "true" && item.usesocialSub == "true"
-                                        ? "有"
-                                        : "无"
+                            item.isuse == "true" && item.usesocialSub == "true"
+                            ? "有"
+                            : "无"
                             }}</el-tag>
                     </el-descriptions-item>
                     <el-descriptions-item>
@@ -199,7 +199,7 @@
                         </template>
                         <el-tag size="small" type="info">
                             {{
-                                    item.isuse == "true" && item.usehouseSub == "true" ? "有" : "无"
+                            item.isuse == "true" && item.usehouseSub == "true" ? "有" : "无"
                             }}</el-tag>
                     </el-descriptions-item>
                     <el-descriptions-item>
@@ -213,7 +213,7 @@
                         </template>
                         <el-tag size="small" type="info">
                             {{
-                                    item.isuse == "true" && item.useeatSub == "true" ? "有" : "无"
+                            item.isuse == "true" && item.useeatSub == "true" ? "有" : "无"
                             }}</el-tag>
                     </el-descriptions-item>
                     <el-descriptions-item>
@@ -226,7 +226,7 @@
                             </div>
                         </template>
                         <el-tag size="small" type="info">{{
-                                item.isuse == "true" && item.usetransSub == "true" ? "有" : "无"
+                        item.isuse == "true" && item.usetransSub == "true" ? "有" : "无"
                         }}</el-tag>
                     </el-descriptions-item>
                     <el-descriptions-item>
@@ -240,7 +240,7 @@
                         </template>
                         <el-tag size="small" type="info">
                             {{
-                                    item.isuse == "true" && item.usehotSub == "true" ? "有" : "无"
+                            item.isuse == "true" && item.usehotSub == "true" ? "有" : "无"
                             }}</el-tag>
                     </el-descriptions-item>
                     <el-descriptions-item>
@@ -333,7 +333,8 @@
         </el-card>
         <el-pagination v-show="
             employeSalaryDetailForm.active > 0 && employeSalaryDetailForm.active < 2
-        " :total="employeSalaryDetailForm.DetailForm.count" v-model:current-page="employeSalaryDetailForm.DetailForm.page"
+        " :total="employeSalaryDetailForm.DetailForm.count"
+            v-model:current-page="employeSalaryDetailForm.DetailForm.page"
             v-model:page-size="employeSalaryDetailForm.DetailForm.size" @current-change="changePage"
             :page-sizes="[8, 10, 20]" @size-change="changeSize" layout="->,total, sizes, prev,pager, next,jumper">
         </el-pagination>

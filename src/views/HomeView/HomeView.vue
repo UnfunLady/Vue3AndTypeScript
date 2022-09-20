@@ -113,7 +113,7 @@
       <el-form-item label="用户名/权限：">
         <el-tag type="danger">{{ user.userInfo.userList.userInfo['username'] }}</el-tag>
         <el-tag type="danger" style="margin-left:15px">{{ user.userInfo.userList.userInfo['level'] == 1 ? '超级管理员' :
-            '普通管理员'
+        '普通管理员'
         }}</el-tag>
       </el-form-item>
       <el-form-item label="用户昵称：">

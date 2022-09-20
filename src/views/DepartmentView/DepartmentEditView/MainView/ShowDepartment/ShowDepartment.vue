@@ -88,7 +88,7 @@
             </el-form-item>
             <el-form-item>
                 <h4 class="form-item">部门职责:<el-tag type="danger"><span>{{
-                        departmentData.detailForm.explain
+                departmentData.detailForm.explain
                 }}</span></el-tag>
                 </h4>
             </el-form-item>
@@ -143,7 +143,7 @@ export default defineComponent({
         }
         // 查看团队信息
         const moveGroupDetail = ({ row }) => {
-            router.push({
+            router.replace({
                 name: 'editemploye',
                 query: {
                     dno: row.deptno,

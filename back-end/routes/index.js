@@ -137,7 +137,7 @@ router.get('/api/getEmployee', (req, res) => {
     if (err) throw err;
     // 查询全部条数
     connect.query(`select d.count from  dept d where d.id=${deptId}`, (error, resu) => {
-      console.log(resu);
+
       if (error) throw error;
       if (results.length >= 0) {
         res.send({
@@ -187,7 +187,6 @@ router.post('/api/addOrUpdateEmploy', (req, res) => {
   employsalary = '${body.default.employsalary}'
   WHERE deptno=${body.old} and employno = ${body.default.employno};
   `
-      console.log(udSql)
       // 更新员工
       connect.query(udSql, (e, r) => {
         if (e) { res.send({ code: 202, msg: '请确认该部门是否有相同员工！' }) }
@@ -317,7 +316,8 @@ select sa.* from employesalary sa WHERE deptno=${dno}
 // 修改薪资信息
 router.post('/api/updateSalaryInfo', (req, res) => {
   const { editForm, performance } = req.body;
-  if (editForm.isuse != null && editForm.deptid != null) {
+
+  if (editForm.isuse !== null && editForm.isuse !== '' && editForm.deptid !== null) {
     const sql = `
 UPDATE employesalary SET isuse = '${editForm.isuse}' WHERE deptid=${editForm.deptid} `;
     connect.query(sql, (error, results) => {
@@ -332,11 +332,19 @@ UPDATE employesalary SET isuse = '${editForm.isuse}' WHERE deptid=${editForm.dep
     const sql = `
 UPDATE employesalary SET performance = '${performance.performance}' WHERE deptid=${performance.deptid} `;
     connect.query(sql, (e, r) => {
+      const nextSql = `UPDATE  vuets.employesalarydetail  SET   usePerformance  = ${performance.performance} WHERE  deptno  = ${performance.deptid};`
+
+      connect.query(nextSql, (errorr, changeSuccess) => {
+        if (changeSuccess.affectedRows > 0) {
+          res.send({
+            code: 200,
+            msg: '修改成功'
+          })
+        }
+      })
+
     })
-    res.send({
-      code: 200,
-      msg: '修改绩效成功'
-    })
+
   }
 })
 // 获取员工详细薪资明细
@@ -348,7 +356,7 @@ router.get('/api/getSaralyDetailInfo', (req, res) => {
         const sql = `SELECT ed.*,d.deptname FROM employesalarydetail  ed,dept d where ed.deptno=d.id AND  ed.deptno=${deptid} GROUP BY ed.employno limit ${(page - 1) * size},${size}`
         connect.query(sql, (e, r) => {
           // 获取补贴相关的具体数据
-          connect.query('select *from employeSub', (haserror, success) => {
+          connect.query(`SELECT es.socialSub,es.houseSub,es.eatSub,es.transSub,es.hotSub,(es.performance*10)as performance FROM employesalary es WHERE deptid=${deptid}`, (haserror, success) => {
             if (r.length > 0) {
               res.send({
                 code: 200,
@@ -410,6 +418,7 @@ isuse ='${item.isuse}' where  employno =${item.employno};`
 })
 // 没有头像
 router.post('/api/editDeptNoAvatar', (req, res) => {
+  console.log(req.body)
   const { dno, dname, explain } = req.body.editDeptData;
   const sql = `
 UPDATE depall SET dname = '${dname}',
@@ -424,9 +433,12 @@ depall.explain = '${explain}'  WHERE dno = ${dno};
     }
   })
 })
-// 1.上传头像
+
+
+
+// 1.上传头像 vue
 router.post('/api/editDept', upload.single('file'), (req, res) => {
-  // // 上传的图片到uploads文件
+  //上传的图片到uploads文件
   const { dno, dname, explain } = req.query;
   var imges = req.file;
   if (imges) {
@@ -471,6 +483,52 @@ router.post('/api/editDept', upload.single('file'), (req, res) => {
     res.send({ code: 202, msg: '图片上传失败' })
   }
 })
+// 2.上传头像 react
+router.post('/api/editDeptR', upload.single('file'), (req, res) => {
+  // 图片信息
+  const files = JSON.parse(req.body.files)
+  const { dname, explain, dno } = req.body
+  // 高清图片base64
+  const avarat_str = req.body.base64;
+  // 去掉前缀
+  const originStr = avarat_str.replace(/^data:image\/\w+;base64,/, "")
+  // 转成buffer格式
+  const dataBuffer = Buffer.from(originStr, 'base64');
+  // 随机名称
+  const randomName = Date.now() + parseInt(Math.random() * 114514)
+  // 后缀名
+  const hzm = files.name.substring(files.name.lastIndexOf('.'), files.name.length)
+  // 写入图片
+  fs.writeFile(path.join(__dirname, '../public/images/' + randomName + hzm), dataBuffer, (err) => {
+    if (err) {
+      console.log('上传图片失败')
+      res.send({ code: 202, msg: '图片上传失败' })
+    } else {
+      // 通过os模块 获取本地address
+      const couter = os.networkInterfaces()
+      for (var cm in couter) {
+        var cms = couter[cm]
+      }
+      // 将图片的路径保存到数据库
+      // "http://localhost:3000/public/images/"不用public 因为 app.js用了  app.use(express.static(path.join(__dirname, 'public')));  省略了public
+      const picPath = "http://" + cms[1].address + ':3000' + '/images/' + randomName + hzm;
+      const sql = `
+       UPDATE depall SET avatar='${picPath}',dname='${dname}',depall.explain='${explain}' WHERE dno =${dno};`
+      // 执行修改逻辑
+      connect.query(sql, (error, result) => {
+        if (error) throw error;
+        if (result.affectedRows > 0) {
+          res.send({ code: 200, msg: "修改成功" })
+        } else {
+          res.send({ code: 202, msg: "修改失败" })
+        }
+      })
+    }
+  })
+})
+
+
+
 // 修改小组信息
 router.post('/api/editGroupInfo', (req, res) => {
   const { id, deptname, location, count } = req.body
@@ -952,7 +1010,7 @@ AND c.deptid=d.id AND d.deptno=${dno} limit ${(page - 1) * size},${size}
       connect.query(sql, (err, results) => {
         if (err) res.send({ code: 202, msg: '获取信息失败' })
         if (results.length > 0) {
-          console.log(1);
+
           res.send({ code: 200, employeInfo: [...r], employeCount: r.length, evilInfo: [...results], evilCount: results.length })
         } else if (results.length === 0) {
           {
@@ -975,7 +1033,7 @@ in (select c.employid from covidinfo c WHERE c.depallid=${dno} )
 AND e.deptno=d.id  AND co.depallid=d.deptno AND d.deptno=${dno} AND e.employno=co.employid ORDER BY e.employno asc
 limit ${(page - 1) * size},${size}`
   connect.query(sql, (err, results) => {
-    console.log(sql);
+
     if (err) res.send({ code: 202, msg: '查询数据失败' })
     if (results && results.length > 0) {
       // 获取总数
@@ -998,7 +1056,7 @@ router.post('/api/updateEmployeEvilInfo', (req, res) => {
   const sql = `UPDATE  covidinfo  SET  depallid  = ${depallid},  firstInoculation  = '${firstInoculation}',
 secondInoculation  = '${secondInoculation}',  threeInoculation  = '${threeInoculation}'
 WHERE  deptid  = ${deptid} AND  employid  = ${employno};`
-  console.log(sql);
+
   connect.query(sql, (err, results) => {
     if (err) res.send({ code: 202, msg: '修改信息失败' })
     if (results && results.affectedRows > 0) {
