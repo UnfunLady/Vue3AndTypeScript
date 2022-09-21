@@ -30,8 +30,7 @@
                         <div class="compareNumber" :style="{
                             color: item['color']
                         }">
-                            + <count-to :startVal="0" :endVal="item['data']['twoNumber']" :decimals="0"
-                                :duration="2000">
+                            <count-to :startVal="0" :endVal="item['data']['twoNumber']" :decimals="0" :duration="2000">
                             </count-to>
                         </div>
                     </div>

@@ -210,6 +210,8 @@ const confirmSava = async () => {
         // 小组地址
         location: initData.addGroupData.selectDeptForm.location
     }
+    console.log(confirmData);
+
     const res = await addGroup(API, confirmData);
     if (res && res.code === 200) {
         ElMessage.success('组建新小组成功!')

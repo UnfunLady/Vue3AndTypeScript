@@ -151,7 +151,7 @@ export const chart = (dom: HTMLElement, data: any) => {
                 },
                 tooltip: {
                     valueFormatter: function (value: number) {
-                        return '+' + value + '人';
+                        return value > 0 ? '+' + value + '人' : value + '人';
                     }
                 },
                 data: data.chinaInfo.echarts.yData.moreData

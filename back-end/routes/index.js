@@ -595,7 +595,7 @@ router.post('/api/addGroup', (req, res) => {
     if (checkResult.length > 0) {
       res.send({
         code: 202,
-        msg: '已有相同名字部门请重新取名!'
+        msg: '已有相同名字小组请重新取名!'
       })
     } else {
       // 插入新小组
