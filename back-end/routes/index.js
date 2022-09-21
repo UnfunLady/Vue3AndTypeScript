@@ -872,6 +872,49 @@ router.post('/api/addDeptpartment', upload.single('file'), (req, res) => {
     }
   })
 })
+// 新增部门react
+router.post('/api/addDeptpartmentR', upload.single('file'), (req, res) => {
+  const files = JSON.parse(req.body.files)
+  const { dname, explain } = req.body
+  // 高清图片base64
+  const avarat_str = req.body.base64;
+  // 去掉前缀
+  const originStr = avarat_str.replace(/^data:image\/\w+;base64,/, "")
+  // 转成buffer格式
+  const dataBuffer = Buffer.from(originStr, 'base64');
+  // 随机名称
+  const randomName = Date.now() + parseInt(Math.random() * 114514)
+  // 后缀名
+  const hzm = files.name.substring(files.name.lastIndexOf('.'), files.name.length)
+  // 写入图片
+  fs.writeFile(path.join(__dirname, '../public/images/' + randomName + hzm), dataBuffer, (err) => {
+    if (err) {
+      console.log('上传图片失败')
+      res.send({ code: 202, msg: '图片上传失败' })
+    } else {
+      // 通过os模块 获取本地address
+      const couter = os.networkInterfaces()
+      for (var cm in couter) {
+        var cms = couter[cm]
+      }
+      // 将图片的路径保存到数据库
+      // "http://localhost:3000/public/images/"不用public 因为 app.js用了  app.use(express.static(path.join(__dirname, 'public')));  省略了public
+      const picPath = "http://" + cms[1].address + ':3000' + '/images/' + randomName + hzm;
+      const sql = ` insert into depall (dname,depall.explain,avatar)  values('${dname}','${explain}','${picPath}')`
+      // 执行修改逻辑
+      connect.query(sql, (error, result) => {
+        if (error) throw error;
+        if (result.affectedRows > 0) {
+          res.send({ code: 200, msg: "添加成功" })
+        } else {
+          res.send({ code: 202, msg: "添加失败" })
+        }
+      })
+    }
+  })
+})
+
+
 // 首页第一张图echarts各部门总人数
 router.get('/api/deptTotal', (req, res) => {
   // 全部部门名
