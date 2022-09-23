@@ -13,11 +13,11 @@
                                 <h6>{{ item['dname'] }}</h6>
                             </div>
                             <div class="detailInfo" v-if="item['isAllCovid'] == 'false'">
-                                <p @click="showNoCovid(item)">总数/未接种:
-                                    <span class="sumNot">
-                                        {{ item['count'] }}/{{ item['noCovid'] }}
-                                    </span>
-                                </p>
+                                    <p @click="showNoCovid(item)">总数/未接种:
+                                        <span class="sumNot">
+                                            {{ item['count'] }}/{{ item['noCovid'] }}
+                                        </span>
+                                    </p>
                             </div>
                             <div class="detailInfo" v-else>
                                 <p @click="justCheck(item)">查看接种信息</p>

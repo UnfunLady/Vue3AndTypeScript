@@ -7,7 +7,7 @@
             <el-button icon="Reading" style="height: 35px !important" color="#337ecc" v-if="!data.employeData.justCheck"
                 @click="getAllEmployeEvilInfoOrBack">
                 {{
-                        data.employeData.isAllEmploye ? "返回具体信息" : "查看所有员工"
+                data.employeData.isAllEmploye ? "返回具体信息" : "查看所有员工"
                 }}</el-button>
             <el-table :data="
                 data.employeData.isAllEmploye
@@ -223,4 +223,5 @@ const changeFirstAndSecond = () => {
 }
 </script>
 <style lang='scss' scoped>
+
 </style>

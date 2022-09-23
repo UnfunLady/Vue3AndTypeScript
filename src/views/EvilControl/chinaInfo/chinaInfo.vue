@@ -112,7 +112,7 @@ const initEchartsxData = () => {
         data.chinaInfo.echarts.xData.push(i['title']);
     })
 }
-// echarts 赋值给x轴数据
+// echarts 赋值给y轴数据
 const initEchartsyData = () => {
     // y轴数据
     data.chinaInfo.allInfo.map((i) => {
