@@ -148,7 +148,7 @@ const getEvilInfo = async () => {
                     return { ...item, ...res.evilInfo[index] };
                 }
             );
-            data.employeData.someCount = res.employeCount;
+            data.employeData.someCount = res.evilCount;
         }
     }
 };

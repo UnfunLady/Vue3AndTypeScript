@@ -3,6 +3,7 @@ import request from "@/http";
 const reqGetEvilInfo = () => {
     return request({ url: 'https://api.tianapi.com/ncov/index?key=3fc0a98a6f2fa29aa2c1fadbc54d6a84', method: 'get' })
 }
+
 // 公司疫苗接种信息接口
 const reqGetCompanyEvilInfo = () => {
     return request({ url: '/getCompanyEvilInfo', method: 'get' })

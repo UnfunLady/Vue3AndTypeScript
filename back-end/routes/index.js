@@ -1048,7 +1048,7 @@ AND e.deptno=d.id  AND d.deptno=${dno} limit ${(page - 1) * size},${size}
       const sql = `
 select c.* from covidinfo c ,dept d WHERE c.employid
 in (select c.employid from covidinfo c WHERE c.depallid=${dno} AND threeInoculation='false')
-AND c.deptid=d.id AND d.deptno=${dno} limit ${(page - 1) * size},${size}
+AND c.deptid=d.id AND d.deptno=${dno} 
 `
       connect.query(sql, (err, results) => {
         if (err) res.send({ code: 202, msg: '获取信息失败' })
@@ -1071,12 +1071,12 @@ AND c.deptid=d.id AND d.deptno=${dno} limit ${(page - 1) * size},${size}
 router.get('/api/getAllEmployeEvilInfo', (req, res) => {
   const { dno } = JSON.parse(req.query.baseInfo);
   const { page, size } = JSON.parse(req.query.pagination)
+  // 获取员工 分页
   const sql = `SELECT DISTINCT e.*,co.deptid,co.depallid,co.firstInoculation,co.secondInoculation,co.threeInoculation from employee e,dept d,covidinfo co WHERE e.employno
 in (select c.employid from covidinfo c WHERE c.depallid=${dno} )
 AND e.deptno=d.id  AND co.depallid=d.deptno AND d.deptno=${dno} AND e.employno=co.employid ORDER BY e.employno asc
 limit ${(page - 1) * size},${size}`
   connect.query(sql, (err, results) => {
-
     if (err) res.send({ code: 202, msg: '查询数据失败' })
     if (results && results.length > 0) {
       // 获取总数
@@ -1099,7 +1099,7 @@ router.post('/api/updateEmployeEvilInfo', (req, res) => {
   const sql = `UPDATE  covidinfo  SET  depallid  = ${depallid},  firstInoculation  = '${firstInoculation}',
 secondInoculation  = '${secondInoculation}',  threeInoculation  = '${threeInoculation}'
 WHERE  deptid  = ${deptid} AND  employid  = ${employno};`
-
+  console.log(sql);
   connect.query(sql, (err, results) => {
     if (err) res.send({ code: 202, msg: '修改信息失败' })
     if (results && results.affectedRows > 0) {
