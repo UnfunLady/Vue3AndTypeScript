@@ -170,6 +170,7 @@ export const twoCharts = (dom: HTMLElement, data: any) => {
     };
     option && myChart.setOption(option);
 }
+
 export const initData = (data: any) => {
     data.mainViewData.showData[0]['num'] = data.mainViewData.DetailData['companyDeptCount']
     data.mainViewData.showData[1]['num'] = data.mainViewData.DetailData['companyGroupCount']

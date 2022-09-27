@@ -127,6 +127,7 @@ export default defineComponent({
   .el-button {
     background-color: #79a0c9 !important;
     border: #79a0c9 !important;
+
   }
 
   .el-button:hover {
@@ -145,7 +146,7 @@ export default defineComponent({
   }
 
   .bgForm {
-    width: 500px;
+    width: 600px;
     padding: 40px;
     background-color: rgba(255, 255, 255, 0.826);
     border-radius: 10px;
