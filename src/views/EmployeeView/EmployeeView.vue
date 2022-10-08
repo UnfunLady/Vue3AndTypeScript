@@ -164,9 +164,12 @@ import { defineComponent, toRefs, nextTick, ref, getCurrentInstance, reactive, o
 import { EmployeeInitData, getGroupByDno, getGroupEmploye, getAllProvinceAndCityList, searchEmploye, addOrUpdateDateEmploy, deleteEmploye } from '@/types/employe'
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { useRoute, useRouter } from 'vue-router';
+import useStore from "@/store";
 export default defineComponent({
     name: 'editEmploye',
     setup(props, ctx) {
+        // 获取用户信息
+        const { user } = useStore()
         // 定义收集数据的表单
         const data = reactive(new EmployeeInitData());
         // 获取挂在原型上的全部api方法
@@ -376,7 +379,7 @@ export default defineComponent({
                 }
             )
                 .then(async () => {
-                    const res = await deleteEmploye(API, { employno: row.employno });
+                    const res = await deleteEmploye(API, { employno: row.employno, deptno: row.deptno, user: user.userInfo.userList.userInfo['username'] });
                     if (res.code == 200) {
                         ElMessage({
                             type: 'success',

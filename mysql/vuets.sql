@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 28/09/2022 16:32:22
+ Date: 30/09/2022 18:19:05
 */
 
 SET NAMES utf8mb4;
@@ -265,7 +265,6 @@ INSERT INTO `covidinfo` VALUES (1, 1, 227, 'false', 'false', 'false');
 INSERT INTO `covidinfo` VALUES (2, 5, 228, 'false', 'false', 'false');
 INSERT INTO `covidinfo` VALUES (2, 5, 229, 'false', 'false', 'false');
 INSERT INTO `covidinfo` VALUES (1, 1, 230, 'false', 'false', 'false');
-INSERT INTO `covidinfo` VALUES (1, 1, 231, 'false', 'false', 'false');
 INSERT INTO `covidinfo` VALUES (1, 2, 233, 'false', 'false', 'false');
 
 -- ----------------------------
@@ -287,11 +286,11 @@ CREATE TABLE `depall`  (
 -- ----------------------------
 -- Records of depall
 -- ----------------------------
-INSERT INTO `depall` VALUES (1, '爬虫团队', '参与分布式爬虫和数据采集系统的架构设计和开发,负责大规模文本、图像数据的抓取、抽取，去重、分类，垃圾过滤，质量识别等工作', 'https://img0.baidu.com/it/u=3104250705,162290846&fm=253&fmt=auto&app=138&f=JPG\r\n', 82, 4, 'false', 9);
+INSERT INTO `depall` VALUES (1, '爬虫团队', '参与分布式爬虫和数据采集系统的架构设计和开发,负责大规模文本、图像数据的抓取、抽取，去重、分类，垃圾过滤，质量识别等工作', 'https://img0.baidu.com/it/u=3104250705,162290846&fm=253&fmt=auto&app=138&f=JPG\r\n', 81, 4, 'false', 8);
 INSERT INTO `depall` VALUES (2, '后端团队', '设计开发以及测试并且维护后端的各个子系统，负责线上服务器运行期间的安全以及稳定性，负责相关后台服务的工发工作', '\r\nhttps://mms2.baidu.com/it/u=1219526164,3946276492&fm=253&app=138&f=JPEG', 43, 3, 'false', 3);
 INSERT INTO `depall` VALUES (3, 'UI团队', '负责软件界面的美术设计、创意工作和制作工作，根据各种相关软件的用户群，提出构思新颖、有高度吸引力的创意设计', 'https://img1.baidu.com/it/u=3213166844,1927952924&fm=253&fmt=auto&app=138&f=PNG', 20, 2, 'true', 0);
 INSERT INTO `depall` VALUES (4, '前端团队', '配合UI设计师实现预期的视觉交互效果，定期的更新和优化产品，保持产品的生命力和可用性，配合后端工程师完成相关应用的开发工作', 'https://img2.baidu.com/it/u=2213282682,62301055&fm=253&fmt=auto&app=138&f=JPEG', 30, 3, 'true', 0);
-INSERT INTO `depall` VALUES (5, '运维团队', '设计并开发高效的监控平台和告警平台，以可控的方式，尽可能高效的完成产品功能的迭代的变更工作', 'https://img0.baidu.com/it/u=3231418332,3200306261&fm=253&fmt=auto&app=138&f=JPEG', 30, 3, 'true', 0);
+INSERT INTO `depall` VALUES (5, '运维团队', '设计并开发高效的监控平台和告警平台，以可控的方式，尽可能高效的完成产品功能的迭代的变更工作', 'https://img0.baidu.com/it/u=3231418332,3200306261&fm=253&fmt=auto&app=138&f=JPEG', 30, 3, 'false', 0);
 INSERT INTO `depall` VALUES (6, '经营团队', '以可控的方式，尽可能高效的完成产品功能的迭代的变更工作，搞好市场调查与预测，选定产品发展方向，制定长期发展规划', 'https://img1.baidu.com/it/u=312885407,2370214083&fm=253&fmt=auto&app=138&f=JPEG', 11, 1, 'true', 0);
 INSERT INTO `depall` VALUES (7, '行政团队', '负责公司全体员工的后勤保障工作，负责接待来宾（比如：政府部门、职能部门人员），接听或转接外部电话，负责公司员工的考勤管理', 'https://img0.baidu.com/it/u=3450002477,2924136512&fm=253&fmt=auto&app=138&f=PNG', 10, 1, 'false', 2);
 INSERT INTO `depall` VALUES (16, '测试团队', '在规定的条件下对程序进行操作，以发现程序错误，衡量软件质量，并对其是否能满足设计要求进行评估', 'http://127.0.0.1:3000/images/1663576558155.jpg', 7, 2, 'false', 4);
@@ -310,12 +309,12 @@ CREATE TABLE `dept`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_dno`(`deptno`) USING BTREE,
   CONSTRAINT `fk_dno` FOREIGN KEY (`deptno`) REFERENCES `depall` (`dno`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 85 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 90 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of dept
 -- ----------------------------
-INSERT INTO `dept` VALUES (1, 1, '爬虫团队1组', '广州', 19, 14);
+INSERT INTO `dept` VALUES (1, 1, '爬虫团队1组', '广州', 18, 14);
 INSERT INTO `dept` VALUES (2, 1, '爬虫团队2组', '深圳', 21, 20);
 INSERT INTO `dept` VALUES (3, 1, '爬虫团队3组', '广州', 20, 20);
 INSERT INTO `dept` VALUES (4, 1, '爬虫团队4组', '长沙', 22, 19);
@@ -327,12 +326,32 @@ INSERT INTO `dept` VALUES (9, 3, 'UI团队2组', '深圳', 10, 10);
 INSERT INTO `dept` VALUES (10, 4, '前端团队1组', '广州', 10, 10);
 INSERT INTO `dept` VALUES (11, 4, '前端团队2组', '广州', 10, 10);
 INSERT INTO `dept` VALUES (12, 4, '前端团队3组', '北京', 10, 10);
-INSERT INTO `dept` VALUES (13, 5, '运维团队1组', '广州', 10, 10);
+INSERT INTO `dept` VALUES (13, 5, '运维团队1组', '广州', 10, 30);
 INSERT INTO `dept` VALUES (14, 5, '运维团队2组', '广州', 10, 10);
 INSERT INTO `dept` VALUES (15, 5, '运维团队3组', '深圳', 10, 10);
 INSERT INTO `dept` VALUES (16, 6, '经营团队1组', '广州', 11, 11);
 INSERT INTO `dept` VALUES (17, 7, '行政团队1组', '广州', 10, 8);
 INSERT INTO `dept` VALUES (76, 16, '测试团队1组', '上海', 7, 3);
+INSERT INTO `dept` VALUES (85, 16, 'test', 'test', 0, 0);
+
+-- ----------------------------
+-- Table structure for deptredo
+-- ----------------------------
+DROP TABLE IF EXISTS `deptredo`;
+CREATE TABLE `deptredo`  (
+  `id` int(0) NOT NULL,
+  `deptno` int(0) NULL DEFAULT NULL,
+  `deptname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `location` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `count` int(0) NULL DEFAULT NULL,
+  `countCovid` int(0) NULL DEFAULT NULL,
+  `confirmTime` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `whichDone` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of deptredo
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for employee
@@ -356,7 +375,7 @@ CREATE TABLE `employee`  (
   INDEX `employname`(`employname`) USING BTREE,
   INDEX `employno`(`employno`) USING BTREE,
   CONSTRAINT `fk_deptno` FOREIGN KEY (`deptno`) REFERENCES `dept` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 235 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 242 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of employee
@@ -592,8 +611,36 @@ INSERT INTO `employee` VALUES (1, 227, '陆语熙141', '123', '女', '123123', '
 INSERT INTO `employee` VALUES (5, 228, '陆语熙', '123', '男', '123', '123', '2022-09-02', '123', '广东省 汕头市', '123', 'true');
 INSERT INTO `employee` VALUES (5, 229, '陆语熙', '123', '男', '123', '123', '2022-09-02', '123', '广东省 汕头市', '123', 'true');
 INSERT INTO `employee` VALUES (1, 230, '鲁潜2233', '21', '男', '441623200110158757', '13825361944', '2022-02-12', '_50@hotmail.com', '广东省 佛山市', '3500', 'true');
-INSERT INTO `employee` VALUES (1, 231, '鲁潜2234', '21', '男', '441623200110158757', '13825361944', '2022-02-12', '_50@hotmail.com', '广东省 汕头市', '3500', 'true');
 INSERT INTO `employee` VALUES (2, 233, '艾尔2', '123', '女', '1', '1', '2022-09-22', '1', '河南省 洛阳市', '11', 'true');
+
+-- ----------------------------
+-- Table structure for employeredo
+-- ----------------------------
+DROP TABLE IF EXISTS `employeredo`;
+CREATE TABLE `employeredo`  (
+  `dno` int(0) NOT NULL,
+  `deptno` int(0) NULL DEFAULT NULL,
+  `employno` int(0) NULL DEFAULT NULL,
+  `employname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `employage` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `employsex` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `employidcard` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `employphone` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `entryDate` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `employemail` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `employaddress` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `employsalary` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `isuse` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `confirmTime` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `whichDone` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of employeredo
+-- ----------------------------
+INSERT INTO `employeredo` VALUES (5, 13, 240, '123123', '123', '男', '123', '123', '2022-09-14', '123', '新疆维吾尔自治区 和田地区', '123123', 'true', '2022-09-29 15:26:51', 'admin');
+INSERT INTO `employeredo` VALUES (5, 13, 241, 'ZHANGSAN', '123', '女', '12322', '12322', '2022-09-14', '1232', '新疆维吾尔自治区 和田地区', '123123', 'true', '2022-09-29 17:10:55', 'admin');
+INSERT INTO `employeredo` VALUES (1, 1, 231, '鲁潜2234', '21', '男', '441623200110158757', '13825361944', '2022-02-12', '_50@hotmail.com', '广东省 汕头市', '3500', 'true', '2022-09-29 17:30:01', 'admin');
 
 -- ----------------------------
 -- Table structure for employesalary
@@ -634,6 +681,7 @@ INSERT INTO `employesalary` VALUES (5, 15, 150, 800, 650, 500, 300, 100, 'true')
 INSERT INTO `employesalary` VALUES (6, 16, 150, 800, 650, 500, 300, 100, 'true');
 INSERT INTO `employesalary` VALUES (7, 17, 150, 800, 650, 500, 300, 100, 'true');
 INSERT INTO `employesalary` VALUES (16, 76, 150, 800, 650, 500, 300, 100, 'true');
+INSERT INTO `employesalary` VALUES (16, 85, 150, 800, 650, 500, 300, 100, 'true');
 
 -- ----------------------------
 -- Table structure for employesalarydetail
@@ -862,7 +910,6 @@ INSERT INTO `employesalarydetail` VALUES (1, 18, '韦苑博1', 'true', 'true', '
 INSERT INTO `employesalarydetail` VALUES (1, 19, '江涛1', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
 INSERT INTO `employesalarydetail` VALUES (1, 227, '陆语熙141', 'true', 'true', 'true', 'true', 'true', 100, 1231, 'true');
 INSERT INTO `employesalarydetail` VALUES (1, 230, '鲁潜2233', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
-INSERT INTO `employesalarydetail` VALUES (1, 231, '鲁潜2234', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
 INSERT INTO `employesalarydetail` VALUES (2, 21, '鲁潜', 'true', 'true', 'true', 'true', 'true', 100, 3500, 'true');
 INSERT INTO `employesalarydetail` VALUES (2, 22, '邵金鑫', 'true', 'true', 'true', 'true', 'true', 100, 3800, 'true');
 INSERT INTO `employesalarydetail` VALUES (2, 23, '陈昊强', 'true', 'true', 'true', 'true', 'true', 100, 8000, 'true');

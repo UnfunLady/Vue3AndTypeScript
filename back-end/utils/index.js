@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const secret = 'UnfunLady'
 const createToken = (username) => {
     return jwt.sign(username, secret, {
-        expiresIn: '12h'// 设置token的有效期 单位（秒）
+        expiresIn: '10h'// 设置token的有效期 单位（秒）
     })
 }
 // 校验token

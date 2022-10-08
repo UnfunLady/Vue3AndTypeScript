@@ -9,10 +9,12 @@ const fs = require('fs')
 const path = require("path") // 处理路径的模块
 // 引入token相关util
 const { createToken } = require('../utils/index')
+const moment = require('moment')
 //上传图片的模板
 var multer = require('multer');
 //生成的图片放入uploads文件夹下
 var upload = multer({ dest: 'uploads/' })
+
 router.get('/', function (req, res, next) {
   res.render('index', { title: 'Express' });
 });
@@ -229,21 +231,54 @@ VALUES (${body.default.deptno}, '${body.default.employname}', '${body.default.em
 })
 // 删除员工
 router.post('/api/deleteEmploy', (req, res) => {
-  const { employno } = req.body;
-  const sql = `delete from employee where employno =${employno}`
-  connect.query(sql, (error, results) => {
-    if (results && results.affectedRows > 0) {
-      res.send({
-        code: 200,
-        msg: '删除员工成功!'
-      })
-    } else {
-      res.send({
-        code: 202,
-        msg: '删除员工失败,员工不存在或未知异常'
+  const { employno, deptno, user } = req.body;
+  // 获取当前操作的时间
+  const nowDate = moment().format('YYYY-MM-DD HH:mm:ss')
+  // 删除sql
+  const sql = `delete from employee where employno =${employno} and deptno=${deptno}`
+  // 获取员工当前部门号
+  const preSql = `select deptno from dept where id=${deptno}`
+  connect.query(preSql, (er, rs) => {
+    if (er) res.send({ code: 202, msg: '删除失败' })
+    if (rs) {
+      // rs[0].deptno
+      // 获取删除员工的个人信息 准备存入备份表
+      const preSql2 = `select *from employee where employno=${employno} and deptno=${deptno}`
+      connect.query(preSql2, (ser, srs) => {
+        if (ser) res.send({ code: 202, msg: '删除失败' })
+        // 插入备份表语句
+        const preSql3 = `INSERT INTO vuets.employeredo(dno, deptno, employno,
+           employname, employage, employsex, employidcard, employphone, 
+           entryDate, employemail, employaddress,employsalary ,isuse,confirmTime,whichDone)
+         VALUES (${rs[0].deptno}, ${deptno}, ${employno},
+           '${srs[0].employname}', '${srs[0].employage}', '${srs[0].employsex}',
+            '${srs[0].employidcard}', '${srs[0].employphone}', '${srs[0].entryDate}', 
+            '${srs[0].employemail}', '${srs[0].employaddress}','${srs[0].employsalary}', '${srs[0].isuse}','${nowDate}','${user}');
+        `
+        connect.query(preSql3, (rer, rrs) => {
+          if (rer) res.send({ code: 202, msg: '删除失败' })
+          if (rrs.affectedRows > 0) {
+            connect.query(sql, (error, results) => {
+              if (results && results.affectedRows > 0) {
+                res.send({
+                  code: 200,
+                  msg: '删除员工成功!'
+                })
+              } else {
+                res.send({
+                  code: 202,
+                  msg: '删除员工失败,员工不存在或未知异常'
+                })
+              }
+            })
+          }
+        })
       })
     }
   })
+
+
+
 })
 // 关键字查找
 router.get('/api/searchEmploy', (req, res) => {
@@ -1108,5 +1143,28 @@ WHERE  deptid  = ${deptid} AND  employid  = ${employno};`
       res.send({ code: 202, msg: '修改信息失败' })
     }
   })
+})
+
+// 查看删除的员工信息
+router.get('/api/getDeletedEmploye', (req, res) => {
+  const { page, size } = req.query
+  const sql = `select * from employeredo limit ${page - 1},${size}`
+  connect.query(`select count(*) as count from employeredo`, (e, r) => {
+    if (e) res.send({ code: 202, msg: '获取信息失败' })
+    connect.query(sql, (err, results) => {
+      if (err) res.send({ code: 202, msg: '获取信息失败！' })
+      if (results.length > 0) {
+        res.send({ code: 200, results: results, count: r[0].count })
+      } else {
+        res.send({ code: 202, msg: '暂无删除员工' })
+      }
+    })
+  })
+
+})
+// 撤回删除的员工操作
+router.post('/api/rebackEmploye', (req, res) => {
+  console.log(req.body)
+  res.send({ code: 200 })
 })
 module.exports = router;
