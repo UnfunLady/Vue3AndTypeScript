@@ -1,6 +1,6 @@
 ## 项目运行环境 
 ```
-Vue3.x+typeScript+pinia状态管理
+Vue3.x
 ```
 
 ## back-end是node的后台接口 (express框架) 
